@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  nacos:
+    image: nacos/nacos-server:${NACOS_VERSION}
+    container_name: chiot-nacos-standalone
+    env_file:
+      - ./nacos/env/nacos-standalone-mysql.env
+    volumes:
+      - ../nacos/standalone-logs/:/home/nacos/logs
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: always
+    networks:
+      chiot-net:
+        aliases:
+          - chiot-net-nacos
+  mysql:
+    container_name: chiot-mysql
+    image: chiot-mysql
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    env_file:
+      - ./mysql/env/mysql.env
+    volumes:
+      - ../mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    networks:
+      chiot-net:
+        aliases:
+          - chiot-net-mysql
+  redis:
+    container_name: chiot-redis
+    image: chiot-redis
+    build:
+      context: ./redis
+      dockerfile: Dockerfile
+    ports:
+      - "6379:6379"
+    volumes:
+      - ../redis/data:/usr/local/redis/data
+      - ../redis/logs:/usr/local/redis/logs
+    command: redis-server /home/redis/conf/redis.conf
+    networks:
+      chiot-net:
+        aliases:
+          - chiot-net-redis
+networks:
+  chiot-net:
+    driver: bridge
