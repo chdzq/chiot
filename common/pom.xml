@@ -15,6 +15,7 @@
     <modules>
         <module>web</module>
         <module>core</module>
+        <module>mybatis</module>
     </modules>
 
     <dependencyManagement>
@@ -30,6 +31,12 @@
                 <artifactId>web</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.chdzq.chiot.common</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -38,5 +45,12 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

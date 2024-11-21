@@ -22,6 +22,7 @@
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <spring-boot.version>3.0.2</spring-boot.version>
         <lombok.version>1.18.34</lombok.version>
+        <mybatis-plus.version>3.5.9</mybatis-plus.version>
     </properties>
 
     <dependencyManagement>
@@ -48,6 +49,12 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

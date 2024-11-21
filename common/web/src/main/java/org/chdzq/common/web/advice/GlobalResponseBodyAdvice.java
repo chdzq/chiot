@@ -1,13 +1,12 @@
 package org.chdzq.common.web.advice;
 
+import org.chdzq.common.core.entity.R;
 import org.chdzq.common.web.annotation.IgnoreJsonResponse;
-import org.chdzq.common.web.entity.R;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
