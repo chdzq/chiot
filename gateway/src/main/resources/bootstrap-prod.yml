@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://f.chdzq.tech:8848
+        namespace: chiot-prod
+        password: public
+        username: nacos
+        group: chiot
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        password: ${spring.cloud.nacos.discovery.password}
+        username: ${spring.cloud.nacos.discovery.username}
+        group: ${spring.cloud.nacos.discovery.group}
+        file-extension: yaml
+#        shared-configs[0]:
+#          data-id: chiot-common.yaml
+#          refresh: true
