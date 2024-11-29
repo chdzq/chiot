@@ -35,6 +35,7 @@ services:
       interval: 5s
       timeout: 10s
       retries: 10
+    restart: always
     networks:
       chiot-net:
         aliases:
@@ -51,6 +52,7 @@ services:
       - ../redis/data:/usr/local/redis/data
       - ../redis/logs:/usr/local/redis/logs
     command: redis-server /home/redis/conf/redis.conf
+    restart: always
     networks:
       chiot-net:
         aliases:
