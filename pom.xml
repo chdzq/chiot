@@ -12,17 +12,21 @@
         <module>common</module>
         <module>gateway</module>
         <module>authentication</module>
+        <module>system</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.encoding>UTF-8</project.encoding>
-        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
-        <spring-cloud.version>2022.0.2</spring-cloud.version>
-        <spring-boot.version>3.0.2</spring-boot.version>
-        <lombok.version>1.18.34</lombok.version>
+        <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <spring-boot.version>3.2.4</spring-boot.version>
         <mybatis-plus.version>3.5.9</mybatis-plus.version>
+        <transmittable-thread-local.version>2.12.6</transmittable-thread-local.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <org.mapstruct.version>1.6.2</org.mapstruct.version>
+        <lombok.version>1.18.30</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -51,10 +55,30 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- 添加 TransmittableThreadLocal 依赖 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${org.mapstruct.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -63,7 +87,12 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -71,10 +100,48 @@
     <build>
         <pluginManagement>
             <plugins>
+                <!-- maven-compiler-plugin 插件，解决 Lombok + MapStruct 组合 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${org.mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
+                    <configuration>
+                        <excludes>
+                            <!-- 打包忽略lombok(作用于编译阶段)-->
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+
+                            <!-- 打包忽略mapstruct(作用于编译阶段)-->
+                            <exclude>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
                     <executions>
                         <execution>
                             <goals>
@@ -85,22 +152,12 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${maven.compiler.source}</source> <!-- 你的 Java 版本 -->
-                    <target>${maven.compiler.target}</target>
-                    <encoding>${project.encoding}</encoding>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
             </plugin>
         </plugins>
     </build>
