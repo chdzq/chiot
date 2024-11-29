@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    nacos:
+      # 注册中心
+      discovery:
+        server-addr: http://localhost:8848
+        namespace: chiot-dev
+        password: public
+        username: nacos
+        group: chiot
+      # 配置中心
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        password: ${spring.cloud.nacos.discovery.password}
+        username: ${spring.cloud.nacos.discovery.username}
+        group: ${spring.cloud.nacos.discovery.chiot}
+        file-extension: yaml
+#        shared-configs[0]:
+#          data-id: chiot-common.yaml
+#          refresh: true
