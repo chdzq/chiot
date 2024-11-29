@@ -4,4 +4,5 @@ module org.chdzq.common.core {
     requires spring.beans;
     requires spring.context;
     requires spring.core;
+    requires static lombok;
 }
