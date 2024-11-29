@@ -9,6 +9,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/system/system-interface/system-interface-external/pom.xml" />
       </list>
     </option>
   </component>
