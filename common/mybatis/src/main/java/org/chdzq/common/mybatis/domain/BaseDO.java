@@ -7,66 +7,66 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.time.LocalDateTime;
 
 /**
- * @Description Domain Object 基类
+ * @Description Data Object 基类
  * @Author chdzq
  * @Date 2024/11/20
  */
 public abstract class BaseDO {
 
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private LocalDateTime createdTime;
 
     @TableField(fill = FieldFill.UPDATE)
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
 
     @TableField(fill = FieldFill.INSERT)
-    private String createUserId;
+    private String createdBy;
 
     @TableField(fill = FieldFill.UPDATE)
-    private String updateUserId;
+    private String updateBy;
 
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime deleteTime;
+    private LocalDateTime deletedTime;
 
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
+    public LocalDateTime getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatedTime(LocalDateTime updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
-    public String getCreateUserId() {
-        return createUserId;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public String getUpdateUserId() {
-        return updateUserId;
+    public String getUpdateBy() {
+        return updateBy;
     }
 
-    public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 
-    public LocalDateTime getDeleteTime() {
-        return deleteTime;
+    public LocalDateTime getDeletedTime() {
+        return deletedTime;
     }
 
-    public void setDeleteTime(LocalDateTime deleteTime) {
-        this.deleteTime = deleteTime;
+    public void setDeletedTime(LocalDateTime deletedTime) {
+        this.deletedTime = deletedTime;
     }
 }

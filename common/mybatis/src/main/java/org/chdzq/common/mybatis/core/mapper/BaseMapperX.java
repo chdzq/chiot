@@ -18,7 +18,7 @@ import java.util.List;
  * @author chdzq
  * @create 2022/11/11
  */
-public interface BaseMapperX<T extends BaseDO> extends BaseMapper<T> {
+public interface BaseMapperX<T> extends BaseMapper<T> {
 
     @FunctionalInterface
     interface CustomQueryMethod<T extends PageParam, R> {
