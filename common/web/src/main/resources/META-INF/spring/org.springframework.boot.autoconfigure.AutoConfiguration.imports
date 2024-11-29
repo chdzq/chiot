@@ -1,0 +1,2 @@
+org.chdzq.common.web.autoconfigure.WebAutoConfiguration
+org.chdzq.common.web.autoconfigure.FeignAutoConfiguration
