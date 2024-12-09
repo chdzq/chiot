@@ -12,10 +12,10 @@
     <artifactId>common</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>web</module>
-        <module>core</module>
-        <module>mybatis</module>
-        <module>security</module>
+        <module>common-web</module>
+        <module>common-core</module>
+        <module>common-mybatis</module>
+        <module>common-security</module>
         <module>common-redis</module>
     </modules>
 
@@ -29,25 +29,25 @@
         <dependencies>
             <dependency>
                 <groupId>org.chdzq.common</groupId>
-                <artifactId>core</artifactId>
+                <artifactId>common-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.chdzq.common</groupId>
-                <artifactId>web</artifactId>
+                <artifactId>common-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.chdzq.common</groupId>
-                <artifactId>mybatis</artifactId>
+                <artifactId>common-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.chdzq.common</groupId>
-                <artifactId>security</artifactId>
+                <artifactId>common-security</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

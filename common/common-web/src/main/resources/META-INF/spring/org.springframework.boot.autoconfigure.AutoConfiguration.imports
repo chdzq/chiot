@@ -1,0 +1,4 @@
+org.chdzq.common.web.autoconfigure.WebAutoConfiguration
+org.chdzq.common.web.autoconfigure.FeignAutoConfiguration
+org.chdzq.common.web.core.advice.GlobalExceptionConfig
+org.chdzq.common.web.core.advice.GlobalResponseBodyAdvice

@@ -33,9 +33,18 @@ public class UserController {
      * @return 认证信息
      */
     @GetMapping("/{username}/authInfo")
-    public UserAuthInfo getUserAuthInfo(@PathVariable String username) {
+    public UserAuthInfo getUserAuthInfo(@PathVariable("username") String username) {
         QueryAuthInfo query = new QueryAuthInfo(username);
         UserAuthInfo userAuthInfo = userService.query(query);
         return userAuthInfo;
+    }
+
+    /**
+     * 获取用户认证信息
+     * @return 认证信息
+     */
+    @GetMapping("/authInfo/test")
+    public String getUserAuthInfo() {
+        return "userAuthInfo";
     }
 }

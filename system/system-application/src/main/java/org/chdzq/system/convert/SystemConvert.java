@@ -23,6 +23,7 @@ public interface SystemConvert {
     SystemConvert INSTANCE = Mappers.getMapper(SystemConvert.class);
 
 
+    @Mapping(target = "userId", source = "id")
     UserAuthInfo userConvert2AuthInfo(User user);
 
     default String getRoleCode(Role role) {

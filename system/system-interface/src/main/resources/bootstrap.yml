@@ -14,7 +14,7 @@ spring:
 logging:
   file:
     path: ../logs/${spring.application.name}
-  level:
-    org.chdzq: debug
-    root: info
+  logging:
+    level:
+      root: INFO
   config: classpath:log/logback.xml

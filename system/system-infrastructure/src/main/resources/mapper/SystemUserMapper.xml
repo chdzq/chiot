@@ -16,7 +16,7 @@
         <result property="gender" column="gender" />
         <collection property="roles"
                     ofType="org.chdzq.system.entity.Role"
-                    javaType="java.util.Set"
+                    javaType="java.util.ArrayList"
                     columnPrefix="role_"
         />
     </resultMap>
@@ -42,10 +42,13 @@
             t3.sort as role_sort,
             t3.data_scope as role_data_scope
         FROM sys_user t1
-            LEFT JOIN sys_user_role t2 ON t2.user_id = t1.id
-            LEFT JOIN sys_role t3 ON t3.id = t2.role_id
+            LEFT JOIN sys_user_role t2
+                ON t2.user_id = t1.id
+            LEFT JOIN sys_role t3
+                ON t3.id = t2.role_id
+                AND t3.status = 1
         WHERE
             t1.username = #{username}
-        AND t3.status = 1
+
     </select>
 </mapper>

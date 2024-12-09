@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>org.chdzq.common</groupId>
-            <artifactId>mybatis</artifactId>
+            <artifactId>common-mybatis</artifactId>
         </dependency>
 
         <dependency>

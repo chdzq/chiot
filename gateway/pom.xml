@@ -22,7 +22,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.chdzq.common</groupId>
-                <artifactId>core</artifactId>
+                <artifactId>common-core</artifactId>
                 <version>${project.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
@@ -33,7 +33,7 @@
     <dependencies>
         <dependency>
             <groupId>org.chdzq.common</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>common-core</artifactId>
         </dependency>
 
         <dependency>

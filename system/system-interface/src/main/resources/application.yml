@@ -12,6 +12,15 @@ spring:
         pool:
           min-idle: 1
 
+  security:
+    oauth2:
+      # 资源服务器配置
+      resourceserver:
+        jwt:
+          # Jwt中claims的iss属性，也就是jwt的签发地址，即认证服务器的根路径
+          # 资源服务器会进一步的配置，通过该地址获取公钥以解析jwt
+          issuer-uri: http://auth.chdzq.com:9201
+
 mybatis-plus:
   global-config:
     db-config:
@@ -33,6 +42,6 @@ feign:
 # 安全配置
 security:
   # 允许无需认证的路径列表
-  whitelist-paths:
+  white-path-list:
     # 获取系统用户的认证信息用于账号密码判读
-    - /api/v1/users/{username}/authInfo
+    - /v1/user/{username}/authInfo

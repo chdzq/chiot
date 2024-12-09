@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>org.chdzq.common</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>common-core</artifactId>
         </dependency>
 
         <dependency>
