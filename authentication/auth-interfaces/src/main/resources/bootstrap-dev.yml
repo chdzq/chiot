@@ -14,8 +14,16 @@ spring:
         namespace: ${spring.cloud.nacos.discovery.namespace}
         password: ${spring.cloud.nacos.discovery.password}
         username: ${spring.cloud.nacos.discovery.username}
-        group: ${spring.cloud.nacos.discovery.chiot}
+        group: ${spring.cloud.nacos.discovery.group}
         file-extension: yaml
 #        shared-configs[0]:
 #          data-id: chiot-common.yaml
 #          refresh: true
+
+logging:
+  level:
+    org.chdzq: debug
+    org.springframework.web: debug
+    org.springframework.security: debug
+    org.springframework.security.oauth2: debug
+    org.springframework.security.oauth2.client: debug

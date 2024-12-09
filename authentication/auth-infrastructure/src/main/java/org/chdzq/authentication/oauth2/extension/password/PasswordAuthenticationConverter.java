@@ -4,15 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.chdzq.authentication.oauth2.utils.OAuth2EndpointUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -56,10 +55,14 @@ public class PasswordAuthenticationConverter implements AuthenticationConverter 
             OAuth2EndpointUtil.throwInvalidParameterError(OAuth2ParameterNames.SCOPE);
         }
 
-        Set<String> requestedScopes = null;
+        Set<String> requestedScopes;
         if (StringUtils.hasText(scope)) {
-            requestedScopes = new HashSet<>(Arrays.asList(StringUtils.delimitedListToStringArray(scope, " ")));
+            requestedScopes = new HashSet<>(Arrays.asList(StringUtils.delimitedListToStringArray(scope, ",")));
+        } else {
+            requestedScopes = new HashSet<>();
         }
+
+        requestedScopes.add(OidcScopes.OPENID);
 
         Set<String> filterParameter = Set.of(OAuth2ParameterNames.GRANT_TYPE, OAuth2ParameterNames.SCOPE);
         // 附加参数(保存用户名/密码传递给 PasswordAuthenticationProvider 用于身份认证)

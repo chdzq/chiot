@@ -1,6 +1,8 @@
 package org.chdzq.authentication.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.system.entity.UserAuthInfo;
 import org.springframework.security.core.CredentialsContainer;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
  * @date 2024/11/29 17:09
  */
 @Data
+@Builder
 public class SysUserDetail implements UserDetails, CredentialsContainer {
     /**
      * 扩展字段：用户ID
@@ -44,32 +47,55 @@ public class SysUserDetail implements UserDetails, CredentialsContainer {
     private String username;
     private String password;
     private Boolean enabled;
-    private Collection<GrantedAuthority> authorities;
+    private Set<? extends GrantedAuthority> authorities;
 
-    private boolean accountNonExpired;
+    private boolean accountNonExpired = true;
 
-    private boolean accountNonLocked;
+    private boolean accountNonLocked = true;
 
-    private boolean credentialsNonExpired;
+    private boolean credentialsNonExpired = true;
 
     private Set<String> permissions;
+
+    public SysUserDetail(Long userId, Long deptId, Integer dataScope, String username, String password, Boolean enabled, Set<? extends GrantedAuthority> authorities, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, Set<String> permissions) {
+        this.userId = userId;
+        this.deptId = deptId;
+        this.dataScope = dataScope;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.authorities = authorities;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.permissions = permissions;
+    }
 
     /**
      * 系统管理用户
      */
-    public SysUserDetail(UserAuthInfo user) {
-        this.setUserId(user.getUserId());
-        this.setUsername(user.getUsername());
-        this.setDeptId(user.getDeptId());
-        this.setDataScope(user.getDataScope());
-        this.setPassword("{bcrypt}" + user.getPassword());
-        this.setEnabled(Objects.equals(StatusEnum.ENABLE.getValue(), user.getStatus()));
+    public static SysUserDetail newSysUserDetail(UserAuthInfo user) {
+        Set<GrantedAuthority> authorities;
         if (!CollectionUtils.isEmpty(user.getRoles())) {
             authorities = user.getRoles().stream()
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toSet());
+        } else {
+            authorities = null;
         }
-        this.setPermissions(user.getPermissions());
+
+        return builder().userId(user.getUserId())
+                .username(user.getUsername())
+                .password("{bcrypt}" + user.getPassword())
+                .dataScope(user.getDataScope())
+                .deptId(user.getDeptId())
+                .authorities(authorities)
+                .enabled(Objects.equals(StatusEnum.ENABLE.getValue(), user.getStatus()))
+                .permissions(user.getPermissions())
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .accountNonExpired(true)
+                .build();
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -88,17 +114,17 @@ public class SysUserDetail implements UserDetails, CredentialsContainer {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return credentialsNonExpired;
     }
 
     @Override

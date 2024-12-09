@@ -1,5 +1,7 @@
 package org.chdzq.authentication.config;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -7,27 +9,32 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.chdzq.authentication.model.SysUserDetail;
 import org.chdzq.authentication.oauth2.extension.password.PasswordAuthenticationConverter;
 import org.chdzq.authentication.oauth2.extension.password.PasswordAuthenticationProvider;
 import org.chdzq.authentication.oauth2.handler.CustomAuthenticationFailureHandler;
 import org.chdzq.authentication.oauth2.handler.CustomAuthenticationSuccessHandler;
+import org.chdzq.authentication.oauth2.jackson.SysUserSetMixin;
 import org.chdzq.authentication.oauth2.oidc.CustomOidcAuthenticationConverter;
 import org.chdzq.authentication.oauth2.oidc.CustomOidcAuthenticationProvider;
 import org.chdzq.authentication.oauth2.oidc.CustomOidcUserInfoService;
 import org.chdzq.common.core.constants.RedisConstant;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -42,6 +49,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
@@ -66,6 +74,7 @@ import java.util.UUID;
  * @version 1.0
  * @date 2024/11/27 16:02
  */
+@Configuration
 @RequiredArgsConstructor
 public class AuthorizationServerConfig {
 
@@ -254,7 +263,30 @@ public class AuthorizationServerConfig {
     @Bean
     public JdbcOAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate,
                                                                RegisteredClientRepository registeredClientRepository) {
-        return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+        // 创建基于JDBC的OAuth2授权服务。这个服务使用JdbcTemplate和客户端仓库来存储和检索OAuth2授权数据。
+        JdbcOAuth2AuthorizationService service = new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+
+        // 创建并配置用于处理数据库中OAuth2授权数据的行映射器。
+        JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper rowMapper = new JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper(registeredClientRepository);
+        rowMapper.setLobHandler(new DefaultLobHandler());
+        ObjectMapper objectMapper = new ObjectMapper();
+        ClassLoader classLoader = JdbcOAuth2AuthorizationService.class.getClassLoader();
+        List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
+        objectMapper.registerModules(securityModules);
+        objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+        // You will need to write the Mixin for your class so Jackson can marshall it.
+
+        // 添加自定义Mixin，用于序列化/反序列化特定的类。
+        // Mixin类需要自行实现，以便Jackson可以处理这些类的序列化。
+        objectMapper.addMixIn(SysUserDetail.class, SysUserSetMixin.class);
+        objectMapper.addMixIn(Long.class, Object.class);
+
+        // 将配置好的ObjectMapper设置到行映射器中。
+        rowMapper.setObjectMapper(objectMapper);
+
+        // 将自定义的行映射器设置到授权服务中。
+        service.setAuthorizationRowMapper(rowMapper);
+        return service;
     }
 
     @Bean

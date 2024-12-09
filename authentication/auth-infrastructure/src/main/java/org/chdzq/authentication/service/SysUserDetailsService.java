@@ -41,6 +41,6 @@ public class SysUserDetailsService implements UserDetailsService {
             throw new DisabledException("该账户已被禁用!");
         }
 
-        return new SysUserDetail(userAuthInfo);
+        return SysUserDetail.newSysUserDetail(userAuthInfo);
     }
 }

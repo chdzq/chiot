@@ -27,12 +27,12 @@
 
         <dependency>
             <groupId>org.chdzq.common</groupId>
-            <artifactId>web</artifactId>
+            <artifactId>common-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.chdzq.common</groupId>
-            <artifactId>security</artifactId>
+            <artifactId>common-security</artifactId>
         </dependency>
 
         <dependency>
