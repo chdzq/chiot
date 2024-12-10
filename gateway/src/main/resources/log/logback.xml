@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <springProperty scope="context" name="SPRING_APP_NAME" source="spring.application.name"/>
-    <springProperty scope="context" name="SPRING_APP_PORT" source="server.port"/>
     <springProperty scope="context" name="LOG_FILE_PATH" source="logging.file.path"/>
 
     <!--0. 日志格式和颜色渲染 -->
@@ -27,7 +26,7 @@
 
     <!-- 系统日志输出 -->
 	<appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE_PATH}/${SPRING_APP_NAME}_${SPRING_APP_PORT}_info.log</file>
+        <file>${LOG_FILE_PATH}/${SPRING_APP_NAME}_info.log</file>
         <!--日志文档输出格式-->
         <encoder>
             <pattern>${FILE_LOG_PATTERN}</pattern>
