@@ -13,8 +13,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum StatusEnum implements IBaseEnum<Integer> {
-    ENABLE(1, "启用"),
     DISABLE(0, "停用"),
+    ENABLE(1, "启用"),
     ;
     private final Integer code;
     private final String name;
@@ -28,4 +28,17 @@ public enum StatusEnum implements IBaseEnum<Integer> {
     public String getLabel() {
         return name;
     }
+
+    public static StatusEnum getByCode(Integer code) {
+        if (code == null) {
+            return null;
+        }
+        for (StatusEnum statusEnum : StatusEnum.values()) {
+            if (statusEnum.getCode().equals(code)) {
+                return statusEnum;
+            }
+        }
+        return null;
+    }
+
 }

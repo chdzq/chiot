@@ -30,4 +30,16 @@ public enum GenderEnum implements IBaseEnum<Integer> {
     public String getLabel() {
         return name;
     }
+
+    public static GenderEnum getByCode(Integer code) {
+        if (code == null) {
+            return null;
+        }
+        for (GenderEnum genderEnum : GenderEnum.values()) {
+            if (genderEnum.getCode().equals(code)) {
+                return genderEnum;
+            }
+        }
+        return null;
+    }
 }

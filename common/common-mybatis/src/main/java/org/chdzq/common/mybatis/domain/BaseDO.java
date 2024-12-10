@@ -23,11 +23,11 @@ public abstract class BaseDO {
     private String createdBy;
 
     @TableField(fill = FieldFill.UPDATE)
-    private String updateBy;
+    private String updatedBy;
 
     @TableLogic
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime deletedTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Integer deleted;
 
 
     public LocalDateTime getCreatedTime() {
@@ -54,19 +54,19 @@ public abstract class BaseDO {
         this.createdBy = createdBy;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdatedBy(String updateBy) {
+        this.updatedBy = updateBy;
     }
 
-    public LocalDateTime getDeletedTime() {
-        return deletedTime;
+    public Integer getDeleted() {
+        return deleted;
     }
 
-    public void setDeletedTime(LocalDateTime deletedTime) {
-        this.deletedTime = deletedTime;
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
     }
 }
