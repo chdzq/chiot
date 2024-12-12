@@ -4,6 +4,7 @@ import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.chdzq.common.core.entity.Result;
 import org.chdzq.common.core.exceptions.BusinessException;
+import org.chdzq.common.core.result.ResultError;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -93,6 +94,19 @@ public class GlobalExceptionConfig {
         log.warn("HttpRequestMethodNotSupportedException Handler: {}", ex.getMessage());
         return Result.fail(String.format("请求方法不正确:%s", ex.getMessage()));
     }
+
+    /**
+     * 处理 SpringMVC 请求方法不正确
+     *
+     * 例如说，A 接口的方法为 GET 方式，结果请求方法为 POST 方式，导致不匹配
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Result<?> httpIllegalArgumentExceptionHandler(IllegalArgumentException ex) {
+        log.warn("IllegalArgumentException Handler: {}", ex.getMessage());
+        return ResultError.PARAMETER_ERROR.makeResultFail(ex.getMessage());
+    }
+
+
 
     /**
      * Global Exception

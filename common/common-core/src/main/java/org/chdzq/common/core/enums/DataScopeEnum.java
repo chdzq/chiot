@@ -2,6 +2,7 @@ package org.chdzq.common.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.chdzq.common.core.validation.EnumerableValue;
 
 /**
  * 数据权限枚举
@@ -12,7 +13,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum DataScopeEnum implements IBaseEnum<Integer> {
+public enum DataScopeEnum implements IBaseEnum<Integer>, EnumerableValue<Integer> {
 
     /**
      * value 越小，数据权限范围越大
@@ -46,5 +47,18 @@ public enum DataScopeEnum implements IBaseEnum<Integer> {
             }
         }
         return null;
+    }
+
+    public static Integer valueOf(DataScopeEnum dataScopeEnum) {
+        if (dataScopeEnum == null) {
+            return null;
+        }
+        return dataScopeEnum.getValue();
+    }
+
+
+    @Override
+    public Integer getEnumerableValue() {
+        return code;
     }
 }

@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @author chdzq
  * @create 2024/11/20
  */
-public abstract class ServiceImplX<M extends BaseMapperX<T>, T extends BaseDO> extends ServiceImpl<M, T> {
+public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceImpl<M, T> {
 
     public Page<T> page(PageQuery pageParam, Wrapper<T> queryWrapper) {
         return this.customPage(pageParam, (page, aPageParam) -> getBaseMapper().selectPage(page, queryWrapper));

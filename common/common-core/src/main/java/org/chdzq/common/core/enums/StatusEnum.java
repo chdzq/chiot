@@ -2,6 +2,7 @@ package org.chdzq.common.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.chdzq.common.core.validation.EnumerableValue;
 
 /**
  * 通用状态枚举
@@ -12,7 +13,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum StatusEnum implements IBaseEnum<Integer> {
+public enum StatusEnum implements IBaseEnum<Integer>, EnumerableValue<Integer> {
     DISABLE(0, "停用"),
     ENABLE(1, "启用"),
     ;
@@ -41,4 +42,15 @@ public enum StatusEnum implements IBaseEnum<Integer> {
         return null;
     }
 
+    public static Integer valueOf(StatusEnum statusEnum) {
+        if (statusEnum == null) {
+            return null;
+        }
+        return statusEnum.getValue();
+    }
+
+    @Override
+    public Integer getEnumerableValue() {
+        return code;
+    }
 }

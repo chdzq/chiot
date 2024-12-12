@@ -2,6 +2,7 @@ package org.chdzq.common.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.chdzq.common.core.validation.EnumerableValue;
 
 /**
  * 性别
@@ -12,7 +13,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum GenderEnum implements IBaseEnum<Integer> {
+public enum GenderEnum implements IBaseEnum<Integer>, EnumerableValue<Integer> {
 
     MALE(1, "男"),
     FEMALE(2, "女"),
@@ -41,5 +42,17 @@ public enum GenderEnum implements IBaseEnum<Integer> {
             }
         }
         return null;
+    }
+
+    public static Integer valueOf(GenderEnum genderEnum) {
+        if (genderEnum == null) {
+            return null;
+        }
+        return genderEnum.getValue();
+    }
+
+    @Override
+    public Integer getEnumerableValue() {
+        return code;
     }
 }

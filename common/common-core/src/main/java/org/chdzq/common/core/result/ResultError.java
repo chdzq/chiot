@@ -1,5 +1,8 @@
 package org.chdzq.common.core.result;
 
+import org.chdzq.common.core.exceptions.BusinessException;
+import org.springframework.util.StringUtils;
+
 /**
  * @Description 响应常量
  * @Author chdzq
@@ -9,12 +12,16 @@ public enum ResultError implements IResultError {
     /**
      * 成功
      */
-    SUCCESS(0, "正常"),
+    SUCCESS(0, "请求成功"),
 
     /**
      * 服务器异常
      */
     SERVER_ERROR(500, "服务器异常"),
+    /**
+     * 服务器异常
+     */
+    PARAMETER_ERROR(501, "参数校验失败"),
 
     /**
      * 被禁止

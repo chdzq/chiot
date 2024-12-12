@@ -19,14 +19,8 @@ public interface IBaseRepository<T extends IBaseEntity<ID>, ID extends Serializa
 
     /**
      * 删除
-     * @param entity
-     */
-    void delete(T entity);
-
-    /**
-     * 查询
      * @param id
-     * @return
      */
-    T findById(Long id);
+    void deleteById(ID id);
+
 }
