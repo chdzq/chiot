@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.chdzq.common.core.entity.PageParam;
+import org.chdzq.common.core.ddd.PageQuery;
 import org.chdzq.common.mybatis.core.pojo.OrderField;
 
 import java.util.ArrayList;
@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
  */
 public class MyBatisUtils {
 
-    public static <T> Page<T> buildPage(PageParam pageParam) {
+    public static <T> Page<T> buildPage(PageQuery pageParam) {
         return buildPage(pageParam, null);
     }
 
-    public static <T> Page<T> buildPage(PageParam pageParam, Collection<OrderField> sortFields) {
+    public static <T> Page<T> buildPage(PageQuery pageParam, Collection<OrderField> sortFields) {
         // 页码 + 数量
         Page<T> page = new Page<>(pageParam.getPageNo().getPage(), pageParam.getPageSize().getSize());
         // 排序字段

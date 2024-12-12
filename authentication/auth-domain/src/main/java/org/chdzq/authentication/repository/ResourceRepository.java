@@ -1,7 +1,7 @@
 package org.chdzq.authentication.repository;
 
 import org.chdzq.authentication.entity.Resource;
-import org.chdzq.common.core.repository.IBaseRepository;
+import org.chdzq.common.core.ddd.IBaseRepository;
 
 /**
  * 资源存储
@@ -10,5 +10,5 @@ import org.chdzq.common.core.repository.IBaseRepository;
  * @version 1.0
  * @date 2024/11/28 02:09
  */
-public interface ResourceRepository extends IBaseRepository<Resource> {
+public interface ResourceRepository extends IBaseRepository<Resource, Long> {
 }

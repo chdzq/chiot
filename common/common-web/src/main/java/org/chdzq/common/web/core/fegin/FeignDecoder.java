@@ -4,9 +4,8 @@ import feign.FeignException;
 import feign.Response;
 import feign.codec.DecodeException;
 import feign.codec.Decoder;
-import org.chdzq.common.core.result.Result;
+import org.chdzq.common.core.entity.Result;
 import org.chdzq.common.core.result.ResultError;
-import org.springframework.cglib.core.TypeUtils;
 import org.springframework.cloud.openfeign.support.SpringDecoder;
 
 import java.io.IOException;

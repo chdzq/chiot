@@ -3,7 +3,7 @@ package org.chdzq.common.security.exception;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.chdzq.common.core.result.Result;
+import org.chdzq.common.core.entity.Result;
 import org.chdzq.common.core.result.ResultError;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

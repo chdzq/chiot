@@ -1,4 +1,6 @@
-package org.chdzq.common.core.repository;
+package org.chdzq.common.core.ddd;
+
+import java.io.Serializable;
 
 /**
  * 基础数据仓储
@@ -7,7 +9,7 @@ package org.chdzq.common.core.repository;
  * @version 1.0
  * @date 2024/11/28 02:01
  */
-public interface IBaseRepository<T extends IBaseEntity> {
+public interface IBaseRepository<T extends IBaseEntity<ID>, ID extends Serializable> {
 
     /**
      * 保存

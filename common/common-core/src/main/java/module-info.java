@@ -6,4 +6,6 @@ module org.chdzq.common.core {
     requires spring.core;
     requires static lombok;
     requires com.fasterxml.jackson.annotation;
+    requires transmittable.thread.local;
+    requires spring.tx;
 }

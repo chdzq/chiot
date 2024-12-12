@@ -3,7 +3,7 @@ package org.chdzq.authentication.entity;
 import lombok.Data;
 import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.StatusEnum;
-import org.chdzq.common.core.repository.IBaseEntity;
+import org.chdzq.common.core.ddd.IBaseEntity;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2024/11/28 01:33
  */
 @Data
-public class Role implements IBaseEntity {
+public class Role implements IBaseEntity<Long> {
 
     /**
      * 主键
@@ -53,7 +53,7 @@ public class Role implements IBaseEntity {
     private List<Resource> resource;
 
     @Override
-    public Long getIdentity() {
+    public Long getIdentifier() {
         return id;
     }
 }

@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import org.apache.ibatis.binding.MapperMethod;
 import org.chdzq.common.core.entity.Page;
-import org.chdzq.common.core.entity.PageParam;
+import org.chdzq.common.core.ddd.PageQuery;
 import org.chdzq.common.mybatis.core.mapper.BaseMapperX;
 import org.chdzq.common.mybatis.domain.BaseDO;
 
@@ -29,11 +29,11 @@ import java.util.stream.Collectors;
  */
 public abstract class ServiceImplX<M extends BaseMapperX<T>, T extends BaseDO> extends ServiceImpl<M, T> {
 
-    public Page<T> page(PageParam pageParam, Wrapper<T> queryWrapper) {
+    public Page<T> page(PageQuery pageParam, Wrapper<T> queryWrapper) {
         return this.customPage(pageParam, (page, aPageParam) -> getBaseMapper().selectPage(page, queryWrapper));
     }
 
-    public Page<T> page(PageParam pageParam) {
+    public Page<T> page(PageQuery pageParam) {
         return this.page(pageParam, Wrappers.emptyWrapper());
     }
 
@@ -45,11 +45,11 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T extends BaseDO> e
      * @param <R>
      * @param <P>
      */
-    public <R, P extends PageParam> Page<R> customPage(P pageParam, BaseMapperX.CustomQueryMethod<P, R> consumer) {
+    public <R, P extends PageQuery> Page<R> customPage(P pageParam, BaseMapperX.CustomQueryMethod<P, R> consumer) {
         return getBaseMapper().selectCustomPage(pageParam, consumer);
     }
 
-    public Page<T> customPage(PageParam pageParam) {
+    public Page<T> customPage(PageQuery pageParam) {
         return this.customPage(pageParam, (page, aPageParam) -> page(page));
     }
 

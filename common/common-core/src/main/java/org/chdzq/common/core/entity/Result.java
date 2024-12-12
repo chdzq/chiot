@@ -1,7 +1,9 @@
-package org.chdzq.common.core.result;
+package org.chdzq.common.core.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.chdzq.common.core.result.IResultError;
+import org.chdzq.common.core.result.ResultError;
 
 import java.io.Serializable;
 import java.util.Objects;

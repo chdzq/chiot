@@ -1,6 +1,6 @@
 package org.chdzq.common.web.core.utils;
 
-import org.chdzq.common.core.result.Result;
+import org.chdzq.common.core.entity.Result;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotWritableException;

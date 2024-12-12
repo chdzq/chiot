@@ -4,7 +4,7 @@ import lombok.Data;
 import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
 import org.chdzq.common.core.enums.StatusEnum;
-import org.chdzq.common.core.repository.IBaseEntity;
+import org.chdzq.common.core.ddd.IBaseEntity;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2024/11/28 01:23
  */
 @Data
-public class User implements IBaseEntity {
+public class User implements IBaseEntity<Long> {
     /**
      * 用户id
      */
@@ -78,7 +78,7 @@ public class User implements IBaseEntity {
     private DataScopeEnum dataScope;
 
     @Override
-    public Long getIdentity() {
+    public Long getIdentifier() {
         return id;
     }
 }

@@ -2,7 +2,7 @@ package org.chdzq.authentication.entity;
 
 import lombok.Data;
 import org.chdzq.common.core.enums.StatusEnum;
-import org.chdzq.common.core.repository.IBaseEntity;
+import org.chdzq.common.core.ddd.IBaseEntity;
 
 /**
  * 资源
@@ -12,7 +12,7 @@ import org.chdzq.common.core.repository.IBaseEntity;
  * @date 2024/11/28 01:36
  */
 @Data
-public class Resource implements IBaseEntity {
+public class Resource implements IBaseEntity<Long> {
     /**
      * 菜单ID
      */
@@ -64,7 +64,7 @@ public class Resource implements IBaseEntity {
     private String icon;
 
     @Override
-    public Long getIdentity() {
+    public Long getIdentifier() {
         return id;
     }
 }

@@ -2,7 +2,7 @@ package org.chdzq.common.web.core.advice;
 
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.chdzq.common.core.result.Result;
+import org.chdzq.common.core.entity.Result;
 import org.chdzq.common.core.exceptions.BusinessException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;

@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import org.chdzq.common.core.entity.Page;
-import org.chdzq.common.core.entity.PageParam;
+import org.chdzq.common.core.ddd.PageQuery;
 import org.chdzq.common.mybatis.core.util.MyBatisUtils;
-import org.chdzq.common.mybatis.domain.BaseDO;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 public interface BaseMapperX<T> extends BaseMapper<T> {
 
     @FunctionalInterface
-    interface CustomQueryMethod<T extends PageParam, R> {
+    interface CustomQueryMethod<T extends PageQuery, R> {
         IPage<R> doIt(IPage<R> page, T param);
     }
 
@@ -31,7 +31,7 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
      * @param consumer
      * @return PageResult<R>
      */
-    default <R, P extends PageParam> Page<R> selectCustomPage(P param, CustomQueryMethod<P, R> consumer) {
+    default <R, P extends PageQuery> Page<R> selectCustomPage(P param, CustomQueryMethod<P, R> consumer) {
         // MyBatis Plus 查询
         IPage<R> mpPage = MyBatisUtils.buildPage(param);
         mpPage = consumer.doIt(mpPage, param);
