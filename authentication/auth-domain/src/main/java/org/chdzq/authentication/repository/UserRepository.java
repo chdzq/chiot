@@ -18,4 +18,26 @@ public interface UserRepository extends IBaseRepository<User, Long> {
      * @return
      */
     User findByUsername(String username);
+
+    /**
+     * 根据主键查询是否存在当前用户
+     * @param id 主键
+     * @return
+     */
+    Boolean isExistByKey(Long id);
+
+    /**
+     * 根据用户名查询是否存在当前用户
+     * @param username 用户名
+     * @return
+     */
+    Boolean isUsernameAvailable(String username);
+
+    /**
+     * 根据用户名是否可以使用：username没有被别的用户使用过；或是跟自身保持一致
+     * @param id 主键
+     * @return
+     */
+    Boolean isUsernameAvailable(Long id, String username);
+
 }

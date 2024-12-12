@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.chdzq.authentication.entity.User;
 import org.chdzq.authentication.query.QueryAuthInfo;
 import org.chdzq.authentication.service.UserService;
+import org.chdzq.common.core.vo.EmailNumber;
+import org.chdzq.common.core.vo.PhoneNumber;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +46,8 @@ public class CustomOidcUserInfoService {
                 .claim(CustomClaimNames.STATUS, user.getStatus())
                 .subject(user.getUsername())
                 .nickname(user.getNickname())
-                .phoneNumber(user.getMobile())
-                .email(user.getEmail())
+                .phoneNumber(PhoneNumber.valueOf(user.getMobile()))
+                .email(EmailNumber.valueOf(user.getEmail()))
                 .profile(user.getAvatar())
                 .build();
     }

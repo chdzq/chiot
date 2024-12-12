@@ -1,7 +1,9 @@
 package org.chdzq.authentication.repository.impl;
 
+import lombok.AllArgsConstructor;
 import org.chdzq.authentication.convert.AuthConvertor;
 import org.chdzq.authentication.entity.User;
+import org.chdzq.authentication.repository.SystemUserRoleRepository;
 import org.chdzq.authentication.repository.po.SystemUserDO;
 import org.chdzq.authentication.repository.UserRepository;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
@@ -9,6 +11,8 @@ import org.chdzq.common.mybatis.core.service.ServiceImplX;
 import org.chdzq.authentication.repository.dao.SystemUserMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+
+import java.util.Objects;
 
 /**
  * 用户存储实现类
@@ -18,21 +22,30 @@ import org.springframework.util.StringUtils;
  * @date 2024/11/28 02:36
  */
 @Repository
+@AllArgsConstructor
 public class UserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUserDO> implements UserRepository {
+
     @Override
     public void save(User entity) {
+        SystemUserDO user = AuthConvertor.INSTANCE.user2UserDo(entity);
+        if (Objects.isNull(user)) {
+            return;
+        }
 
+        if (Objects.isNull(user.getId())) {
+            save(user);
+        } else {
+            updateById(user);
+        }
+        userRoleRepository.saveUserRelationship(user.getId(), entity.getRoles());
     }
 
     @Override
-    public void delete(User entity) {
-
-    }
-
-    @Override
-    public User findById(Long id) {
-        SystemUserDO user = getById(id);
-        return null;
+    public void deleteById(Long id) {
+        if (Objects.isNull(id)) {
+            return;
+        }
+        removeById(id);
     }
 
     @Override
@@ -40,11 +53,30 @@ public class UserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUse
         if (!StringUtils.hasText(username)) {
             return null;
         }
-        SystemUserDO userDO = getOne(SystemUserDO::getUsername, username);
-        if (userDO == null) {
-            return null;
-        }
-        User user = AuthConvertor.INSTANCE.userDo2User(userDO);
+        User user = baseMapper.selectUserAuthInfo(username);
         return user;
     }
+
+    @Override
+    public Boolean isExistByKey(Long id) {
+        SystemUserDO o = getById(id);
+        return Objects.nonNull(o);
+    }
+
+    @Override
+    public Boolean isUsernameAvailable(String username) {
+        long count = count(SystemUserDO::getUsername, username);
+        return count > 0;
+    }
+
+    @Override
+    public Boolean isUsernameAvailable(Long id, String username) {
+        SystemUserDO one = getById(id);
+        if(Objects.equals(one.getUsername(), username)) {
+            return Boolean.TRUE;
+        }
+        return !isUsernameAvailable(username);
+    }
+
+    private SystemUserRoleRepository userRoleRepository;
 }

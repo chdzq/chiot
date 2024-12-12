@@ -21,6 +21,12 @@ spring:
     sentinel: # 开启feign对sentinel的支持
       enabled: false
 
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://auth.chdzq.com:9201
+
 mybatis-plus:
   global-config:
     db-config:

@@ -1,5 +1,8 @@
 package org.chdzq.authentication.service;
 
+import org.chdzq.authentication.command.CreateUserCommand;
+import org.chdzq.authentication.command.DeleteUserCommand;
+import org.chdzq.authentication.command.UpdateUserCommand;
 import org.chdzq.authentication.entity.SysUserDetail;
 import org.chdzq.authentication.entity.User;
 import org.chdzq.authentication.query.QueryAuthInfo;
@@ -20,5 +23,23 @@ public interface UserService {
      * @return 授权信息
      */
     User get(QueryAuthInfo param);
+
+    /**
+     * 创建用户
+     * @param cmd
+     */
+    void createUser(CreateUserCommand cmd);
+
+    /**
+     * 更新用户
+     * @param cmd
+     */
+    void updateUser(UpdateUserCommand cmd);
+
+    /**
+     * 删除用户
+     * @param cmd
+     */
+    void deleteUser(DeleteUserCommand cmd);
 
 }

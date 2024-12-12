@@ -5,6 +5,9 @@ import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
 import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.common.core.ddd.IBaseEntity;
+import org.chdzq.common.core.vo.EmailNumber;
+import org.chdzq.common.core.vo.Password;
+import org.chdzq.common.core.vo.PhoneNumber;
 
 import java.util.List;
 
@@ -35,7 +38,7 @@ public class User implements IBaseEntity<Long> {
     /**
      * 密码
      */
-    private String password;
+    private Password password;
 
     /**
      * 盐
@@ -45,12 +48,12 @@ public class User implements IBaseEntity<Long> {
     /**
      * email
      */
-    private String email;
+    private EmailNumber email;
 
     /**
      * 手机号
      */
-    private String mobile;
+    private PhoneNumber mobile;
 
     /**
      * 状态: 1->启用;0->禁用

@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @TableName("sys_user_role")
 @Data
-public class SystemUserRole {
+public class SystemUserRoleDO {
 
     /**
      * 用户ID
@@ -25,7 +25,6 @@ public class SystemUserRole {
     /**
      * 角色ID
      */
-    @TableId(value = "role_id", type = IdType.NONE)
     private Long roleId;
 
 }
