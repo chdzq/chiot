@@ -10,12 +10,10 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/system/system-interface/system-interface-external/pom.xml" />
+        <option value="$PROJECT_DIR$/system/system-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/system/system-domain-external/pom.xml" />
+        <option value="$PROJECT_DIR$/system/system-infrastructure/pom.xml" />
       </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/system/pom.xml" />
-      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="liberica-17 (2)" project-jdk-type="JavaSDK">
