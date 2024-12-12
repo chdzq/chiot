@@ -1,6 +1,7 @@
 package org.chdzq.system.entity;
 
 import lombok.Data;
+import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
 import org.chdzq.common.core.enums.StatusEnum;
 
@@ -80,6 +81,6 @@ public class AuthInfo {
     /**
      * 用户角色数据权限集合
      */
-    private Integer dataScope;
+    private DataScopeEnum dataScope;
 
 }

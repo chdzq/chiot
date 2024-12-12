@@ -11,13 +11,6 @@
 
     <groupId>org.chdzq</groupId>
     <artifactId>authentication</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>auth-interfaces</module>
-        <module>auth-infrastructure</module>
-        <module>auth-application</module>
-        <module>auth-domain</module>
-    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -35,31 +28,77 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <dependency>
-                <groupId>org.chdzq.authentication</groupId>
-                <artifactId>auth-application</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.chdzq.authentication</groupId>
-                <artifactId>auth-domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.chdzq.authentication</groupId>
-                <artifactId>auth-infrastructure</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.chdzq.system</groupId>
-                <artifactId>system-interface-external</artifactId>
-                <version>${project.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.chdzq.common</groupId>
+            <artifactId>common-redis</artifactId>
+        </dependency>
+
+        <!--Spring Cloud & Alibaba -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.chdzq.common</groupId>
+            <artifactId>common-mybatis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.chdzq.system</groupId>
+            <artifactId>system-interface-external</artifactId>
+            <version>${chiot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.chdzq.common</groupId>
+            <artifactId>common-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!-- SpringCloud Alibaba Nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- SpringCloud Alibaba Nacos Config -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
+        </dependency>
+
+        <!-- spring-security-cas -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-cas</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

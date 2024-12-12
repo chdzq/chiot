@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.chdzq.authentication.repository.dao.SystemUserMapper">
+<mapper namespace="org.chdzq.system.repository.dao.SystemUserMapper">
     <!-- 用户认证信息映射 -->
     <resultMap id="UserAuthMap" type="org.chdzq.system.entity.AuthInfo">
         <id property="id" column="id" jdbcType="BIGINT"/>
@@ -15,10 +15,11 @@
         <result property="avatar" column="avatar"/>
         <result property="gender" column="gender" />
         <collection property="roles"
-                    ofType="org.chdzq.system.entity.Role"
-                    javaType="java.util.ArrayList"
-                    columnPrefix="role_"
-        />
+                    ofType="string"
+                    javaType="java.util.Set"
+                    columnPrefix="role_">
+                    <result column="code"/>
+        </collection>
     </resultMap>
 
     <!-- 根据用户名获取认证信息 -->

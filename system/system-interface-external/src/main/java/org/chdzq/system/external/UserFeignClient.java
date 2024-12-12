@@ -20,5 +20,5 @@ public interface UserFeignClient {
      * @param username 用户名
      */
     @GetMapping("/api/v1/user/{username}/authInfo")
-    AuthInfo getUserAuthInfo(@PathVariable String username);
+    AuthInfo getUserAuthInfo(@PathVariable("username") String username);
 }
