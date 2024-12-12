@@ -38,7 +38,7 @@
 
         <dependency>
             <groupId>org.chdzq.common</groupId>
-            <artifactId>redis</artifactId>
+            <artifactId>common-redis</artifactId>
             <version>${project.version}</version>
         </dependency>
 
