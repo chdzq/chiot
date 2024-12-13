@@ -137,14 +137,6 @@ public class AuthorizationServerConfig {
     }
 
     /**
-     * 授权服务器配置(令牌签发者、获取令牌等端点)
-     */
-    @Bean
-    public AuthorizationServerSettings authorizationServerSettings() {
-        return AuthorizationServerSettings.builder().build();
-    }
-
-    /**
      * 密码加密器
      */
     @Bean

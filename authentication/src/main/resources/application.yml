@@ -26,6 +26,8 @@ spring:
       resource-server:
         jwt:
           issuer-uri: http://auth.chdzq.com:9201
+      authorization-server:
+        issuer: http://auth.chdzq.com:9201
 
 mybatis-plus:
   global-config:

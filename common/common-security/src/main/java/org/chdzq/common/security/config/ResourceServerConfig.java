@@ -43,12 +43,12 @@ import java.util.List;
 public class ResourceServerConfig {
 
     @Bean
-    AccessDeniedHandler accessDeniedHandler(MappingJackson2HttpMessageConverter httpConverter) {
+    public AccessDeniedHandler accessDeniedHandler(MappingJackson2HttpMessageConverter httpConverter) {
         return new ChiotAccessDeniedHandler(httpConverter);
     }
 
     @Bean
-    AuthenticationEntryPoint authenticationEntryPoint(MappingJackson2HttpMessageConverter httpConverter) {
+    public AuthenticationEntryPoint authenticationEntryPoint(MappingJackson2HttpMessageConverter httpConverter) {
         return new ChiotAuthenticationEntryPoint(httpConverter);
     }
 
@@ -77,6 +77,12 @@ public class ResourceServerConfig {
 //                    .authenticationEntryPoint(authenticationEntryPoint)
 //                    .accessDeniedHandler(accessDeniedHandler);
 //        });
+        http.oauth2ResourceServer(resourceServerConfigurer ->
+                resourceServerConfigurer
+                        .jwt(jwtConfigurer -> jwtAuthenticationConverter())
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler)
+        );
         return http.build();
     }
 
@@ -86,15 +92,15 @@ public class ResourceServerConfig {
      * @return Converter
      * @see JwtAuthenticationProvider#setJwtAuthenticationConverter(Converter)
      */
-//    @Bean
-//    public Converter<Jwt, ? extends AbstractAuthenticationToken> jwtAuthenticationConverter() {
-//        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-//        jwtGrantedAuthoritiesConverter.setAuthorityPrefix(Strings.EMPTY);
-//        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName(JwtClaimConstant.AUTHORITIES);
-//
-//        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-//        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-//        return jwtAuthenticationConverter;
-//    }
+    @Bean
+    public Converter<Jwt, ? extends AbstractAuthenticationToken> jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix(Strings.EMPTY);
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName(JwtClaimConstant.AUTHORITIES);
+
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
+    }
 
 }

@@ -22,7 +22,7 @@ spring:
             # 获取Token使用的授权流程
             authorization-grant-type: authorization_code
             # 回调地址，这里设置为Spring Security Client默认实现使用code换取token的接口，当前服务(gateway网关)的地址
-            redirect-uri: http://127.0.0.1:7000/login/oauth2/code/messaging-client-oidc
+            redirect-uri: http://127.0.0.1:9200/login/oauth2/code/messaging-client-oidc
             scope:
               - openid
               - profile
