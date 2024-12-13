@@ -62,8 +62,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
     }
 
     public T getOne(String field1, Object value1, String field2, Object value2) {
-        QueryWrapper<T> queryWrapper = generateQueryWrapperWithLogicDelete()
-                .eq(field1, value1);
+        QueryWrapper<T> queryWrapper = new QueryWrapper<T>().eq(field1, value1);
 
         if (!Objects.isNull(value2) && !Objects.isNull(field2) ) {
             queryWrapper.eq(field2, value2);
@@ -72,7 +71,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
     }
 
     public T getOne(SFunction<T, ?> field1, Object value1, SFunction<T, ?> field2, Object value2) {
-        LambdaQueryWrapper<T> queryWrapper = generateLambdaQueryWrapperWithLogicDelete()
+        LambdaQueryWrapper<T> queryWrapper = new LambdaQueryWrapper<T>()
                 .eq(field1, value1);
         if (!Objects.isNull(value2) && !Objects.isNull(field2) ) {
             queryWrapper.eq(field2, value2);
@@ -86,7 +85,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
     }
 
     public long count(String field, Object value) {
-        QueryWrapper<T> queryWrapper = generateQueryWrapperWithLogicDelete();
+        QueryWrapper<T> queryWrapper = new QueryWrapper<T>();
         if (!Objects.isNull(value) && !Objects.isNull(field) ) {
             queryWrapper.eq(field, value);
         }
@@ -94,7 +93,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
     }
 
     public long count(SFunction<T, ?> field, Object value) {
-        LambdaQueryWrapper<T> queryWrapper = generateLambdaQueryWrapperWithLogicDelete();
+        LambdaQueryWrapper<T> queryWrapper = new LambdaQueryWrapper<T>();
         if (!Objects.isNull(value) && !Objects.isNull(field) ) {
             queryWrapper.eq(field, value);
         }
@@ -131,7 +130,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
     }
 
     public List<T> list(String field, Object value) {
-       QueryWrapper<T> queryWrapper = generateQueryWrapperWithLogicDelete();
+       QueryWrapper<T> queryWrapper = new QueryWrapper<>();
         if (!Objects.isNull(value) && !Objects.isNull(field) ) {
             queryWrapper.eq(field, value);
         }
@@ -139,7 +138,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
     }
 
     public List<T> list(SFunction<T, ?> field, Object value) {
-        LambdaQueryWrapper<T> queryWrapper = generateLambdaQueryWrapperWithLogicDelete();
+        LambdaQueryWrapper<T> queryWrapper = new LambdaQueryWrapper<T>();
         if (!Objects.isNull(value) && !Objects.isNull(field) ) {
             queryWrapper.eq(field, value);
         }
@@ -150,7 +149,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
         if (CollectionUtils.isEmpty(values)) {
             return new ArrayList<>();
         }
-        QueryWrapper<T> queryWrapper = generateQueryWrapperWithLogicDelete();
+        QueryWrapper<T> queryWrapper = new QueryWrapper<T>();
         return list(queryWrapper.in(field, values));
     }
 
@@ -158,7 +157,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
         if (CollectionUtils.isEmpty(values)) {
             return new ArrayList<>();
         }
-        LambdaQueryWrapper<T> queryWrapper = generateLambdaQueryWrapperWithLogicDelete();
+        LambdaQueryWrapper<T> queryWrapper = new LambdaQueryWrapper<T>();
         return list(queryWrapper.in(field, values));
     }
 
@@ -199,7 +198,7 @@ public abstract class ServiceImplX<M extends BaseMapperX<T>, T> extends ServiceI
             return Boolean.FALSE;
         }
         TableInfo tableInfo = TableInfoHelper.getTableInfo(this.getEntityClass());
-        QueryWrapper<T> queryWrapper = generateQueryWrapperWithLogicDelete()
+        QueryWrapper<T> queryWrapper = new QueryWrapper<T>()
                 .in(tableInfo.getKeyColumn(), ids);
         long count = count(queryWrapper);
         return count == (long)ids.size();
