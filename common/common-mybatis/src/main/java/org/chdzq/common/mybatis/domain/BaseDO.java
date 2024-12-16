@@ -16,14 +16,14 @@ public abstract class BaseDO {
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdTime;
 
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedTime;
 
     @TableField(fill = FieldFill.INSERT)
-    private String createdBy;
+    private Long createdBy;
 
-    @TableField(fill = FieldFill.UPDATE)
-    private String updatedBy;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Long updatedBy;
 
     @TableLogic
     @TableField(fill = FieldFill.INSERT_UPDATE)
@@ -46,19 +46,19 @@ public abstract class BaseDO {
         this.updatedTime = updatedTime;
     }
 
-    public String getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
-    public String getUpdatedBy() {
+    public Long getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(String updateBy) {
+    public void setUpdatedBy(Long updateBy) {
         this.updatedBy = updateBy;
     }
 

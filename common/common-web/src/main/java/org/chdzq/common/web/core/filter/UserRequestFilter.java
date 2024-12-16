@@ -20,14 +20,10 @@ import java.io.IOException;
 public class UserRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String userId = request.getHeader(RequestHeaderConstant.X_USER_ID);
-        if (StringUtils.hasLength(userId)) {
-            UserContext.setUserId(userId);
-        }
+
         try {
             filterChain.doFilter(request, response);
         } finally {
-            UserContext.clearUserId();
         }
     }
 }

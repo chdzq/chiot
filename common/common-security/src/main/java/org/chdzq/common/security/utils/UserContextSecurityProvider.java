@@ -2,10 +2,15 @@ package org.chdzq.common.security.utils;
 
 import org.chdzq.common.core.constants.JwtClaimConstant;
 import org.chdzq.common.core.constants.SystemConstant;
+import org.chdzq.common.core.enums.DataScopeEnum;
+import org.chdzq.common.core.utils.UserContextProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,15 +22,19 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @date 2024/11/27 15:12
  */
-public class SecurityUtil {
+@ConditionalOnClass(AuthenticationConfiguration.class)
+@Component
+public class UserContextSecurityProvider implements UserContextProvider {
 
 
-    public static Long getUserId() {
+    @Override
+    public Long getUserId() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         return getLong(tokenAttributes.get(JwtClaimConstant.USER_ID));
     }
 
-    public static String getUsername() {
+    @Override
+    public String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             return authentication.getName();
@@ -33,7 +42,7 @@ public class SecurityUtil {
         return null;
     }
 
-    public static Map<String, Object> getTokenAttributes() {
+    private Map<String, Object> getTokenAttributes() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {
             return jwtAuthenticationToken.getTokenAttributes();
@@ -45,7 +54,8 @@ public class SecurityUtil {
     /**
      * 获取用户角色集合
      */
-    public static Set<String> getRoles() {
+    @Override
+    public Set<String> getRoles() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             return AuthorityUtils.authorityListToSet(authentication.getAuthorities())
@@ -58,17 +68,19 @@ public class SecurityUtil {
     /**
      * 获取部门ID
      */
-    public static Long getDeptId() {
+    @Override
+    public Long getDeptId() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         return getLong(tokenAttributes.get(JwtClaimConstant.DEPT_ID));
     }
 
-    public static boolean isRoot() {
+    @Override
+    public Boolean isRoot() {
         Set<String> roles = getRoles();
         return roles != null && roles.contains(SystemConstant.ROOT_ROLE_CODE);
     }
 
-    public static String getJti() {
+    private String getJti() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         if (tokenAttributes != null) {
             return String.valueOf(tokenAttributes.get(JwtClaimConstant.JTI));
@@ -77,7 +89,8 @@ public class SecurityUtil {
     }
 
 
-    public static Long getExp() {
+    @Override
+    public Long getExp() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         return getLong(tokenAttributes.get(JwtClaimConstant.EXP));
     }
@@ -86,14 +99,16 @@ public class SecurityUtil {
      * 获取数据权限范围
      *
      * @return 数据权限范围
-     * @see org.chdzq.common.mybatis.core.enums.DataScopeEnum
+     * @see DataScopeEnum
      */
-    public static Integer getDataScope() {
+    @Override
+    public DataScopeEnum getDataScope() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
-        return getInteger(tokenAttributes.get(JwtClaimConstant.DATA_SCOPE));
+        Integer scopeValue = getInteger(tokenAttributes.get(JwtClaimConstant.DATA_SCOPE));
+        return DataScopeEnum.getByCode(scopeValue);
     }
 
-    private static Long getLong(Object obj) {
+    private Long getLong(Object obj) {
         if (Objects.isNull(obj)) {
             return null;
         }
@@ -106,7 +121,7 @@ public class SecurityUtil {
         return Long.parseLong(obj.toString());
     }
 
-    private static Integer getInteger(Object obj) {
+    private Integer getInteger(Object obj) {
         if (Objects.isNull(obj)) {
             return null;
         }

@@ -1,1 +1,2 @@
 org.chdzq.common.mybatis.autoconfigure.MybatisAutoConfiguration
+org.chdzq.common.web.core.mybatis.MybatisMetaObjectHandler

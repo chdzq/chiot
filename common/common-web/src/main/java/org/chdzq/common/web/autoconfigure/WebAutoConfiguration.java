@@ -3,6 +3,7 @@ package org.chdzq.common.web.autoconfigure;
 import jakarta.servlet.Filter;
 import org.chdzq.common.web.core.constrants.WebFilterOrderConstant;
 import org.chdzq.common.web.core.filter.UserRequestFilter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

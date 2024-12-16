@@ -1,7 +1,12 @@
 package org.chdzq.common.web;
 
-import com.alibaba.ttl.TransmittableThreadLocal;
-import org.springframework.util.StringUtils;
+import org.chdzq.common.core.utils.SpringUtil;
+import org.chdzq.common.core.utils.UserContextProvider;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.Set;
 
 /**
  * 用户上下文
@@ -9,39 +14,35 @@ import org.springframework.util.StringUtils;
  * @version 1.0
  * @date 2024/11/21 23:35
  */
-public final class UserContext {
+@Configuration
+public class UserContext implements ApplicationRunner {
 
-    private UserContext() {}
-    static final TransmittableThreadLocal<String> USER_ID = new TransmittableThreadLocal<>();
-
+    private static UserContextProvider CONTEXT_PROVIDER;
     /**
      * 获取用户ID
      * @return
      */
-    public static String getUserId() {
-        return USER_ID.get();
+    public static Long getUserId() {
+        return CONTEXT_PROVIDER.getUserId();
     }
 
     /**
-     * 更新用户ID
-     * @param userId
+     * 当前用户名
      */
-    public static void setUserId(String userId) {
-        USER_ID.set(userId);
+    public static String getUsername() {
+        return CONTEXT_PROVIDER.getUsername();
     }
 
     /**
-     * 移除
+     * 当前用户角色集合
      */
-    public static void clearUserId() {
-        USER_ID.remove();
+    public static Set<String> getRoles() {
+        return CONTEXT_PROVIDER.getRoles();
     }
 
-    /**
-     * 是否登录
-     * @return
-     */
-    public Boolean isLogin() {
-        return StringUtils.hasLength(getUserId());
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        CONTEXT_PROVIDER = SpringUtil.getBean(UserContextProvider.class);
     }
 }
