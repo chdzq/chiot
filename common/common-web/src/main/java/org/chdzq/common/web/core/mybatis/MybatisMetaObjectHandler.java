@@ -3,8 +3,7 @@ package org.chdzq.common.web.core.mybatis;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.chdzq.common.core.constants.Constant;
-import org.chdzq.common.mybatis.domain.BaseDO;
-import org.chdzq.common.web.UserContext;
+import org.chdzq.common.web.core.context.UserContext;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

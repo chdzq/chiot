@@ -3,14 +3,10 @@ package org.chdzq.common.security.utils;
 import org.chdzq.common.core.constants.JwtClaimConstant;
 import org.chdzq.common.core.constants.SystemConstant;
 import org.chdzq.common.core.enums.DataScopeEnum;
-import org.chdzq.common.core.utils.UserContextProvider;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,19 +18,17 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @date 2024/11/27 15:12
  */
-@ConditionalOnClass(AuthenticationConfiguration.class)
-@Component
-public class UserContextSecurityProvider implements UserContextProvider {
 
+public class UserContextSecurityProvider {
 
-    @Override
-    public Long getUserId() {
+    private UserContextSecurityProvider(){}
+
+    public static Long getUserId() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         return getLong(tokenAttributes.get(JwtClaimConstant.USER_ID));
     }
 
-    @Override
-    public String getUsername() {
+    public static String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             return authentication.getName();
@@ -42,7 +36,7 @@ public class UserContextSecurityProvider implements UserContextProvider {
         return null;
     }
 
-    private Map<String, Object> getTokenAttributes() {
+    private static Map<String, Object> getTokenAttributes() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {
             return jwtAuthenticationToken.getTokenAttributes();
@@ -54,8 +48,7 @@ public class UserContextSecurityProvider implements UserContextProvider {
     /**
      * 获取用户角色集合
      */
-    @Override
-    public Set<String> getRoles() {
+    public static Set<String> getRoles() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             return AuthorityUtils.authorityListToSet(authentication.getAuthorities())
@@ -68,19 +61,17 @@ public class UserContextSecurityProvider implements UserContextProvider {
     /**
      * 获取部门ID
      */
-    @Override
-    public Long getDeptId() {
+    public static Long getDeptId() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         return getLong(tokenAttributes.get(JwtClaimConstant.DEPT_ID));
     }
 
-    @Override
-    public Boolean isRoot() {
+    public static Boolean isRoot() {
         Set<String> roles = getRoles();
         return roles != null && roles.contains(SystemConstant.ROOT_ROLE_CODE);
     }
 
-    private String getJti() {
+    private static String getJti() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         if (tokenAttributes != null) {
             return String.valueOf(tokenAttributes.get(JwtClaimConstant.JTI));
@@ -88,9 +79,7 @@ public class UserContextSecurityProvider implements UserContextProvider {
         return null;
     }
 
-
-    @Override
-    public Long getExp() {
+    public static Long getExp() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         return getLong(tokenAttributes.get(JwtClaimConstant.EXP));
     }
@@ -101,14 +90,13 @@ public class UserContextSecurityProvider implements UserContextProvider {
      * @return 数据权限范围
      * @see DataScopeEnum
      */
-    @Override
-    public DataScopeEnum getDataScope() {
+    public static DataScopeEnum getDataScope() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         Integer scopeValue = getInteger(tokenAttributes.get(JwtClaimConstant.DATA_SCOPE));
         return DataScopeEnum.getByCode(scopeValue);
     }
 
-    private Long getLong(Object obj) {
+    private static Long getLong(Object obj) {
         if (Objects.isNull(obj)) {
             return null;
         }
@@ -121,7 +109,7 @@ public class UserContextSecurityProvider implements UserContextProvider {
         return Long.parseLong(obj.toString());
     }
 
-    private Integer getInteger(Object obj) {
+    private static Integer getInteger(Object obj) {
         if (Objects.isNull(obj)) {
             return null;
         }

@@ -1,6 +1,7 @@
 package org.chdzq.common.core.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.Getter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -26,10 +27,11 @@ import java.util.Map;
 @Component
 public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextAware {
     private static ConfigurableListableBeanFactory beanFactory;
+
+    @Getter
     private static ApplicationContext applicationContext;
 
-    private SpringUtil() {
-    }
+    private SpringUtil() {}
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
@@ -39,10 +41,6 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         SpringUtil.applicationContext = applicationContext;
-    }
-
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
     }
 
     public static ListableBeanFactory getBeanFactory() {

@@ -1,2 +1,1 @@
 org.chdzq.common.security.config.ResourceServerConfig
-org.chdzq.common.security.utils.UserContextSecurityProvider
