@@ -7,7 +7,7 @@ package org.chdzq.system.adapter;
  * @version 1.0
  * @date 2024/12/13 16:26
  */
-public interface PasswordCodeAdapter {
+public interface PasswordCoder {
 
     /**
      * 加密

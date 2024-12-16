@@ -66,7 +66,7 @@ public class UserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUse
     @Override
     public Boolean isUsernameAvailable(String username) {
         long count = count(SystemUserDO::getUsername, username);
-        return count > 0;
+        return count <= 0;
     }
 
     @Override

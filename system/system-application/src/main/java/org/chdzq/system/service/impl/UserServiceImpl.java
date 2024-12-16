@@ -1,5 +1,7 @@
 package org.chdzq.system.service.impl;
 
+import lombok.AllArgsConstructor;
+import org.chdzq.common.core.vo.Password;
 import org.chdzq.system.command.CreateUserCommand;
 import org.chdzq.system.command.DeleteUserCommand;
 import org.chdzq.system.command.UpdateUserCommand;
@@ -7,8 +9,8 @@ import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.User;
 import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.repository.UserRepository;
+import org.chdzq.system.adapter.PasswordCoder;
 import org.chdzq.system.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -22,20 +24,20 @@ import org.springframework.validation.annotation.Validated;
  * @date 2024/11/28 16:26
  */
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private PasswordCoder passwordService;
 
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public AuthInfo getAuthInfo(QueryAuthInfo param) {
         AuthInfo user = userRepository.getAuthInfoByUsername(param.getUsername());
         return user;
     }
+
+    final private static String DEFAULT_PASSWORD = "password";
 
     @Override
     public void createUser(@Validated CreateUserCommand cmd) {
@@ -44,6 +46,10 @@ public class UserServiceImpl implements UserService {
         //查询是否存在当前用户
         Boolean available = userRepository.isUsernameAvailable(user.getUsername());
         Assert.isTrue(available, "当前用户名已存在");
+
+        // 设置默认加密密码
+        String defaultEncryptPwd = passwordService.encode(DEFAULT_PASSWORD);
+        user.setPassword(new Password(defaultEncryptPwd, false));
 
         userRepository.save(user);
     }

@@ -86,7 +86,7 @@ public class SysUserDetail implements UserDetails, CredentialsContainer {
         SysUserDetailBuilder builder = SysUserDetail.builder()
                 .userId(user.getId())
                 .username(user.getUsername())
-                .password("{bcrypt}" + user.getPassword())
+                .password(user.getPassword())
                 .authorities(authorities)
                 .enabled(Objects.equals(StatusEnum.ENABLE, user.getStatus()))
                 .accountNonLocked(true)
