@@ -1,7 +1,7 @@
 package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.chdzq.common.core.vo.Password;
+import org.chdzq.system.entity.Password;
 import org.chdzq.system.command.CreateUserCommand;
 import org.chdzq.system.command.DeleteUserCommand;
 import org.chdzq.system.command.UpdateUserCommand;
@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
         Assert.isTrue(available, "当前用户名已存在");
 
         // 设置默认加密密码
-        String defaultEncryptPwd = passwordService.encode(DEFAULT_PASSWORD);
-        user.setPassword(new Password(defaultEncryptPwd, false));
+        String password = DEFAULT_PASSWORD;
+        user.setPassword(new Password(password, passwordService));
 
         userRepository.save(user);
     }

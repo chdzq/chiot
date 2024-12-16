@@ -6,7 +6,6 @@ import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
 import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.common.core.vo.EmailNumber;
-import org.chdzq.common.core.vo.Password;
 import org.chdzq.common.core.vo.PhoneNumber;
 
 import java.util.List;

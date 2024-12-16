@@ -4,7 +4,7 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
-import org.chdzq.common.core.vo.Password;
+import org.chdzq.system.entity.Password;
 import org.springframework.util.StringUtils;
 
 import java.sql.CallableStatement;
@@ -32,7 +32,7 @@ public class PasswordTypeHandler extends BaseTypeHandler<Password> {
         if (!StringUtils.hasText(rs.getString(columnName))) {
             return null;
         }
-        return new Password(rs.getString(columnName), false);
+        return new Password(rs.getString(columnName));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class PasswordTypeHandler extends BaseTypeHandler<Password> {
         if (!StringUtils.hasText(rs.getString(columnIndex))) {
             return null;
         }
-        return new Password(rs.getString(columnIndex), false);
+        return new Password(rs.getString(columnIndex));
     }
 
     @Override
@@ -48,6 +48,6 @@ public class PasswordTypeHandler extends BaseTypeHandler<Password> {
         if (!StringUtils.hasText(cs.getString(columnIndex))) {
             return null;
         }
-        return new Password(cs.getString(columnIndex), false);
+        return new Password(cs.getString(columnIndex));
     }
 }

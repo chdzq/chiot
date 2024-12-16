@@ -33,7 +33,7 @@ public class UserController {
     }
 
     /**
-     * 新增用户
+     * 更新用户
      * @param userId 新增的用户id
      * @param user 用户信息
      */
