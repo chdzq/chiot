@@ -1,6 +1,7 @@
 package org.chdzq.system.convert;
 
 import org.chdzq.system.entity.User;
+import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.repository.po.SystemUserDO;
 import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
@@ -41,4 +42,6 @@ public interface AuthConvertor {
     @Mapping(target = "status", source = "user.status.code")
     @Mapping(target = "gender", source = "user.gender.code")
     SystemUserDO user2UserDo(User user);
+
+    UserVO userDo2UserVO(SystemUserDO userDO);
 }

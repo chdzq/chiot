@@ -1,8 +1,10 @@
 package org.chdzq.system.repository.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.chdzq.system.entity.AuthInfo;
-import org.chdzq.system.entity.User;
+import org.chdzq.system.query.UserListQuery;
 import org.chdzq.system.repository.po.SystemUserDO;
 import org.chdzq.common.mybatis.core.mapper.BaseMapperX;
 
@@ -22,4 +24,14 @@ public interface SystemUserMapper extends BaseMapperX<SystemUserDO> {
      * @return
      */
     AuthInfo selectUserAuthInfo(String username);
+
+
+    /**
+     * 根据查询参数分页查询数据
+     * @param page
+     * @param param
+     * @return
+     */
+    IPage<SystemUserDO> queryPageList(@Param("page") IPage<SystemUserDO> page, @Param("param") UserListQuery param);
+
 }

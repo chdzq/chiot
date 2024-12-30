@@ -22,4 +22,9 @@ public interface SystemConstant {
      * 超级管理员角色编码
      */
     String ROOT_ROLE_CODE = "ROOT";
+
+    /**
+     * 超级管理员角色编码
+     */
+    String DEFAULT_ADMIN_USER_NAME = "admin";
 }
