@@ -37,7 +37,7 @@ public class UserController {
      */
     @PostMapping()
     public void createUser(@RequestBody CreateUserCommand user) {
-        userService.createUser(user);
+        userService.create(user);
     }
 
     /**
@@ -50,7 +50,7 @@ public class UserController {
             @PathVariable("userId") Long userId,
             @RequestBody UpdateUserCommand user) {
         user.setId(userId);
-        userService.updateUser(user);
+        userService.update(user);
     }
 
     /**
@@ -59,7 +59,7 @@ public class UserController {
      */
     @DeleteMapping(value = "/{userId}")
     public void deleteUser(@PathVariable("userId") Long userId) {
-        userService.deleteUser(new DeleteUserCommand(userId));
+        userService.delete(new DeleteUserCommand(userId));
     }
 
     /**

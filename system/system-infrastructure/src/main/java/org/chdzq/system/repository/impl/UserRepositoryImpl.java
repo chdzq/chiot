@@ -10,6 +10,7 @@ import org.chdzq.system.repository.dao.SystemUserMapper;
 import org.chdzq.system.repository.po.SystemUserDO;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.util.Objects;
@@ -26,17 +27,26 @@ import java.util.Objects;
 public class UserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUserDO> implements UserRepository {
 
     @Override
-    public void save(User entity) {
+    public void create(User entity) {
+        Assert.isNull(entity.getId(), "创建时主键需要为空");
+        SystemUserDO user = SystemConvertor.INSTANCE.user2UserDo(entity);
+        if (Objects.isNull(user)) {
+            return;
+        }
+        save(user);
+        userRoleRepository.saveUserRelationship(user.getId(), entity.getRoles());
+    }
+
+    @Override
+    public void update(User entity) {
+        Assert.notNull(entity.getId(), "更新时主键不能为空");
+
         SystemUserDO user = SystemConvertor.INSTANCE.user2UserDo(entity);
         if (Objects.isNull(user)) {
             return;
         }
 
-        if (Objects.isNull(user.getId())) {
-            save(user);
-        } else {
-            updateById(user);
-        }
+        updateById(user);
         userRoleRepository.saveUserRelationship(user.getId(), entity.getRoles());
     }
 

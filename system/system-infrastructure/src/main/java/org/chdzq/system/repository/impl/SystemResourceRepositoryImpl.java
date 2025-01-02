@@ -7,6 +7,7 @@ import org.chdzq.system.repository.ResourceRepository;
 import org.chdzq.system.repository.dao.SystemResourceMapper;
 import org.chdzq.system.repository.po.SystemResourceDO;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.Objects;
 
@@ -26,16 +27,23 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
     }
 
     @Override
-    public void save(Resource entity) {
+    public void create(Resource entity) {
+        Assert.isNull(entity.getId(), "创建时主键需要为空");
         SystemResourceDO resourceDO = SystemConvertor.INSTANCE.resource2ResourceDO(entity);
         if(Objects.isNull(resourceDO)) {
             return;
         }
-        if (Objects.isNull(resourceDO.getId())) {
-            this.save(resourceDO);
-        } else {
-            this.updateById(resourceDO);
+        this.save(resourceDO);
+    }
+
+    @Override
+    public void update(Resource entity) {
+        Assert.notNull(entity.getId(), "更新时主键不能为空");
+        SystemResourceDO resourceDO = SystemConvertor.INSTANCE.resource2ResourceDO(entity);
+        if(Objects.isNull(resourceDO)) {
+            return;
         }
+        this.updateById(resourceDO);
     }
 
     @Override

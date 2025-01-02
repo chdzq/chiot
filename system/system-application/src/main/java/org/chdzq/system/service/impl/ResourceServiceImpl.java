@@ -48,7 +48,7 @@ public class ResourceServiceImpl implements ResourceService {
             entity.setPermission(permission + ":" + cmd.getCode());
         }
 
-        resourceRepository.save(entity);
+        resourceRepository.create(entity);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -76,7 +76,7 @@ public class ResourceServiceImpl implements ResourceService {
         String permission = resourceRepository.getPermissionByKey(parentId);
         entity.setPermission(permission + ":" + cmd.getCode());
 
-        resourceRepository.save(entity);
+        resourceRepository.update(entity);
     }
 
     @Transactional(rollbackFor = Exception.class)

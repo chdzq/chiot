@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     final private static String DEFAULT_PASSWORD = "password";
 
     @Override
-    public void createUser(@Validated CreateUserCommand cmd) {
+    public void create(@Validated CreateUserCommand cmd) {
         User user = cmd.toEntity();
 
         //查询是否存在当前用户
@@ -51,11 +51,11 @@ public class UserServiceImpl implements UserService {
         String password = DEFAULT_PASSWORD;
         user.setPassword(new Password(password, passwordService));
 
-        userRepository.save(user);
+        userRepository.create(user);
     }
 
     @Override
-    public void updateUser(@Validated UpdateUserCommand cmd) {
+    public void update(@Validated UpdateUserCommand cmd) {
         User user = cmd.toEntity();
 
         Boolean exist = userRepository.isExistByKey(user.getId());
@@ -67,11 +67,11 @@ public class UserServiceImpl implements UserService {
             Assert.isTrue(available, "用户名不可用");
         }
 
-        userRepository.save(user);
+        userRepository.update(user);
     }
 
     @Override
-    public void deleteUser(DeleteUserCommand cmd) {
+    public void delete(DeleteUserCommand cmd) {
         Long id = cmd.getId();
         Boolean exist = userRepository.isExistByKey(id);
         Assert.isTrue(exist, "用户不存在");

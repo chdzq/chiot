@@ -27,18 +27,18 @@ public interface UserService {
      * 创建用户
      * @param cmd
      */
-    void createUser(CreateUserCommand cmd);
+    void create(CreateUserCommand cmd);
 
     /**
      * 更新用户
      * @param cmd
      */
-    void updateUser(UpdateUserCommand cmd);
+    void update(UpdateUserCommand cmd);
 
     /**
      * 删除用户
      * @param cmd
      */
-    void deleteUser(DeleteUserCommand cmd);
+    void delete(DeleteUserCommand cmd);
 
 }

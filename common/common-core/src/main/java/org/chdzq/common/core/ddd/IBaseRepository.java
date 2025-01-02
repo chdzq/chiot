@@ -10,12 +10,17 @@ import java.io.Serializable;
  * @date 2024/11/28 02:01
  */
 public interface IBaseRepository<T extends IBaseEntity<ID>, ID extends Serializable> {
-
     /**
-     * 保存
+     * 创建
      * @param entity
      */
-    void save(T entity);
+    void create(T entity);
+
+    /**
+     * 更新
+     * @param entity
+     */
+    void update(T entity);
 
     /**
      * 删除
