@@ -40,7 +40,7 @@ public interface ResourceRepository extends IBaseRepository<Resource, Long> {
      * 根据父节点和编码查询资源主键
      * @param parentId 父节点
      * @param code 编码
-     * @return 是否存在
+     * @return 主键
      */
     Long getResourceIdByCode(Long parentId, String code);
 
@@ -48,7 +48,7 @@ public interface ResourceRepository extends IBaseRepository<Resource, Long> {
      * 根据父节点和编码查询资源主键
      * @param parentId 父节点
      * @param name 名称
-     * @return 是否存在
+     * @return 主键
      */
     Long getResourceIdByName(Long parentId, String name);
 }

@@ -1,10 +1,13 @@
 package org.chdzq.system.convert;
 
 import org.chdzq.system.entity.Resource;
+import org.chdzq.system.entity.Role;
 import org.chdzq.system.entity.User;
 import org.chdzq.system.query.model.ResourceVO;
+import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.repository.po.SystemResourceDO;
+import org.chdzq.system.repository.po.SystemRoleDO;
 import org.chdzq.system.repository.po.SystemUserDO;
 import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
@@ -59,4 +62,10 @@ public interface SystemConvertor {
     ResourceVO resourceDo2ResourceVO(SystemResourceDO resourceDO);
 
     List<ResourceVO> resourceDo2ResourceVOList(List<SystemResourceDO> resourceDOList);
+
+
+    @Mapping(target = "status", source = "role.status.code")
+    SystemRoleDO role2RoleDO(Role role);
+
+    RoleVO roleDo2RoleVO(SystemRoleDO roleDO);
 }

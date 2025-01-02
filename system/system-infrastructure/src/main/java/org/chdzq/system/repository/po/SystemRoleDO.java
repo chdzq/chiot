@@ -44,9 +44,4 @@ public class SystemRoleDO extends BaseDO {
      * 角色状态(1-正常；0-停用)
      */
     private Integer status;
-
-    /**
-     * 数据权限
-     */
-    private Integer dataScope;
 }

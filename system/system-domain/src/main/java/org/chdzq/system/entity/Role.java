@@ -2,7 +2,6 @@ package org.chdzq.system.entity;
 
 import lombok.Data;
 import org.chdzq.common.core.ddd.IBaseEntity;
-import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.StatusEnum;
 
 import java.util.List;
@@ -41,11 +40,6 @@ public class Role implements IBaseEntity<Long> {
      * 角色状态(1-正常；0-停用)
      */
     private StatusEnum status;
-
-    /**
-     * 数据权限
-     */
-    private DataScopeEnum dataScope;
 
     /**
      * 资源列表
