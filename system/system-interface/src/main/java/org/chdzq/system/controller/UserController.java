@@ -2,10 +2,6 @@ package org.chdzq.system.controller;
 
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.entity.Page;
-import org.chdzq.common.core.enums.StatusEnum;
-import org.chdzq.common.core.validation.InEnum;
-import org.chdzq.common.core.vo.PageNo;
-import org.chdzq.common.core.vo.PageSize;
 import org.chdzq.system.command.CreateUserCommand;
 import org.chdzq.system.command.DeleteUserCommand;
 import org.chdzq.system.command.UpdateUserCommand;
@@ -89,15 +85,14 @@ public class UserController {
     public Page<? extends UserVO> userPage(@RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
                                            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                                            @RequestParam(name = "keyword", required = false) String keyword,
-                                           @InEnum(StatusEnum.class)
                                            @RequestParam(name = "status", required = false) Integer status,
                                            @RequestParam(name = "startTime", required = false) LocalDateTime startTime,
                                            @RequestParam(name = "endTime", required = false) LocalDateTime endTime) {
         UserListQuery query = UserListQuery.builder()
-                .pageNo(new PageNo(pageNo))
-                .pageSize(new PageSize(pageSize))
+                .pageNo(pageNo)
+                .pageSize(pageSize)
                 .keyword(keyword)
-                .status(StatusEnum.getByCode(status))
+                .status(status)
                 .endTime(endTime)
                 .startTime(startTime)
                 .build();

@@ -23,8 +23,8 @@ public class PageQuery implements IQuery {
      */
     private final PageSize pageSize;
 
-    public PageQuery(PageNo pageNo, PageSize pageSize) {
-        this.pageNo = pageNo;
-        this.pageSize = pageSize;
+    public PageQuery(Integer pageNo, Integer pageSize) {
+        this.pageNo = new PageNo(pageNo);
+        this.pageSize = new PageSize(pageSize);
     }
 }

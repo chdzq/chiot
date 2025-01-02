@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import org.chdzq.common.core.ddd.PageQuery;
 import org.chdzq.common.core.enums.StatusEnum;
+import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.common.core.vo.PageNo;
 import org.chdzq.common.core.vo.PageSize;
 
@@ -40,15 +41,16 @@ public class UserListQuery extends PageQuery {
     private final LocalDateTime endTime;
 
     @Builder
-    public UserListQuery(PageNo pageNo,
-                         PageSize pageSize,
+    public UserListQuery(Integer pageNo,
+                         Integer pageSize,
                          String keyword,
-                         StatusEnum status,
+                         @InEnum(StatusEnum.class)
+                         Integer status,
                          LocalDateTime startTime,
                          LocalDateTime endTime) {
         super(pageNo, pageSize);
         this.keyword = keyword;
-        this.status = status;
+        this.status = StatusEnum.getByCode(status);
         this.startTime = startTime;
         this.endTime = endTime;
     }

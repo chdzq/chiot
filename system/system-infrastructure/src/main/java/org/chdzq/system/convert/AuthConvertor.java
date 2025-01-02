@@ -1,7 +1,10 @@
 package org.chdzq.system.convert;
 
+import org.chdzq.system.entity.Resource;
 import org.chdzq.system.entity.User;
+import org.chdzq.system.query.model.ResourceVO;
 import org.chdzq.system.query.model.UserVO;
+import org.chdzq.system.repository.po.SystemResourceDO;
 import org.chdzq.system.repository.po.SystemUserDO;
 import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
@@ -13,6 +16,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 
 /**
@@ -44,4 +49,14 @@ public interface AuthConvertor {
     SystemUserDO user2UserDo(User user);
 
     UserVO userDo2UserVO(SystemUserDO userDO);
+
+
+    @Mapping(target = "enabled", source = "resource.enabled.code")
+    @Mapping(target = "type", source = "resource.type.code")
+    SystemResourceDO resource2ResourceDO(Resource resource);
+
+
+    ResourceVO resourceDo2ResourceVO(SystemResourceDO resourceDO);
+
+    List<ResourceVO> resourceDo2ResourceVOList(List<SystemResourceDO> resourceDOList);
 }

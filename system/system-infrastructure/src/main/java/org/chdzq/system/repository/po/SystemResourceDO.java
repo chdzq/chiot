@@ -35,6 +35,11 @@ public class SystemResourceDO extends BaseDO {
     private String name;
 
     /**
+     * 编码
+     */
+    private String code;
+
+    /**
      * 菜单类型(1-菜单；2-目录；3-外链；4-按钮权限)
      */
     private Integer type;
@@ -57,7 +62,7 @@ public class SystemResourceDO extends BaseDO {
     /**
      * 显示状态(1:显示;0:隐藏)
      */
-    private Integer visible;
+    private Integer enabled;
 
     /**
      * 排序

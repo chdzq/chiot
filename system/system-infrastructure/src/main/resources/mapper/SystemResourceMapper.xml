@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.chdzq.system.repository.dao.SystemResourceMapper">
+
+    <select id="selectResourceIdByCode" resultType="long">
+        SELECT
+            t1.id
+        FROM sys_resource t1
+        WHERE
+            t1.parent_id = #{parentId}
+        AND t1.code = #{code}
+    </select>
+
+    <select id="selectResourceIdByName" resultType="long">
+        SELECT id
+        FROM sys_resource
+        WHERE
+            parent_id = #{parentId}
+          AND name = #{name}
+    </select>
+
+</mapper>

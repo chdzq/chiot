@@ -1,6 +1,7 @@
 package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.chdzq.common.core.utils.Assert;
 import org.chdzq.system.entity.Password;
 import org.chdzq.system.command.CreateUserCommand;
 import org.chdzq.system.command.DeleteUserCommand;
@@ -12,7 +13,6 @@ import org.chdzq.system.repository.UserRepository;
 import org.chdzq.system.adapter.PasswordCoder;
 import org.chdzq.system.service.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 

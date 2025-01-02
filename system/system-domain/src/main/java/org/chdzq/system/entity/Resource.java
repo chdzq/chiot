@@ -2,6 +2,7 @@ package org.chdzq.system.entity;
 
 import lombok.Data;
 import org.chdzq.common.core.ddd.IBaseEntity;
+import org.chdzq.common.core.enums.ResourceEnum;
 import org.chdzq.common.core.enums.StatusEnum;
 
 /**
@@ -24,14 +25,19 @@ public class Resource implements IBaseEntity<Long> {
     private Long parentId;
 
     /**
-     * 菜单名称
+     * 名称
      */
     private String name;
 
     /**
+     * 编码
+     */
+    private String code;
+
+    /**
      * 菜单类型(1-菜单；2-目录；3-外链；4-按钮权限)
      */
-    private Integer type;
+    private ResourceEnum type;
 
     /**
      * 路由路径(浏览器地址栏路径)
@@ -51,7 +57,7 @@ public class Resource implements IBaseEntity<Long> {
     /**
      * 显示状态(1:显示;0:隐藏)
      */
-    private StatusEnum visible;
+    private StatusEnum enabled;
 
     /**
      * 排序
