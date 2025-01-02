@@ -2,6 +2,7 @@ package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.utils.Assert;
+import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.system.entity.Password;
 import org.chdzq.system.command.CreateUserCommand;
 import org.chdzq.system.command.DeleteUserCommand;
@@ -13,6 +14,7 @@ import org.chdzq.system.repository.UserRepository;
 import org.chdzq.system.adapter.PasswordCoder;
 import org.chdzq.system.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
@@ -40,7 +42,9 @@ public class UserServiceImpl implements UserService {
     final private static String DEFAULT_PASSWORD = "password";
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void create(@Validated CreateUserCommand cmd) {
+        ValidationUtil.validate(cmd);
         User user = cmd.toEntity();
 
         //查询是否存在当前用户
@@ -55,7 +59,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(@Validated UpdateUserCommand cmd) {
+        ValidationUtil.validate(cmd);
         User user = cmd.toEntity();
 
         Boolean exist = userRepository.isExistByKey(user.getId());
@@ -72,6 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(DeleteUserCommand cmd) {
+        ValidationUtil.validate(cmd);
         Long id = cmd.getId();
         Boolean exist = userRepository.isExistByKey(id);
         Assert.isTrue(exist, "用户不存在");

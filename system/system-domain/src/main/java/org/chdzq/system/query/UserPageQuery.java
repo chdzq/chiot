@@ -5,8 +5,6 @@ import lombok.Getter;
 import org.chdzq.common.core.ddd.PageQuery;
 import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.common.core.validation.InEnum;
-import org.chdzq.common.core.vo.PageNo;
-import org.chdzq.common.core.vo.PageSize;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +16,7 @@ import java.time.LocalDateTime;
  * @date 2024/12/16 23:58
  */
 @Getter
-public class UserListQuery extends PageQuery {
+public class UserPageQuery extends PageQuery {
 
     /**
      *用户名、昵称、手机号关键字
@@ -41,7 +39,7 @@ public class UserListQuery extends PageQuery {
     private final LocalDateTime endTime;
 
     @Builder
-    public UserListQuery(Integer pageNo,
+    public UserPageQuery(Integer pageNo,
                          Integer pageSize,
                          String keyword,
                          @InEnum(StatusEnum.class)

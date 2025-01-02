@@ -2,16 +2,14 @@ package org.chdzq.system.command;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Value;
 import org.chdzq.common.core.ddd.ICommand;
 import org.chdzq.common.core.enums.ResourceEnum;
 import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.system.entity.Resource;
-import org.chdzq.system.entity.User;
+import org.chdzq.system.repository.ResourceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 创建资源命令
@@ -74,6 +72,8 @@ public class CreateResourceCommand implements ICommand {
      * 菜单图标
      */
     private String icon;
+
+    private ResourceRepository resourceRepository;
 
     public Resource toEntity() {
         Resource resource = new Resource();

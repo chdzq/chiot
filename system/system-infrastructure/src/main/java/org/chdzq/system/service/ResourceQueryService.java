@@ -1,6 +1,6 @@
 package org.chdzq.system.service;
 
-import org.chdzq.system.query.model.ResourceVO;
+import org.chdzq.system.query.model.ResourceTreeVO;
 
 import java.util.List;
 
@@ -17,6 +17,6 @@ public interface ResourceQueryService {
      * 查询列表
      * @return 列表结果
      */
-    List<ResourceVO> tree();
+    List<ResourceTreeVO> tree();
 
 }

@@ -9,6 +9,7 @@ import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.service.RoleQueryService;
 import org.chdzq.system.service.RoleService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**

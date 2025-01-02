@@ -2,6 +2,7 @@ package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.utils.Assert;
+import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.system.command.*;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.ResourceRepository;
@@ -27,6 +28,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void create(CreateResourceCommand cmd) {
+        ValidationUtil.validate(cmd);
         Resource entity = cmd.toEntity();
         if (
                 Objects.isNull(entity.getParentId()) ||
@@ -54,6 +56,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(UpdateResourceCommand cmd) {
+        ValidationUtil.validate(cmd);
         Long id = cmd.getId();
         Assert.isTrue(resourceRepository.isExistByKey(id), "资源不存在");
         Resource entity = cmd.toEntity();
@@ -82,6 +85,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void delete(DeleteResourceCommand cmd) {
+        ValidationUtil.validate(cmd);
         Long id = cmd.getId();
         Boolean exist = resourceRepository.isExistByKey(id);
         Assert.isTrue(exist, "资源不存在");

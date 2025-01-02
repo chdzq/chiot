@@ -2,10 +2,10 @@ package org.chdzq.system.service.impl;
 
 import org.chdzq.common.core.entity.Page;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
-import org.chdzq.system.convert.SystemConvertor;
+import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
-import org.chdzq.system.query.UserListQuery;
+import org.chdzq.system.query.UserPageQuery;
 import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.repository.dao.SystemUserMapper;
 import org.chdzq.system.repository.po.SystemUserDO;
@@ -33,8 +33,8 @@ public class UserQueryServiceImpl extends ServiceImplX<SystemUserMapper, SystemU
     }
 
     @Override
-    public Page<? extends UserVO> list(UserListQuery param) {
-        Page<SystemUserDO> page = customPage(param, (p, p1) -> baseMapper.queryPageList(p, p1));
-        return page.map(SystemConvertor.INSTANCE::userDo2UserVO);
+    public Page<? extends UserVO> page(UserPageQuery param) {
+        Page<SystemUserDO> page = customPage(param, (p, q) -> baseMapper.queryPageList(p, q));
+        return page.map(SystemInfraConvertor.INSTANCE::userDo2UserVO);
     }
 }

@@ -1,7 +1,7 @@
 package org.chdzq.system.repository.impl;
 
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
-import org.chdzq.system.convert.SystemConvertor;
+import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.ResourceRepository;
 import org.chdzq.system.repository.dao.SystemResourceMapper;
@@ -29,7 +29,7 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
     @Override
     public void create(Resource entity) {
         Assert.isNull(entity.getId(), "创建时主键需要为空");
-        SystemResourceDO resourceDO = SystemConvertor.INSTANCE.resource2ResourceDO(entity);
+        SystemResourceDO resourceDO = SystemInfraConvertor.INSTANCE.resource2ResourceDO(entity);
         if(Objects.isNull(resourceDO)) {
             return;
         }
@@ -39,7 +39,7 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
     @Override
     public void update(Resource entity) {
         Assert.notNull(entity.getId(), "更新时主键不能为空");
-        SystemResourceDO resourceDO = SystemConvertor.INSTANCE.resource2ResourceDO(entity);
+        SystemResourceDO resourceDO = SystemInfraConvertor.INSTANCE.resource2ResourceDO(entity);
         if(Objects.isNull(resourceDO)) {
             return;
         }

@@ -2,7 +2,7 @@ package org.chdzq.system.controller;
 
 import lombok.AllArgsConstructor;
 import org.chdzq.system.command.*;
-import org.chdzq.system.query.model.ResourceVO;
+import org.chdzq.system.query.model.ResourceTreeVO;
 import org.chdzq.system.service.ResourceQueryService;
 import org.chdzq.system.service.ResourceService;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class ResourceController {
     private ResourceQueryService queryService;
     /**
      * 新增
-     * @param command 用户信息
+     * @param command 命令
      */
     @PostMapping()
     public void create(@RequestBody CreateResourceCommand command) {
@@ -36,7 +36,7 @@ public class ResourceController {
     /**
      * 更新
      * @param resourceId 资源id
-     * @param command 更新内容
+     * @param command 命令
      */
     @PutMapping(value = "/{resourceId}")
     public void update(
@@ -47,8 +47,8 @@ public class ResourceController {
     }
 
     /**
-     * 删除用户
-     * @param resourceId 删除的用户id
+     * 删除
+     * @param resourceId 资源Id
      */
     @DeleteMapping(value = "/{resourceId}")
     public void delete(@PathVariable("resourceId") Long resourceId) {
@@ -56,10 +56,10 @@ public class ResourceController {
     }
 
     /**
-     * 查询列表
+     * 查询
      */
     @GetMapping(value = "/tree")
-    public List<ResourceVO> tree() {
+    public List<ResourceTreeVO> tree() {
         return queryService.tree();
     }
 

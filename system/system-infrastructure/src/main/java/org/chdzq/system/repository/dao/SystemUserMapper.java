@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.chdzq.system.entity.AuthInfo;
-import org.chdzq.system.query.UserListQuery;
+import org.chdzq.system.query.UserPageQuery;
 import org.chdzq.system.repository.po.SystemUserDO;
 import org.chdzq.common.mybatis.core.mapper.BaseMapperX;
 
@@ -32,6 +32,6 @@ public interface SystemUserMapper extends BaseMapperX<SystemUserDO> {
      * @param param
      * @return
      */
-    IPage<SystemUserDO> queryPageList(@Param("page") IPage<SystemUserDO> page, @Param("param") UserListQuery param);
+    IPage<SystemUserDO> queryPageList(@Param("page") IPage<SystemUserDO> page, @Param("param") UserPageQuery param);
 
 }

@@ -1,7 +1,9 @@
 package org.chdzq.system.service.impl;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.utils.Assert;
+import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.system.command.CreateRoleCommand;
 import org.chdzq.system.command.DeleteRoleCommand;
 import org.chdzq.system.command.UpdateRoleCommand;
@@ -31,6 +33,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(CreateRoleCommand cmd) {
+        ValidationUtil.validate(cmd);
         Long idByCode = roleRepository.getIdByCode(cmd.getCode());
         Assert.isNull(idByCode, "角色编码已存在");
 
@@ -45,6 +48,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(UpdateRoleCommand cmd) {
+        ValidationUtil.validate(cmd);
         Long id = cmd.getId();
 
         Boolean exist = roleRepository.isExistByKey(id);
@@ -67,6 +71,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(DeleteRoleCommand cmd) {
+        ValidationUtil.validate(cmd);
         Long id = cmd.getId();
         Boolean exist = roleRepository.isExistByKey(id);
         Assert.isTrue(exist, "角色不存在");

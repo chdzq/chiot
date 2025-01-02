@@ -2,6 +2,7 @@ package org.chdzq.system.command;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.chdzq.common.core.ddd.ICommand;
 import org.chdzq.common.core.enums.StatusEnum;
 
 /**
@@ -12,7 +13,7 @@ import org.chdzq.common.core.enums.StatusEnum;
  * @date 2025/1/2 15:55
  */
 @Data
-public class UpdateRoleCommand {
+public class UpdateRoleCommand implements ICommand {
     /**
      * 主键
      */

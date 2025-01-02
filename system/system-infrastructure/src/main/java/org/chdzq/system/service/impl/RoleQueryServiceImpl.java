@@ -2,7 +2,7 @@ package org.chdzq.system.service.impl;
 
 import org.chdzq.common.core.entity.Page;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
-import org.chdzq.system.convert.SystemConvertor;
+import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.repository.dao.SystemRoleMapper;
@@ -23,7 +23,7 @@ public class RoleQueryServiceImpl extends ServiceImplX<SystemRoleMapper, SystemR
     public Page<? extends RoleVO> page(RolePageQuery param) {
         Page<SystemRoleDO> roleDOPage = baseMapper.selectCustomPage(param, (p, q)->baseMapper.queryPageList(p, q));
 
-        Page<? extends RoleVO> result = roleDOPage.map(SystemConvertor.INSTANCE::roleDo2RoleVO);
+        Page<? extends RoleVO> result = roleDOPage.map(SystemInfraConvertor.INSTANCE::roleDo2RoleVO);
         return result;
     }
 }

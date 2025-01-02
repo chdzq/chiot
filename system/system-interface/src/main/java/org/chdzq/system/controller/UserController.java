@@ -7,7 +7,7 @@ import org.chdzq.system.command.DeleteUserCommand;
 import org.chdzq.system.command.UpdateUserCommand;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
-import org.chdzq.system.query.UserListQuery;
+import org.chdzq.system.query.UserPageQuery;
 import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.service.UserQueryService;
 import org.chdzq.system.service.UserService;
@@ -33,29 +33,29 @@ public class UserController {
 
     /**
      * 新增用户
-     * @param user 用户信息
+     * @param cmd 命令
      */
     @PostMapping()
-    public void createUser(@RequestBody CreateUserCommand user) {
-        userService.create(user);
+    public void createUser(@RequestBody CreateUserCommand cmd) {
+        userService.create(cmd);
     }
 
     /**
-     * 更新用户
+     * 更新
      * @param userId 新增的用户id
-     * @param user 用户信息
+     * @param cmd 命令
      */
     @PutMapping(value = "/{userId}")
     public void updateUser(
             @PathVariable("userId") Long userId,
-            @RequestBody UpdateUserCommand user) {
-        user.setId(userId);
-        userService.update(user);
+            @RequestBody UpdateUserCommand cmd) {
+        cmd.setId(userId);
+        userService.update(cmd);
     }
 
     /**
-     * 删除用户
-     * @param userId 删除的用户id
+     * 删除
+     * @param userId 用户id
      */
     @DeleteMapping(value = "/{userId}")
     public void deleteUser(@PathVariable("userId") Long userId) {
@@ -82,13 +82,13 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "/page")
-    public Page<? extends UserVO> userPage(@RequestParam(name = "pageNo", required = false, defaultValue = "1") Integer pageNo,
-                                           @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                                           @RequestParam(name = "keyword", required = false) String keyword,
-                                           @RequestParam(name = "status", required = false) Integer status,
-                                           @RequestParam(name = "startTime", required = false) LocalDateTime startTime,
-                                           @RequestParam(name = "endTime", required = false) LocalDateTime endTime) {
-        UserListQuery query = UserListQuery.builder()
+    public Page<? extends UserVO> page(@RequestParam(name = "pageNo", required = false) Integer pageNo,
+                                       @RequestParam(name = "pageSize", required = false) Integer pageSize,
+                                       @RequestParam(name = "keyword", required = false) String keyword,
+                                       @RequestParam(name = "status", required = false) Integer status,
+                                       @RequestParam(name = "startTime", required = false) LocalDateTime startTime,
+                                       @RequestParam(name = "endTime", required = false) LocalDateTime endTime) {
+        UserPageQuery query = UserPageQuery.builder()
                 .pageNo(pageNo)
                 .pageSize(pageSize)
                 .keyword(keyword)
@@ -96,7 +96,7 @@ public class UserController {
                 .endTime(endTime)
                 .startTime(startTime)
                 .build();
-        return userQueryService.list(query);
+        return userQueryService.page(query);
     }
 
 

@@ -3,8 +3,8 @@ package org.chdzq.system.service.impl;
 import org.chdzq.common.core.tree.TreeUtil;
 import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
-import org.chdzq.system.convert.SystemConvertor;
-import org.chdzq.system.query.model.ResourceVO;
+import org.chdzq.system.convert.SystemInfraConvertor;
+import org.chdzq.system.query.model.ResourceTreeVO;
 import org.chdzq.system.repository.dao.SystemResourceMapper;
 import org.chdzq.system.repository.po.SystemResourceDO;
 import org.chdzq.system.service.ResourceQueryService;
@@ -24,12 +24,12 @@ public class ResourceQueryServiceImpl extends ServiceImplX<SystemResourceMapper,
 
 
     @Override
-    public List<ResourceVO> tree() {
+    public List<ResourceTreeVO> tree() {
 
         List<SystemResourceDO> resources = list(
                 WrapperX.<SystemResourceDO>lambdaQuery().orderByDesc(SystemResourceDO::getSort)
         );
-        List<ResourceVO> voList = SystemConvertor.INSTANCE.resourceDo2ResourceVOList(resources);
+        List<ResourceTreeVO> voList = SystemInfraConvertor.INSTANCE.resourceDo2ResourceTreeVOList(resources);
         return TreeUtil.buildTree(voList);
     }
 }

@@ -80,7 +80,7 @@ public class GlobalExceptionConfig {
     @ExceptionHandler(value = ValidationException.class)
     public Result<?> validationException(ValidationException ex) {
         log.warn("ValidationException Handler:{}", ex.getMessage());
-        return Result.fail("系统异常");
+        return Result.fail(ex.getMessage());
     }
 
 

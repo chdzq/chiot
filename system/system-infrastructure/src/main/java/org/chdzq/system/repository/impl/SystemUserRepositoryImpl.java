@@ -1,7 +1,7 @@
 package org.chdzq.system.repository.impl;
 
 import lombok.AllArgsConstructor;
-import org.chdzq.system.convert.SystemConvertor;
+import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.User;
 import org.chdzq.system.repository.SystemUserRoleRepository;
@@ -24,12 +24,12 @@ import java.util.Objects;
  */
 @Repository
 @AllArgsConstructor
-public class UserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUserDO> implements UserRepository {
+public class SystemUserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUserDO> implements UserRepository {
 
     @Override
     public void create(User entity) {
         Assert.isNull(entity.getId(), "创建时主键需要为空");
-        SystemUserDO user = SystemConvertor.INSTANCE.user2UserDo(entity);
+        SystemUserDO user = SystemInfraConvertor.INSTANCE.user2UserDo(entity);
         if (Objects.isNull(user)) {
             return;
         }
@@ -41,7 +41,7 @@ public class UserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUse
     public void update(User entity) {
         Assert.notNull(entity.getId(), "更新时主键不能为空");
 
-        SystemUserDO user = SystemConvertor.INSTANCE.user2UserDo(entity);
+        SystemUserDO user = SystemInfraConvertor.INSTANCE.user2UserDo(entity);
         if (Objects.isNull(user)) {
             return;
         }

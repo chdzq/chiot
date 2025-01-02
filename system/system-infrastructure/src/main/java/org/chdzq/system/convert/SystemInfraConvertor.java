@@ -3,7 +3,7 @@ package org.chdzq.system.convert;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.entity.Role;
 import org.chdzq.system.entity.User;
-import org.chdzq.system.query.model.ResourceVO;
+import org.chdzq.system.query.model.ResourceTreeVO;
 import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.repository.po.SystemResourceDO;
@@ -38,9 +38,9 @@ import java.util.List;
         EmailNumber.class,
         PhoneNumber.class,}
 )
-public interface SystemConvertor {
+public interface SystemInfraConvertor {
 
-    SystemConvertor INSTANCE = Mappers.getMapper(SystemConvertor.class);
+    SystemInfraConvertor INSTANCE = Mappers.getMapper(SystemInfraConvertor.class);
 
     @Mappings(
             @Mapping(target = "id", source = "userDO.id")
@@ -59,9 +59,9 @@ public interface SystemConvertor {
     SystemResourceDO resource2ResourceDO(Resource resource);
 
 
-    ResourceVO resourceDo2ResourceVO(SystemResourceDO resourceDO);
+    ResourceTreeVO resourceDo2ResourceTreeVO(SystemResourceDO resourceDO);
 
-    List<ResourceVO> resourceDo2ResourceVOList(List<SystemResourceDO> resourceDOList);
+    List<ResourceTreeVO> resourceDo2ResourceTreeVOList(List<SystemResourceDO> resourceDOList);
 
 
     @Mapping(target = "status", source = "role.status.code")

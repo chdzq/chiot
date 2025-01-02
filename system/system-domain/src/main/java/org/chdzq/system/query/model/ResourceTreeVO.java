@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2025/1/2 14:41
  */
 @Data
-public class ResourceVO implements TreeInterface<Long, ResourceVO> {
+public class ResourceTreeVO implements TreeInterface<Long, ResourceTreeVO> {
     /**
      * 菜单ID
      */
@@ -59,7 +59,7 @@ public class ResourceVO implements TreeInterface<Long, ResourceVO> {
     /**
      * 子节点列表
      */
-    private List<ResourceVO> children;
+    private List<ResourceTreeVO> children;
 
     @Override
     public Long _getTreeKey() {
@@ -72,12 +72,12 @@ public class ResourceVO implements TreeInterface<Long, ResourceVO> {
     }
 
     @Override
-    public void _setTreeChildren(List<ResourceVO> list) {
+    public void _setTreeChildren(List<ResourceTreeVO> list) {
         children = list;
     }
 
     @Override
-    public List<ResourceVO> _getTreeChildren() {
+    public List<ResourceTreeVO> _getTreeChildren() {
         return children;
     }
 }
