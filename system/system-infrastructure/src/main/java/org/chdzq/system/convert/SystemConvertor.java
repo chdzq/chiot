@@ -35,9 +35,9 @@ import java.util.List;
         EmailNumber.class,
         PhoneNumber.class,}
 )
-public interface AuthConvertor {
+public interface SystemConvertor {
 
-    AuthConvertor INSTANCE = Mappers.getMapper(AuthConvertor.class);
+    SystemConvertor INSTANCE = Mappers.getMapper(SystemConvertor.class);
 
     @Mappings(
             @Mapping(target = "id", source = "userDO.id")

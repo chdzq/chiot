@@ -1,7 +1,7 @@
 package org.chdzq.system.repository.impl;
 
 import lombok.AllArgsConstructor;
-import org.chdzq.system.convert.AuthConvertor;
+import org.chdzq.system.convert.SystemConvertor;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.User;
 import org.chdzq.system.repository.SystemUserRoleRepository;
@@ -27,7 +27,7 @@ public class UserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUse
 
     @Override
     public void save(User entity) {
-        SystemUserDO user = AuthConvertor.INSTANCE.user2UserDo(entity);
+        SystemUserDO user = SystemConvertor.INSTANCE.user2UserDo(entity);
         if (Objects.isNull(user)) {
             return;
         }

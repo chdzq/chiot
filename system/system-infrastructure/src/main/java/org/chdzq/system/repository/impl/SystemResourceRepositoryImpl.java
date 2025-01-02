@@ -1,7 +1,7 @@
 package org.chdzq.system.repository.impl;
 
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
-import org.chdzq.system.convert.AuthConvertor;
+import org.chdzq.system.convert.SystemConvertor;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.ResourceRepository;
 import org.chdzq.system.repository.dao.SystemResourceMapper;
@@ -27,7 +27,7 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
 
     @Override
     public void save(Resource entity) {
-        SystemResourceDO resourceDO = AuthConvertor.INSTANCE.resource2ResourceDO(entity);
+        SystemResourceDO resourceDO = SystemConvertor.INSTANCE.resource2ResourceDO(entity);
         if(Objects.isNull(resourceDO)) {
             return;
         }

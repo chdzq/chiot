@@ -3,7 +3,7 @@ package org.chdzq.system.service.impl;
 import org.chdzq.common.core.tree.TreeUtil;
 import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
-import org.chdzq.system.convert.AuthConvertor;
+import org.chdzq.system.convert.SystemConvertor;
 import org.chdzq.system.query.model.ResourceVO;
 import org.chdzq.system.repository.dao.SystemResourceMapper;
 import org.chdzq.system.repository.po.SystemResourceDO;
@@ -29,7 +29,7 @@ public class ResourceQueryServiceImpl extends ServiceImplX<SystemResourceMapper,
         List<SystemResourceDO> resources = list(
                 WrapperX.<SystemResourceDO>lambdaQuery().orderByDesc(SystemResourceDO::getSort)
         );
-        List<ResourceVO> voList = AuthConvertor.INSTANCE.resourceDo2ResourceVOList(resources);
+        List<ResourceVO> voList = SystemConvertor.INSTANCE.resourceDo2ResourceVOList(resources);
         return TreeUtil.buildTree(voList);
     }
 }
