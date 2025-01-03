@@ -1,14 +1,19 @@
 package org.chdzq.common.mybatis.core.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import org.apache.ibatis.annotations.Param;
 import org.chdzq.common.core.entity.Page;
 import org.chdzq.common.core.ddd.PageQuery;
+import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.util.MyBatisUtils;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +24,21 @@ import java.util.List;
  * @create 2022/11/11
  */
 public interface BaseMapperX<T> extends BaseMapper<T> {
+
+    /**
+     * 根据主键查询
+     * @param queryWrapper 查询
+     * @return
+     */
+    Serializable isExistedByKey(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+
+    /**
+     * 根据主键列表查询
+     * @param queryWrapper 查询
+     * @return
+     */
+    List<Serializable> isExistedByKeys(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+
 
     @FunctionalInterface
     interface CustomQueryMethod<T extends PageQuery, R> {

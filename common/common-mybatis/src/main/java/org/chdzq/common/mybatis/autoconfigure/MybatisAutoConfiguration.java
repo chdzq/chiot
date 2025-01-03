@@ -1,5 +1,6 @@
 package org.chdzq.common.mybatis.autoconfigure;
 
+import org.chdzq.common.mybatis.core.method.LogicSqlInjector;
 import org.chdzq.common.mybatis.core.service.DbTypeDefaultFinalizer;
 import org.chdzq.common.mybatis.core.service.DbTypeFinalizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -19,5 +20,11 @@ public class MybatisAutoConfiguration {
     @ConditionalOnMissingBean(DbTypeFinalizer.class)
     public DbTypeFinalizer dbTypeFinalizer() {
         return new DbTypeDefaultFinalizer();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(LogicSqlInjector.class)
+    public LogicSqlInjector logicSqlInjector() {
+        return new LogicSqlInjector();
     }
 }
