@@ -4,6 +4,9 @@ import org.chdzq.common.core.entity.Page;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.RoleVO;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * 角色查询服务器
  *
@@ -19,4 +22,11 @@ public interface RoleQueryService {
      * @return 分页数据
      */
     Page<? extends RoleVO> page(RolePageQuery param);
+
+    /**
+     * 根据角色编码查询所有的角色数据
+     * @param roleCodes
+     * @return
+     */
+    List<RoleVO> listByCodes(Collection<String> roleCodes);
 }

@@ -3,7 +3,9 @@ package org.chdzq.system.service;
 import org.chdzq.system.query.ResourceQuery;
 import org.chdzq.system.query.model.ResourceTreeVO;
 import org.chdzq.system.query.model.ResourceVO;
+import org.chdzq.system.query.model.RoleVO;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -27,4 +29,11 @@ public interface ResourceQueryService {
      * @return 资源列表
      */
     List<ResourceVO> list(ResourceQuery query);
+
+    /**
+     * 根据角色编码列表查询所有的资源列表
+     * @param roleIds
+     * @return
+     */
+    List<ResourceVO> listByRoleIds(Collection<Long> roleIds);
 }

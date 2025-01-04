@@ -2,7 +2,10 @@ package org.chdzq.system.query.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
+
+import java.util.Objects;
 
 /**
  * 资源展示类
@@ -50,4 +53,12 @@ public class ResourceVO {
      */
     Integer authorized;
 
+    public boolean equals(Object obj) {
+        if (super.equals(obj)) {
+            return true;
+        } else if (obj instanceof ResourceVO vo) {
+            return Objects.equals(this.getId(), vo.getId());
+        }
+        return false;
+    }
 }

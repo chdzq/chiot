@@ -4,6 +4,7 @@ import org.chdzq.common.core.entity.Page;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.query.UserPageQuery;
+import org.chdzq.system.query.model.UserInfo;
 import org.chdzq.system.query.model.UserVO;
 
 /**
@@ -29,4 +30,11 @@ public interface UserQueryService {
      * @return
      */
     Page<? extends UserVO> page(UserPageQuery param);
+
+
+    /**
+     * 查询当前用户的登录信息
+     * @return
+     */
+    UserInfo getCurrentUserInfo();
 }

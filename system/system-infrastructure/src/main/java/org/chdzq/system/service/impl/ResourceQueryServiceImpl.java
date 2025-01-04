@@ -13,6 +13,7 @@ import org.chdzq.system.repository.po.SystemResourceDO;
 import org.chdzq.system.service.ResourceQueryService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ResourceQueryServiceImpl extends ServiceImplX<SystemResourceMapper, SystemResourceDO> implements ResourceQueryService {
 
-
+    private final SystemInfraConvertor convertor = SystemInfraConvertor.INSTANCE;
 
     @Override
     public List<ResourceTreeVO> tree() {
@@ -42,5 +43,11 @@ public class ResourceQueryServiceImpl extends ServiceImplX<SystemResourceMapper,
     public List<ResourceVO> list(ResourceQuery query) {
         List<SystemResourceDO> resources = baseMapper.selectByRoleId(query.getRoleId());
         return SystemInfraConvertor.INSTANCE.resourceDo2ResourceVOList(resources);
+    }
+
+    @Override
+    public List<ResourceVO> listByRoleIds(Collection<Long> roleIds) {
+        List<SystemResourceDO> resources = baseMapper.selectByRoleIds(roleIds);
+        return resources.stream().map(convertor::resourceDo2ResourceVO).distinct().toList();
     }
 }

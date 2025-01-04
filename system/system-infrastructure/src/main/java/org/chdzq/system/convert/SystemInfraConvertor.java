@@ -3,10 +3,7 @@ package org.chdzq.system.convert;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.entity.Role;
 import org.chdzq.system.entity.User;
-import org.chdzq.system.query.model.ResourceTreeVO;
-import org.chdzq.system.query.model.ResourceVO;
-import org.chdzq.system.query.model.RoleVO;
-import org.chdzq.system.query.model.UserVO;
+import org.chdzq.system.query.model.*;
 import org.chdzq.system.repository.po.SystemResourceDO;
 import org.chdzq.system.repository.po.SystemRoleDO;
 import org.chdzq.system.repository.po.SystemUserDO;
@@ -53,6 +50,9 @@ public interface SystemInfraConvertor {
     SystemUserDO user2UserDo(User user);
 
     UserVO userDo2UserVO(SystemUserDO userDO);
+
+    UserInfo userDo2UserInfo(SystemUserDO userDO, List<RoleVO> roles, List<ResourceVO> resources);
+
 
 
     @Mapping(target = "enabled", source = "resource.enabled.code")

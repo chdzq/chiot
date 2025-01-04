@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.chdzq.common.mybatis.core.mapper.BaseMapperX;
 import org.chdzq.system.repository.po.SystemResourceDO;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -43,4 +44,12 @@ public interface SystemResourceMapper extends BaseMapperX<SystemResourceDO> {
      * @return
      */
     List<SystemResourceDO> selectByRoleId(@Param("roleId") Long roleId);
+
+
+    /**
+     * 根据角色编码 查询所授权的资源列表
+     * @param roleIds 角色列表
+     * @return
+     */
+    List<SystemResourceDO> selectByRoleIds(@Param("roleIds") Collection<Long> roleIds);
 }

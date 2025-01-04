@@ -1,18 +1,18 @@
 package org.chdzq.system.query.model;
 
-import lombok.Builder;
 import lombok.Value;
 
+import java.util.List;
+
 /**
- * 用户展示类
+ * 用户信息
  *
  * @author chdzq
  * @version 1.0
- * @date 2024/12/17 00:11
+ * @date 2025/1/4 19:36
  */
 @Value
-@Builder
-public class UserVO {
+public class UserInfo {
     /**
      * 用户id
      */
@@ -47,4 +47,16 @@ public class UserVO {
      * 性别(1->男；2->女)
      */
     Integer gender;
+
+    /**
+     * 角色列表
+     */
+    List<RoleVO> roles;
+
+    /**
+     * 权限列表
+     */
+    List<ResourceVO> resources;
+
+
 }

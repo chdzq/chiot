@@ -8,6 +8,7 @@ import org.chdzq.system.command.UserUpdateCommand;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.query.UserPageQuery;
+import org.chdzq.system.query.model.UserInfo;
 import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.service.UserQueryService;
 import org.chdzq.system.service.UserService;
@@ -97,5 +98,14 @@ public class UserController {
                 .startTime(startTime)
                 .build();
         return userQueryService.page(query);
+    }
+
+    /**
+     * 查询当前用户的登录信息
+     * @return 登录信息
+     */
+    @GetMapping(value = "/info")
+    public UserInfo userInfo() {
+        return userQueryService.getCurrentUserInfo();
     }
 }
