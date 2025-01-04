@@ -6,9 +6,11 @@ import org.chdzq.common.core.utils.Assert;
 import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.system.command.CreateRoleCommand;
 import org.chdzq.system.command.DeleteRoleCommand;
+import org.chdzq.system.command.RoleAuthorizeCommand;
 import org.chdzq.system.command.UpdateRoleCommand;
 import org.chdzq.system.convert.SystemApplicationConvertor;
 import org.chdzq.system.entity.Role;
+import org.chdzq.system.repository.ResourceRepository;
 import org.chdzq.system.repository.RoleRepository;
 import org.chdzq.system.service.RoleService;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,8 @@ import java.util.Objects;
 public class RoleServiceImpl implements RoleService {
 
     private RoleRepository roleRepository;
+
+    private ResourceRepository resourceRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -76,5 +80,15 @@ public class RoleServiceImpl implements RoleService {
         Boolean exist = roleRepository.isExistByKey(id);
         Assert.isTrue(exist, "角色不存在");
         roleRepository.deleteById(cmd.getId());
+    }
+
+    @Override
+    public void authorize(RoleAuthorizeCommand command) {
+        //1 校验
+        command.validate(roleRepository, resourceRepository);
+
+        //2.更新
+        Role role = command.toEntity();
+        roleRepository.update(role);
     }
 }

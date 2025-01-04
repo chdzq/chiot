@@ -1,5 +1,6 @@
 package org.chdzq.system.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.chdzq.common.core.ddd.IBaseEntity;
 import org.chdzq.common.core.enums.StatusEnum;
@@ -49,5 +50,22 @@ public class Role implements IBaseEntity<Long> {
     @Override
     public Long getIdentifier() {
         return id;
+    }
+
+    public Role() {
+    }
+
+    public Role(Long id) {
+        this.id = id;
+    }
+
+    @Builder
+    public Role(Long id, String name, String code, Integer sort, StatusEnum status, List<Resource> resource) {
+        this.id = id;
+        this.name = name;
+        this.code = code;
+        this.sort = sort;
+        this.status = status;
+        this.resource = resource;
     }
 }

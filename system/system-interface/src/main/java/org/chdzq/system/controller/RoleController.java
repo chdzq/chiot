@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import org.chdzq.common.core.entity.Page;
 import org.chdzq.system.command.CreateRoleCommand;
 import org.chdzq.system.command.DeleteRoleCommand;
+import org.chdzq.system.command.RoleAuthorizeCommand;
 import org.chdzq.system.command.UpdateRoleCommand;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.service.RoleQueryService;
 import org.chdzq.system.service.RoleService;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 角色控制器
@@ -78,5 +80,22 @@ public class RoleController {
                         .pageSize(pageSize)
                         .build()
         );
+    }
+
+    /**
+     * 更新
+     * @param roleId 角色Id
+     * @param resourceIdList 资源列表
+     */
+    @PutMapping(value = "/{roleId}/resources")
+    public void authorization(
+            @PathVariable("roleId") Long roleId,
+            @RequestBody List<Long> resourceIdList) {
+
+        RoleAuthorizeCommand cmd = RoleAuthorizeCommand.builder()
+                .resourceIds(resourceIdList)
+                .roleId(roleId)
+                .build();
+        roleService.authorize(cmd);
     }
 }

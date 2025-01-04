@@ -4,6 +4,8 @@ import org.chdzq.common.core.ddd.IBaseRepository;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.Resource;
 
+import java.util.List;
+
 /**
  * 资源存储
  *
@@ -19,6 +21,13 @@ public interface ResourceRepository extends IBaseRepository<Resource, Long> {
      * @return
      */
     Boolean isExistByKey(Long id);
+
+    /**
+     * 根据主键列表查询是否全部存在
+     * @param ids 主键列表
+     * @return
+     */
+    Boolean isExistByKeys(List<Long> ids);
 
 
     /**

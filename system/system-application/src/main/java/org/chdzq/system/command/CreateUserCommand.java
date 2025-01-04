@@ -106,11 +106,7 @@ public class CreateUserCommand implements ICommand {
         }
 
         if (!CollectionUtils.isEmpty(roles)) {
-            List<Role> list = roles.stream().map((a) -> {
-                Role role = new Role();
-                role.setId(a);
-                return role;
-            }).toList();
+            List<Role> list = roles.stream().map(Role::new).toList();
             obj.setRoles(list);
         }
 

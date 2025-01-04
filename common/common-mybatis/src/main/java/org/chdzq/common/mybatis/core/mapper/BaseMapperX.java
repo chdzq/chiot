@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import org.apache.ibatis.annotations.Param;
 import org.chdzq.common.core.entity.Page;
 import org.chdzq.common.core.ddd.PageQuery;
-import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.util.MyBatisUtils;
 
 import java.io.Serializable;

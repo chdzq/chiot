@@ -18,5 +18,6 @@ public interface SystemUserRoleRepository {
      * @param userId
      * @param roles
      */
-    void saveUserRelationship(Long userId, List<Role> roles);
+    void authorizeUserRoles(Long userId, List<Role> roles);
+
 }

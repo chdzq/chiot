@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @TableName("sys_role_resource")
 @Data
-public class SystemRoleResource {
+public class SystemRoleResourceDO {
 
     /**
      * 角色ID
@@ -25,6 +25,5 @@ public class SystemRoleResource {
     /**
      * 资源ID
      */
-    @TableId(value = "resource_id", type = IdType.NONE)
     private Long resourceId;
 }

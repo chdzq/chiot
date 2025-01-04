@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 系统用户角色资源库
@@ -24,8 +25,11 @@ public class SystemUserRoleRepositoryImpl extends ServiceImplX<SystemUserRoleMap
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveUserRelationship(Long userId, List<Role> roles) {
-         remove(WrapperX.<SystemUserRoleDO>lambdaQuery().eq(SystemUserRoleDO::getUserId, userId));
+    public void authorizeUserRoles(Long userId, List<Role> roles) {
+        if (Objects.isNull(userId)) {
+            return;
+        }
+         removeById(userId);
          if (CollectionUtils.isEmpty(roles)) {
              return;
          }
