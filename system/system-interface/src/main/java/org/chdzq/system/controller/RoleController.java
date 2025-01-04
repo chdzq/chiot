@@ -6,8 +6,11 @@ import org.chdzq.system.command.RoleCreateCommand;
 import org.chdzq.system.command.RoleDeleteCommand;
 import org.chdzq.system.command.RoleAuthorizeCommand;
 import org.chdzq.system.command.RoleUpdateCommand;
+import org.chdzq.system.query.ResourceQuery;
 import org.chdzq.system.query.RolePageQuery;
+import org.chdzq.system.query.model.ResourceVO;
 import org.chdzq.system.query.model.RoleVO;
+import org.chdzq.system.service.ResourceQueryService;
 import org.chdzq.system.service.RoleQueryService;
 import org.chdzq.system.service.RoleService;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,8 @@ public class RoleController {
     private RoleService roleService;
 
     private RoleQueryService queryService;
+
+    private ResourceQueryService resourceQueryService;
 
     /**
      * 新增
@@ -97,5 +102,17 @@ public class RoleController {
                 .roleId(roleId)
                 .build();
         roleService.authorize(cmd);
+    }
+
+    /**
+     * 查询列表
+     * @param roleId 角色Id
+     */
+    @GetMapping(value = "/{roleId}/resources")
+    public List<ResourceVO> authorization(@PathVariable("roleId") Long roleId) {
+        ResourceQuery query = ResourceQuery.builder()
+                .roleId(roleId)
+                .build();
+        return resourceQueryService.list(query);
     }
 }

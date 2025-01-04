@@ -1,10 +1,13 @@
 package org.chdzq.system.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.chdzq.common.core.tree.TreeUtil;
 import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
 import org.chdzq.system.convert.SystemInfraConvertor;
+import org.chdzq.system.query.ResourceQuery;
 import org.chdzq.system.query.model.ResourceTreeVO;
+import org.chdzq.system.query.model.ResourceVO;
 import org.chdzq.system.repository.dao.SystemResourceMapper;
 import org.chdzq.system.repository.po.SystemResourceDO;
 import org.chdzq.system.service.ResourceQueryService;
@@ -20,7 +23,9 @@ import java.util.List;
  * @date 2025/1/2 14:59
  */
 @Service
+@AllArgsConstructor
 public class ResourceQueryServiceImpl extends ServiceImplX<SystemResourceMapper, SystemResourceDO> implements ResourceQueryService {
+
 
 
     @Override
@@ -31,5 +36,11 @@ public class ResourceQueryServiceImpl extends ServiceImplX<SystemResourceMapper,
         );
         List<ResourceTreeVO> voList = SystemInfraConvertor.INSTANCE.resourceDo2ResourceTreeVOList(resources);
         return TreeUtil.buildTree(voList);
+    }
+
+    @Override
+    public List<ResourceVO> list(ResourceQuery query) {
+        List<SystemResourceDO> resources = baseMapper.selectByRoleId(query.getRoleId());
+        return SystemInfraConvertor.INSTANCE.resourceDo2ResourceVOList(resources);
     }
 }

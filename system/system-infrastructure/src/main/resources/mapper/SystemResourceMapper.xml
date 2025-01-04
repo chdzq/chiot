@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.chdzq.system.repository.dao.SystemResourceMapper">
 
-    <select id="selectResourceIdByCode" resultType="long">
+    <select id="selectResourceIdByCode" resultType="java.lang.Long">
         SELECT
             t1.id
         FROM sys_resource t1
@@ -13,12 +13,37 @@
         AND t1.code = #{code}
     </select>
 
-    <select id="selectResourceIdByName" resultType="long">
+    <select id="selectResourceIdByName" resultType="java.lang.Long">
         SELECT id
         FROM sys_resource
         WHERE
             parent_id = #{parentId}
           AND name = #{name}
+    </select>
+
+    <select id="selectByRoleId" resultType="org.chdzq.system.repository.po.SystemResourceDO">
+        SELECT
+            t2.id,
+            t2.type,
+            t2.name,
+            t2.code,
+            t2.path,
+            t2.component,
+            t2.permission,
+            t2.icon,
+            t2.sort,
+            t2.enabled,
+            t2.deleted,
+            t2.created_time,
+            t2.updated_time,
+            t2.created_by,
+            t2.updated_by
+        FROM sys_role_resource t1
+        JOIN sys_resource t2
+            ON t1.resource_id = t2.id
+        WHERE
+            t1.role_id = #{roleId}
+        ORDER BY t2.sort DESC
     </select>
 
 </mapper>

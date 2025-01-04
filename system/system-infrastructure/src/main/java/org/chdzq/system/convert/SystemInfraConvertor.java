@@ -4,6 +4,7 @@ import org.chdzq.system.entity.Resource;
 import org.chdzq.system.entity.Role;
 import org.chdzq.system.entity.User;
 import org.chdzq.system.query.model.ResourceTreeVO;
+import org.chdzq.system.query.model.ResourceVO;
 import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.repository.po.SystemResourceDO;
@@ -62,6 +63,10 @@ public interface SystemInfraConvertor {
     ResourceTreeVO resourceDo2ResourceTreeVO(SystemResourceDO resourceDO);
 
     List<ResourceTreeVO> resourceDo2ResourceTreeVOList(List<SystemResourceDO> resourceDOList);
+
+    ResourceVO resourceDo2ResourceVO(SystemResourceDO resourceDO);
+
+    List<ResourceVO> resourceDo2ResourceVOList(List<SystemResourceDO> resourceDOList);
 
 
     @Mapping(target = "status", source = "role.status.code")

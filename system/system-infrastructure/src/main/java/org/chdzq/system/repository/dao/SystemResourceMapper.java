@@ -1,11 +1,11 @@
 package org.chdzq.system.repository.dao;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.chdzq.common.mybatis.core.mapper.BaseMapperX;
-import org.chdzq.system.query.ResourcePageQuery;
 import org.chdzq.system.repository.po.SystemResourceDO;
+
+import java.util.List;
 
 /**
  * 资源
@@ -35,4 +35,12 @@ public interface SystemResourceMapper extends BaseMapperX<SystemResourceDO> {
      */
     Long selectResourceIdByName(@Param("parentId")Long parentId,
                                 @Param("name")String name);
+
+
+    /**
+     * 根据 角色Id 查询所有的资源
+     * @param roleId 角色id
+     * @return
+     */
+    List<SystemResourceDO> selectByRoleId(@Param("roleId") Long roleId);
 }

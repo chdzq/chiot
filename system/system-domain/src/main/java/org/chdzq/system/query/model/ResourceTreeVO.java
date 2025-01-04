@@ -50,12 +50,6 @@ public class ResourceTreeVO implements TreeInterface<Long, ResourceTreeVO> {
      * 组件路径(vue页面完整路径，省略.vue后缀)
      */
     private String component;
-
-    /**
-     * 显示状态(1:显示;0:隐藏)
-     */
-    private Integer enabled;
-
     /**
      * 子节点列表
      */

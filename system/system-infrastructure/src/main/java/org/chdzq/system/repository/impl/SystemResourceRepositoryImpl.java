@@ -4,7 +4,7 @@ import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
 import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.entity.Resource;
-import org.chdzq.system.repository.ResourceRepository;
+import org.chdzq.system.repository.SystemResourceService;
 import org.chdzq.system.repository.dao.SystemResourceMapper;
 import org.chdzq.system.repository.po.SystemResourceDO;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.Objects;
  * @date 2025/1/2 09:43
  */
 @Service
-public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMapper, SystemResourceDO> implements ResourceRepository {
+public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMapper, SystemResourceDO> implements SystemResourceService {
     @Override
     public Boolean isExistByKey(Long id) {
         Serializable existedByKey = baseMapper.isExistedByKey(WrapperX.<SystemResourceDO>lambdaQuery()
@@ -89,5 +89,10 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
     @Override
     public Long getResourceIdByName(Long parentId, String name) {
         return baseMapper.selectResourceIdByName(parentId, name);
+    }
+
+    @Override
+    public List<SystemResourceDO> getByRoleId(Long roleId) {
+        return baseMapper.selectByRoleId(roleId);
     }
 }
