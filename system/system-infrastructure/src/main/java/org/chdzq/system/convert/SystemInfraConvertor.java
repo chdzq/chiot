@@ -68,6 +68,10 @@ public interface SystemInfraConvertor {
 
     List<ResourceVO> resourceDo2ResourceVOList(List<SystemResourceDO> resourceDOList);
 
+    Resource resourceDo2Resource(SystemResourceDO resourceDO);
+
+    List<Resource> resourceDo2ResourceList(List<SystemResourceDO> resourceDOList);
+
 
     @Mapping(target = "status", source = "role.status.code")
     SystemRoleDO role2RoleDO(Role role);

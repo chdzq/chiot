@@ -1,7 +1,9 @@
 package org.chdzq.system.command;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Value;
 import org.chdzq.common.core.ddd.ICommand;
 import org.chdzq.common.core.utils.Assert;
@@ -22,7 +24,7 @@ import java.util.List;
  * @version 1.0
  * @date 2025/1/3 09:24
  */
-@Value
+@Data
 @Builder
 public class RoleAuthorizeCommand implements ICommand<Role, Long> {
 
@@ -30,13 +32,20 @@ public class RoleAuthorizeCommand implements ICommand<Role, Long> {
      * 角色名称
      */
     @NotNull(message = "角色ID不能为空")
-    Long roleId;
+    private Long roleId;
 
     /**
      * 资源列表
      */
     @NotNull(message = "资源列表不能为空")
-    List<Long> resourceIds;
+    private List<Long> resourceIds;
+
+    /**
+     * @ignore
+     * 资源列表
+     */
+    @JsonIgnore
+    private List<Resource> resources;
 
 
     /**
@@ -52,23 +61,18 @@ public class RoleAuthorizeCommand implements ICommand<Role, Long> {
         Assert.isTrue(exist, "角色不存在");
 
         if (!CollectionUtils.isEmpty(resourceIds)) {
-            Boolean existByKeys = resourceRepository.isExistByKeys(resourceIds);
-            Assert.isTrue(existByKeys, "资源列表不一致");
+            List<Resource> resources = resourceRepository.getResources(resourceIds);
+            resources.forEach((resource) -> {
+                Assert.isTrue(resourceIds.contains(resource.getId()), String.format("资源:%s不存在", resource.getCode()));
+            });
+            this.resources = resources;
+        } else {
+            resources = new ArrayList<>();
         }
     }
 
     @Override
     public Role buildEntity() {
-        List<Resource> resources;
-        if (CollectionUtils.isEmpty(resourceIds)) {
-            resources = new ArrayList<>();
-        } else {
-            resources = resourceIds.stream().map((resourceId) -> {
-                Resource r = new Resource();
-                r.setId(resourceId);
-                return r;
-            }).toList();
-        }
         return Role.builder()
                 .id(roleId)
                 .resource(resources)

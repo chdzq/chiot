@@ -19,12 +19,11 @@ import java.util.*;
  * @version 1.0
  * @date 2025/1/2 09:34
  */
-@Service("ss")
 @RequiredArgsConstructor
 @Slf4j
 public class PermissionService {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     /**
      * 判断当前登录用户是否拥有操作权限
@@ -32,7 +31,7 @@ public class PermissionService {
      * @param requiredPerm 所需权限
      * @return 是否有权限
      */
-    public Boolean hasPerm(String requiredPerm) {
+    public Boolean permit(String requiredPerm) {
 
         if (!StringUtils.hasText(requiredPerm)) {
             return Boolean.FALSE;

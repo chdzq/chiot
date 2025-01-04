@@ -5,10 +5,12 @@ import org.apache.logging.log4j.util.Strings;
 import org.chdzq.common.core.constants.JwtClaimConstant;
 import org.chdzq.common.security.exception.ChiotAccessDeniedHandler;
 import org.chdzq.common.security.exception.ChiotAuthenticationEntryPoint;
+import org.chdzq.common.security.service.PermissionService;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,6 +25,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -101,5 +104,10 @@ public class ResourceServerConfig {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
+    }
+
+    @Bean("ps")
+    public PermissionService permissionService(RedisTemplate<Object, Object> redisTemplate) {
+        return new PermissionService(redisTemplate);
     }
 }

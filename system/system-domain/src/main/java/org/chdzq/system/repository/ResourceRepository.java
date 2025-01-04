@@ -60,4 +60,11 @@ public interface ResourceRepository extends IBaseRepository<Resource, Long> {
      * @return 主键
      */
     Long getResourceIdByName(Long parentId, String name);
+
+    /**
+     * 根据ID列表查询资源列表
+     * @param resourceIds
+     * @return
+     */
+    List<Resource> getResources(List<Long> resourceIds);
 }

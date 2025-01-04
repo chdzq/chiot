@@ -57,6 +57,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void authorize(RoleAuthorizeCommand command) {
         //1 校验
         command.validate(roleRepository, resourceRepository);

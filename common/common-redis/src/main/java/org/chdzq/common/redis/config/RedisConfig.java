@@ -23,19 +23,19 @@ public class RedisConfig {
      * @param redisConnectionFactory {@link RedisConnectionFactory}
      * @return {@link RedisTemplate}
      */
-//    @Bean
-//    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-//
-//        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
-//        redisTemplate.setConnectionFactory(redisConnectionFactory);
-//
-//        redisTemplate.setKeySerializer(RedisSerializer.string());
-//        redisTemplate.setValueSerializer(RedisSerializer.json());
-//
-//        redisTemplate.setHashKeySerializer(RedisSerializer.string());
-//        redisTemplate.setHashValueSerializer(RedisSerializer.json());
-//
-//        redisTemplate.afterPropertiesSet();
-//        return redisTemplate;
-//    }
+    @Bean
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+
+        redisTemplate.setKeySerializer(RedisSerializer.string());
+        redisTemplate.setValueSerializer(RedisSerializer.json());
+
+        redisTemplate.setHashKeySerializer(RedisSerializer.string());
+        redisTemplate.setHashValueSerializer(RedisSerializer.json());
+
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+    }
 }

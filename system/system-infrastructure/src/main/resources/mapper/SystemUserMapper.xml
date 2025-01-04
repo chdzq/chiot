@@ -18,7 +18,7 @@
                     ofType="string"
                     javaType="java.util.Set"
                     columnPrefix="role_">
-                    <result column="code"/>
+            <result column="code"/>
         </collection>
     </resultMap>
 

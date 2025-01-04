@@ -1,12 +1,9 @@
 package org.chdzq.system.repository.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.SystemRoleResourceService;
-import org.chdzq.system.repository.dao.SystemRoleMapper;
 import org.chdzq.system.repository.dao.SystemRoleResourceMapper;
-import org.chdzq.system.repository.po.SystemResourceDO;
 import org.chdzq.system.repository.po.SystemRoleResourceDO;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
@@ -28,6 +25,10 @@ public class SystemRoleResourceServiceImpl extends ServiceImplX<SystemRoleResour
         if (roleId == null) {
             return;
         }
+        doSaveResourcesToDatabase(roleId, resources);
+    }
+
+    private void doSaveResourcesToDatabase(Long roleId, List<Resource> resources) {
         removeById(roleId);
         if (CollectionUtils.isEmpty(resources)) {
             return;

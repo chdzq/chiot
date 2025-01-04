@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -94,5 +95,14 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
     @Override
     public List<SystemResourceDO> getByRoleId(Long roleId) {
         return baseMapper.selectByRoleId(roleId);
+    }
+
+    @Override
+    public List<Resource> getResources(List<Long> resourceIds) {
+        if (CollectionUtils.isEmpty(resourceIds)) {
+            return new ArrayList<>();
+        }
+        List<SystemResourceDO> resources = listByIds(resourceIds);
+        return SystemInfraConvertor.INSTANCE.resourceDo2ResourceList(resources);
     }
 }
