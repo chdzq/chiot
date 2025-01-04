@@ -29,7 +29,7 @@ public class ResourceController {
      * @param command 命令
      */
     @PostMapping()
-    public void create(@RequestBody CreateResourceCommand command) {
+    public void create(@RequestBody ResourceCreateCommand command) {
         resourceService.create(command);
     }
 
@@ -41,7 +41,7 @@ public class ResourceController {
     @PutMapping(value = "/{resourceId}")
     public void update(
             @PathVariable("resourceId") Long resourceId,
-            @RequestBody UpdateResourceCommand command) {
+            @RequestBody ResourceUpdateCommand command) {
         command.setId(resourceId);
         resourceService.update(command);
     }
@@ -52,7 +52,7 @@ public class ResourceController {
      */
     @DeleteMapping(value = "/{resourceId}")
     public void delete(@PathVariable("resourceId") Long resourceId) {
-        resourceService.delete(new DeleteResourceCommand(resourceId));
+        resourceService.delete(new ResourceDeleteCommand(resourceId));
     }
 
     /**

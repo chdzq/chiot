@@ -1,8 +1,8 @@
 package org.chdzq.system.service;
 
-import org.chdzq.system.command.CreateUserCommand;
-import org.chdzq.system.command.DeleteUserCommand;
-import org.chdzq.system.command.UpdateUserCommand;
+import org.chdzq.system.command.UserCreateCommand;
+import org.chdzq.system.command.UserDeleteCommand;
+import org.chdzq.system.command.UserUpdateCommand;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
 
@@ -27,18 +27,18 @@ public interface UserService {
      * 创建用户
      * @param cmd
      */
-    void create(CreateUserCommand cmd);
+    void create(UserCreateCommand cmd);
 
     /**
      * 更新用户
      * @param cmd
      */
-    void update(UpdateUserCommand cmd);
+    void update(UserUpdateCommand cmd);
 
     /**
      * 删除用户
      * @param cmd
      */
-    void delete(DeleteUserCommand cmd);
+    void delete(UserDeleteCommand cmd);
 
 }

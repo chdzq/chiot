@@ -2,9 +2,9 @@ package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.chdzq.system.adapter.PasswordCoder;
-import org.chdzq.system.command.CreateUserCommand;
-import org.chdzq.system.command.DeleteUserCommand;
-import org.chdzq.system.command.UpdateUserCommand;
+import org.chdzq.system.command.UserCreateCommand;
+import org.chdzq.system.command.UserDeleteCommand;
+import org.chdzq.system.command.UserUpdateCommand;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.Password;
 import org.chdzq.system.entity.User;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void create(@Validated CreateUserCommand cmd) {
+    public void create(@Validated UserCreateCommand cmd) {
         cmd.validate(userRepository);
         User user = cmd.buildEntity();
 
@@ -53,14 +53,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(@Validated UpdateUserCommand cmd) {
+    public void update(@Validated UserUpdateCommand cmd) {
         cmd.validate(userRepository);
         User user = cmd.buildEntity();
         userRepository.update(user);
     }
 
     @Override
-    public void delete(DeleteUserCommand cmd) {
+    public void delete(UserDeleteCommand cmd) {
         cmd.validate(userRepository);
         userRepository.delete(cmd.buildEntity());
     }

@@ -1,9 +1,9 @@
 package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.chdzq.system.command.CreateResourceCommand;
-import org.chdzq.system.command.DeleteResourceCommand;
-import org.chdzq.system.command.UpdateResourceCommand;
+import org.chdzq.system.command.ResourceCreateCommand;
+import org.chdzq.system.command.ResourceDeleteCommand;
+import org.chdzq.system.command.ResourceUpdateCommand;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.ResourceRepository;
 import org.chdzq.system.service.ResourceService;
@@ -27,7 +27,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void create(CreateResourceCommand cmd) {
+    public void create(ResourceCreateCommand cmd) {
         cmd.validate(resourceRepository);
         Resource entity = cmd.buildEntity();
         if (
@@ -46,7 +46,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void update(UpdateResourceCommand cmd) {
+    public void update(ResourceUpdateCommand cmd) {
         cmd.validate(resourceRepository);
 
         Resource entity = cmd.buildEntity();
@@ -59,7 +59,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void delete(DeleteResourceCommand cmd) {
+    public void delete(ResourceDeleteCommand cmd) {
         cmd.validate(resourceRepository);
         Resource resource = cmd.buildEntity();
         resourceRepository.delete(resource);

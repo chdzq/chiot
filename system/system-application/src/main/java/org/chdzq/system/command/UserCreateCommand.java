@@ -29,7 +29,7 @@ import java.util.Objects;
  * @date 2024/12/12 10:40
  */
 @Data
-public class CreateUserCommand implements ICommand<User, Long> {
+public class UserCreateCommand implements ICommand<User, Long> {
     /**
      * 账户名
      * 必填

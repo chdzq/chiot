@@ -16,7 +16,7 @@ import org.chdzq.system.repository.UserRepository;
  * @date 2024/12/12 20:04
  */
 @Data
-public class DeleteUserCommand implements ICommand<User, Long> {
+public class UserDeleteCommand implements ICommand<User, Long> {
 
     /**
      * 用户Id
@@ -24,7 +24,7 @@ public class DeleteUserCommand implements ICommand<User, Long> {
     @NotBlank(message = "主键不能为空")
     private Long id;
 
-    public DeleteUserCommand(Long id) {
+    public UserDeleteCommand(Long id) {
         this.id = id;
     }
 

@@ -29,7 +29,7 @@ import java.util.Objects;
  * @date 2024/12/12 13:36
  */
 @Data
-public class UpdateUserCommand implements ICommand<User, Long> {
+public class UserUpdateCommand implements ICommand<User, Long> {
 
     /**
      * 用户Id

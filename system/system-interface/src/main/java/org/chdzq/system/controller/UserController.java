@@ -2,9 +2,9 @@ package org.chdzq.system.controller;
 
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.entity.Page;
-import org.chdzq.system.command.CreateUserCommand;
-import org.chdzq.system.command.DeleteUserCommand;
-import org.chdzq.system.command.UpdateUserCommand;
+import org.chdzq.system.command.UserCreateCommand;
+import org.chdzq.system.command.UserDeleteCommand;
+import org.chdzq.system.command.UserUpdateCommand;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.query.UserPageQuery;
@@ -36,7 +36,7 @@ public class UserController {
      * @param cmd 命令
      */
     @PostMapping()
-    public void createUser(@RequestBody CreateUserCommand cmd) {
+    public void createUser(@RequestBody UserCreateCommand cmd) {
         userService.create(cmd);
     }
 
@@ -48,7 +48,7 @@ public class UserController {
     @PutMapping(value = "/{userId}")
     public void updateUser(
             @PathVariable("userId") Long userId,
-            @RequestBody UpdateUserCommand cmd) {
+            @RequestBody UserUpdateCommand cmd) {
         cmd.setId(userId);
         userService.update(cmd);
     }
@@ -59,7 +59,7 @@ public class UserController {
      */
     @DeleteMapping(value = "/{userId}")
     public void deleteUser(@PathVariable("userId") Long userId) {
-        userService.delete(new DeleteUserCommand(userId));
+        userService.delete(new UserDeleteCommand(userId));
     }
 
     /**

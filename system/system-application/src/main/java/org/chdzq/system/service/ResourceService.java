@@ -15,17 +15,17 @@ public interface ResourceService {
      * 创建
      * @param cmd
      */
-    void create(CreateResourceCommand cmd);
+    void create(ResourceCreateCommand cmd);
 
     /**
      * 更新
      * @param cmd
      */
-    void update(UpdateResourceCommand cmd);
+    void update(ResourceUpdateCommand cmd);
 
     /**
      * 删除
      * @param cmd
      */
-    void delete(DeleteResourceCommand cmd);
+    void delete(ResourceDeleteCommand cmd);
 }

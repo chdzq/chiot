@@ -16,13 +16,13 @@ import org.chdzq.system.repository.RoleRepository;
  * @date 2025/1/2 16:56
  */
 @Value
-public class DeleteRoleCommand implements ICommand<Role, Long> {
+public class RoleDeleteCommand implements ICommand<Role, Long> {
     /**
      * 用户Id
      */
     Long id;
 
-    public DeleteRoleCommand(
+    public RoleDeleteCommand(
             @NotBlank(message = "主键不能为空") Long id)
     {
         this.id = id;

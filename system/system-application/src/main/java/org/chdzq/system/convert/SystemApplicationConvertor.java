@@ -1,8 +1,8 @@
 package org.chdzq.system.convert;
 
 import org.chdzq.common.core.enums.StatusEnum;
-import org.chdzq.system.command.CreateRoleCommand;
-import org.chdzq.system.command.UpdateRoleCommand;
+import org.chdzq.system.command.RoleCreateCommand;
+import org.chdzq.system.command.RoleUpdateCommand;
 import org.chdzq.system.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -20,7 +20,7 @@ public interface SystemApplicationConvertor {
 
     SystemApplicationConvertor INSTANCE = Mappers.getMapper(SystemApplicationConvertor.class);
 
-    Role roleCreateCommand2Dto(CreateRoleCommand command);
+    Role roleCreateCommand2Dto(RoleCreateCommand command);
 
-    Role roleUpdateCommand2Dto(UpdateRoleCommand command);
+    Role roleUpdateCommand2Dto(RoleUpdateCommand command);
 }

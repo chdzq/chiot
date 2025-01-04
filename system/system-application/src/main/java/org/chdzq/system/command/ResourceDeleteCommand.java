@@ -1,15 +1,12 @@
 package org.chdzq.system.command;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
 import lombok.Value;
 import org.chdzq.common.core.ddd.ICommand;
 import org.chdzq.common.core.utils.Assert;
 import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.system.entity.Resource;
-import org.chdzq.system.entity.Role;
 import org.chdzq.system.repository.ResourceRepository;
-import org.chdzq.system.repository.RoleRepository;
 
 /**
  * 删除资源
@@ -19,14 +16,14 @@ import org.chdzq.system.repository.RoleRepository;
  * @date 2024/12/31 11:19
  */
 @Value
-public class DeleteResourceCommand implements ICommand<Resource, Long> {
+public class ResourceDeleteCommand implements ICommand<Resource, Long> {
 
     /**
      * 用户Id
      */
     Long id;
 
-    public DeleteResourceCommand(
+    public ResourceDeleteCommand(
             @NotBlank(message = "主键不能为空") Long id)
     {
         this.id = id;

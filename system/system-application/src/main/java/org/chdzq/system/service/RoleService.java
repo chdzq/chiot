@@ -14,19 +14,19 @@ public interface RoleService {
      * 创建
      * @param cmd
      */
-    void create(CreateRoleCommand cmd);
+    void create(RoleCreateCommand cmd);
 
     /**
      * 更新
      * @param cmd
      */
-    void update(UpdateRoleCommand cmd);
+    void update(RoleUpdateCommand cmd);
 
     /**
      * 删除
      * @param cmd
      */
-    void delete(DeleteRoleCommand cmd);
+    void delete(RoleDeleteCommand cmd);
 
 
     /**

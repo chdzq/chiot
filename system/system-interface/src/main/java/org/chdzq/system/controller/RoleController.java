@@ -2,10 +2,10 @@ package org.chdzq.system.controller;
 
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.entity.Page;
-import org.chdzq.system.command.CreateRoleCommand;
-import org.chdzq.system.command.DeleteRoleCommand;
+import org.chdzq.system.command.RoleCreateCommand;
+import org.chdzq.system.command.RoleDeleteCommand;
 import org.chdzq.system.command.RoleAuthorizeCommand;
-import org.chdzq.system.command.UpdateRoleCommand;
+import org.chdzq.system.command.RoleUpdateCommand;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.service.RoleQueryService;
@@ -35,7 +35,7 @@ public class RoleController {
      * @param command 命令
      */
     @PostMapping()
-    public void create(@RequestBody CreateRoleCommand command) {
+    public void create(@RequestBody RoleCreateCommand command) {
         roleService.create(command);
     }
 
@@ -47,7 +47,7 @@ public class RoleController {
     @PutMapping(value = "/{roleId}")
     public void update(
             @PathVariable("roleId") Long roleId,
-            @RequestBody UpdateRoleCommand command) {
+            @RequestBody RoleUpdateCommand command) {
         command.setId(roleId);
         roleService.update(command);
     }
@@ -58,7 +58,7 @@ public class RoleController {
      */
     @DeleteMapping(value = "/{roleId}")
     public void delete(@PathVariable("roleId") Long roleId) {
-        roleService.delete(new DeleteRoleCommand(roleId));
+        roleService.delete(new RoleDeleteCommand(roleId));
     }
 
     /**
