@@ -3,6 +3,8 @@ package org.chdzq.system.command;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.chdzq.common.core.utils.Assert;
+import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.system.entity.Role;
 import org.chdzq.system.entity.User;
 import org.chdzq.common.core.ddd.ICommand;
@@ -12,6 +14,7 @@ import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.common.core.vo.EmailNumber;
 import org.chdzq.common.core.vo.PhoneNumber;
+import org.chdzq.system.repository.UserRepository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -26,7 +29,7 @@ import java.util.Objects;
  * @date 2024/12/12 10:40
  */
 @Data
-public class CreateUserCommand implements ICommand {
+public class CreateUserCommand implements ICommand<User, Long> {
     /**
      * 账户名
      * 必填
@@ -78,8 +81,20 @@ public class CreateUserCommand implements ICommand {
      */
     private Integer dataScope;
 
+    /**
+     * 校验
+     * @param userRepository 仓库
+     */
+    public void validate(UserRepository userRepository) {
+        ValidationUtil.validate(this);
 
-    public User toEntity() {
+        //查询是否存在当前用户
+        Boolean available = userRepository.isUsernameAvailable(username);
+        Assert.isTrue(available, "当前用户名已存在");
+    }
+
+    @Override
+    public User buildEntity() {
         User obj = new User();
         obj.setUsername(username);
         obj.setNickname(nickname);

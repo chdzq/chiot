@@ -85,10 +85,10 @@ public class SystemRoleRepositoryImpl extends ServiceImplX<SystemRoleMapper, Sys
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (Objects.isNull(id)) {
+    public void delete(Role entity) {
+        if (Objects.isNull(entity.getId())) {
             return;
         }
-        removeById(id);
+        removeById(entity.getId());
     }
 }

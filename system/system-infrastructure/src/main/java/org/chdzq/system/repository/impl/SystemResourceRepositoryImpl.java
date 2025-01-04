@@ -62,11 +62,11 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (Objects.isNull(id)) {
+    public void delete(Resource entity) {
+        if (Objects.isNull(entity.getId())) {
             return;
         }
-        removeById(id);
+        removeById(entity.getId());
     }
 
     @Override

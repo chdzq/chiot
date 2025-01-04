@@ -61,11 +61,11 @@ public class SystemUserRepositoryImpl extends ServiceImplX<SystemUserMapper, Sys
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (Objects.isNull(id)) {
+    public void delete(User user) {
+        if (Objects.isNull(user.getId())) {
             return;
         }
-        removeById(id);
+        removeById(user.getId());
     }
 
     @Override

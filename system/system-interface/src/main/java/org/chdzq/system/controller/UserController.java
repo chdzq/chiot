@@ -98,6 +98,4 @@ public class UserController {
                 .build();
         return userQueryService.page(query);
     }
-
-
 }

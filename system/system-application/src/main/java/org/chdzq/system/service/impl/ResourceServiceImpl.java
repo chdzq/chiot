@@ -1,9 +1,9 @@
 package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.chdzq.common.core.utils.Assert;
-import org.chdzq.common.core.utils.ValidationUtil;
-import org.chdzq.system.command.*;
+import org.chdzq.system.command.CreateResourceCommand;
+import org.chdzq.system.command.DeleteResourceCommand;
+import org.chdzq.system.command.UpdateResourceCommand;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.ResourceRepository;
 import org.chdzq.system.service.ResourceService;
@@ -28,24 +28,15 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void create(CreateResourceCommand cmd) {
-        ValidationUtil.validate(cmd);
-        Resource entity = cmd.toEntity();
+        cmd.validate(resourceRepository);
+        Resource entity = cmd.buildEntity();
         if (
                 Objects.isNull(entity.getParentId()) ||
                 Objects.equals(entity.getParentId(), 0L)) {
             //说明是顶级节点
-            entity.setParentId(0L);
             entity.setPermission(cmd.getCode());
         } else {
             Long parentId = entity.getParentId();
-            Assert.isTrue(resourceRepository.isExistByKey(parentId), "父节点不存在");
-
-            Long resourceIdByCode = resourceRepository.getResourceIdByCode(parentId, entity.getCode());
-            Assert.isNull(resourceIdByCode, "资源编码已经存在");
-
-            Long resourceIdByName = resourceRepository.getResourceIdByName(parentId, entity.getName());
-            Assert.isNull(resourceIdByName, "资源名称已经存在");
-
             String permission = resourceRepository.getPermissionByKey(parentId);
             entity.setPermission(permission + ":" + cmd.getCode());
         }
@@ -56,26 +47,10 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(UpdateResourceCommand cmd) {
-        ValidationUtil.validate(cmd);
-        Long id = cmd.getId();
-        Assert.isTrue(resourceRepository.isExistByKey(id), "资源不存在");
-        Resource entity = cmd.toEntity();
+        cmd.validate(resourceRepository);
 
+        Resource entity = cmd.buildEntity();
         Long parentId = resourceRepository.getParentIdByKey(entity.getId());
-        entity.setParentId(parentId);
-
-        Assert.isTrue(resourceRepository.isExistByKey(parentId), "父节点不存在");
-
-        Long resourceIdByCode = resourceRepository.getResourceIdByCode(parentId, entity.getCode());
-        Assert.isTrue(
-                Objects.isNull(resourceIdByCode) || !Objects.equals(id, resourceIdByCode),
-                "资源编码已经存在");
-
-        Long resourceIdByName = resourceRepository.getResourceIdByName(parentId, entity.getName());
-        Assert.isTrue(
-                Objects.isNull(resourceIdByName) || Objects.equals(id, resourceIdByName),
-                "资源名称已经存在");
-
         String permission = resourceRepository.getPermissionByKey(parentId);
         entity.setPermission(permission + ":" + cmd.getCode());
 
@@ -85,10 +60,8 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void delete(DeleteResourceCommand cmd) {
-        ValidationUtil.validate(cmd);
-        Long id = cmd.getId();
-        Boolean exist = resourceRepository.isExistByKey(id);
-        Assert.isTrue(exist, "资源不存在");
-        resourceRepository.deleteById(id);
+        cmd.validate(resourceRepository);
+        Resource resource = cmd.buildEntity();
+        resourceRepository.delete(resource);
     }
 }

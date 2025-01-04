@@ -2,13 +2,17 @@ package org.chdzq.system.command;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
 import org.chdzq.common.core.ddd.ICommand;
 import org.chdzq.common.core.enums.ResourceEnum;
 import org.chdzq.common.core.enums.StatusEnum;
+import org.chdzq.common.core.utils.Assert;
+import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.system.entity.Resource;
+import org.chdzq.system.repository.ResourceRepository;
+
+import java.util.Objects;
 
 /**
  * 更新资源
@@ -18,7 +22,7 @@ import org.chdzq.system.entity.Resource;
  * @date 2024/12/31 11:18
  */
 @Data
-public class UpdateResourceCommand implements ICommand {
+public class UpdateResourceCommand implements ICommand<Resource, Long> {
     /**
      * 资源ID
      */
@@ -74,8 +78,34 @@ public class UpdateResourceCommand implements ICommand {
      */
     private String icon;
 
-    public Resource toEntity() {
+    /**
+     * 校验
+     * @param resourceRepository 仓库
+     */
+    public void validate(ResourceRepository resourceRepository) {
+        ValidationUtil.validate(this);
+
+        Assert.isTrue(resourceRepository.isExistByKey(id), "资源不存在");
+
+        Long parentId = resourceRepository.getParentIdByKey(id);
+
+        Assert.isTrue(resourceRepository.isExistByKey(parentId), "父节点不存在");
+
+        Long resourceIdByCode = resourceRepository.getResourceIdByCode(parentId, code);
+        Assert.isTrue(
+                Objects.isNull(resourceIdByCode) || !Objects.equals(id, resourceIdByCode),
+                "资源编码已经存在");
+
+        Long resourceIdByName = resourceRepository.getResourceIdByName(parentId, name);
+        Assert.isTrue(
+                Objects.isNull(resourceIdByName) || Objects.equals(id, resourceIdByName),
+                "资源名称已经存在");
+    }
+
+    @Override
+    public Resource buildEntity() {
         Resource resource = new Resource();
+        resource.setId(id);
         resource.setName(name);
         resource.setCode(code);
         resource.setType(ResourceEnum.getByCode(type));

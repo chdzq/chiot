@@ -12,20 +12,20 @@ import java.io.Serializable;
 public interface IBaseRepository<T extends IBaseEntity<ID>, ID extends Serializable> {
     /**
      * 创建
-     * @param entity
+     * @param entity 实体
      */
     void create(T entity);
 
     /**
      * 更新
-     * @param entity
+     * @param entity 实体
      */
     void update(T entity);
 
     /**
      * 删除
-     * @param id
+     * @param entity 实体
      */
-    void deleteById(ID id);
+    void delete(T entity);
 
 }

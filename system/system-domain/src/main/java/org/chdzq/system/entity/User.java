@@ -1,6 +1,9 @@
 package org.chdzq.system.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.chdzq.common.core.ddd.IBaseEntity;
 import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
@@ -18,6 +21,9 @@ import java.util.List;
  * @date 2024/11/28 01:23
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements IBaseEntity<Long> {
     /**
      * 用户id
@@ -83,4 +89,5 @@ public class User implements IBaseEntity<Long> {
     public Long getIdentifier() {
         return id;
     }
+
 }

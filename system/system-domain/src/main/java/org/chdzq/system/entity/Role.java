@@ -40,7 +40,7 @@ public class Role implements IBaseEntity<Long> {
     /**
      * 角色状态(1-正常；0-停用)
      */
-    private StatusEnum status;
+    private StatusEnum status = StatusEnum.ENABLE;
 
     /**
      * 资源列表
@@ -60,12 +60,12 @@ public class Role implements IBaseEntity<Long> {
     }
 
     @Builder
-    public Role(Long id, String name, String code, Integer sort, StatusEnum status, List<Resource> resource) {
+    public Role(Long id, String name, String code, Integer sort, Integer status, List<Resource> resource) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.sort = sort;
-        this.status = status;
+        this.status = StatusEnum.getByCode(status);
         this.resource = resource;
     }
 }

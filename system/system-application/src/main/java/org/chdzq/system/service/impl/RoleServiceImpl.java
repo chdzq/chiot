@@ -1,6 +1,5 @@
 package org.chdzq.system.service.impl;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.utils.Assert;
 import org.chdzq.common.core.utils.ValidationUtil;
@@ -37,14 +36,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(CreateRoleCommand cmd) {
-        ValidationUtil.validate(cmd);
-        Long idByCode = roleRepository.getIdByCode(cmd.getCode());
-        Assert.isNull(idByCode, "角色编码已存在");
+        cmd.validate(roleRepository);
 
-        Long idByName = roleRepository.getIdByName(cmd.getName());
-        Assert.isNull(idByName, "角色名称已存在");
-
-        Role role = SystemApplicationConvertor.INSTANCE.roleCreateCommand2Dto(cmd);
+        Role role = cmd.buildEntity();
 
         roleRepository.create(role);
     }
@@ -52,22 +46,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(UpdateRoleCommand cmd) {
-        ValidationUtil.validate(cmd);
-        Long id = cmd.getId();
 
-        Boolean exist = roleRepository.isExistByKey(id);
-        Assert.isTrue(exist, "角色不存在");
-        if (StringUtils.hasText(cmd.getCode())) {
-            Long idByCode = roleRepository.getIdByCode(cmd.getCode());
-            Assert.isTrue(Objects.isNull(idByCode) || Objects.equals(id, idByCode), "角色编码已存在");
-        }
+        cmd.validate(roleRepository);
 
-        if (StringUtils.hasText(cmd.getName())) {
-            Long idByName = roleRepository.getIdByName(cmd.getName());
-            Assert.isTrue(Objects.isNull(idByName) || Objects.equals(id, idByName), "角色名称已存在");
-        }
-
-        Role role = SystemApplicationConvertor.INSTANCE.roleUpdateCommand2Dto(cmd);
+        Role role = cmd.buildEntity();
 
         roleRepository.update(role);
     }
@@ -75,11 +57,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(DeleteRoleCommand cmd) {
-        ValidationUtil.validate(cmd);
-        Long id = cmd.getId();
-        Boolean exist = roleRepository.isExistByKey(id);
-        Assert.isTrue(exist, "角色不存在");
-        roleRepository.deleteById(cmd.getId());
+        cmd.validate(roleRepository);
+        Role role = cmd.buildEntity();
+        roleRepository.delete(role);
     }
 
     @Override
@@ -88,7 +68,7 @@ public class RoleServiceImpl implements RoleService {
         command.validate(roleRepository, resourceRepository);
 
         //2.更新
-        Role role = command.toEntity();
+        Role role = command.buildEntity();
         roleRepository.update(role);
     }
 }

@@ -1,5 +1,6 @@
 package org.chdzq.system.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.chdzq.common.core.ddd.IBaseEntity;
 import org.chdzq.common.core.enums.ResourceEnum;
@@ -72,5 +73,27 @@ public class Resource implements IBaseEntity<Long> {
     @Override
     public Long getIdentifier() {
         return id;
+    }
+
+    public Resource() {
+    }
+
+    public Resource(Long id) {
+        this.id = id;
+    }
+
+    @Builder
+    public Resource(Long id, Long parentId, String name, String code, Integer type, String path, String component, String permission, Integer enabled, Integer sort, String icon) {
+        this.id = id;
+        this.parentId = parentId;
+        this.name = name;
+        this.code = code;
+        this.type = ResourceEnum.getByCode(type);
+        this.path = path;
+        this.component = component;
+        this.permission = permission;
+        this.enabled = StatusEnum.getByCode(enabled);
+        this.sort = sort;
+        this.icon = icon;
     }
 }

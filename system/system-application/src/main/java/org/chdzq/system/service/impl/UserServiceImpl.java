@@ -1,21 +1,18 @@
 package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.chdzq.common.core.utils.Assert;
-import org.chdzq.common.core.utils.ValidationUtil;
-import org.chdzq.system.entity.Password;
+import org.chdzq.system.adapter.PasswordCoder;
 import org.chdzq.system.command.CreateUserCommand;
 import org.chdzq.system.command.DeleteUserCommand;
 import org.chdzq.system.command.UpdateUserCommand;
 import org.chdzq.system.entity.AuthInfo;
+import org.chdzq.system.entity.Password;
 import org.chdzq.system.entity.User;
 import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.repository.UserRepository;
-import org.chdzq.system.adapter.PasswordCoder;
 import org.chdzq.system.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -44,12 +41,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(@Validated CreateUserCommand cmd) {
-        ValidationUtil.validate(cmd);
-        User user = cmd.toEntity();
-
-        //查询是否存在当前用户
-        Boolean available = userRepository.isUsernameAvailable(user.getUsername());
-        Assert.isTrue(available, "当前用户名已存在");
+        cmd.validate(userRepository);
+        User user = cmd.buildEntity();
 
         // 设置默认加密密码
         String password = DEFAULT_PASSWORD;
@@ -61,27 +54,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(@Validated UpdateUserCommand cmd) {
-        ValidationUtil.validate(cmd);
-        User user = cmd.toEntity();
-
-        Boolean exist = userRepository.isExistByKey(user.getId());
-        Assert.isTrue(exist, "用户不存在");
-
-        //查询是否存在当前用户
-        if (StringUtils.hasText(user.getUsername())) {
-            Boolean available = userRepository.isUsernameAvailable(user.getId(), user.getUsername());
-            Assert.isTrue(available, "用户名不可用");
-        }
-
+        cmd.validate(userRepository);
+        User user = cmd.buildEntity();
         userRepository.update(user);
     }
 
     @Override
     public void delete(DeleteUserCommand cmd) {
-        ValidationUtil.validate(cmd);
-        Long id = cmd.getId();
-        Boolean exist = userRepository.isExistByKey(id);
-        Assert.isTrue(exist, "用户不存在");
-        userRepository.deleteById(id);
+        cmd.validate(userRepository);
+        userRepository.delete(cmd.buildEntity());
     }
 }

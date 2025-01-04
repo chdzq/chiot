@@ -6,10 +6,12 @@ import lombok.Data;
 import org.chdzq.common.core.ddd.ICommand;
 import org.chdzq.common.core.enums.ResourceEnum;
 import org.chdzq.common.core.enums.StatusEnum;
+import org.chdzq.common.core.utils.Assert;
+import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.ResourceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Objects;
 
 /**
  * 创建资源命令
@@ -20,13 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @Data
-public class CreateResourceCommand implements ICommand {
+public class CreateResourceCommand implements ICommand<Resource, Long> {
 
     /**
      * 父菜单ID
      */
     @NotNull(message = "父节点不能为空")
-    private Long parentId;
+    private Long parentId = 0L;
 
     /**
      * 菜单名称
@@ -73,9 +75,29 @@ public class CreateResourceCommand implements ICommand {
      */
     private String icon;
 
-    private ResourceRepository resourceRepository;
+    /**
+     * 校验
+     * @param resourceRepository 仓库
+     */
+    public void validate(ResourceRepository resourceRepository) {
+        ValidationUtil.validate(this);
 
-    public Resource toEntity() {
+        if (Objects.nonNull(parentId) && !Objects.equals(parentId, 0L)) {
+            //说明不是是顶级节点
+            Assert.isTrue(resourceRepository.isExistByKey(parentId), "父节点不存在");
+        } else {
+            parentId = 0L;
+        }
+
+        Long resourceIdByCode = resourceRepository.getResourceIdByCode(parentId, code);
+        Assert.isNull(resourceIdByCode, "资源编码已经存在");
+
+        Long resourceIdByName = resourceRepository.getResourceIdByName(parentId, name);
+        Assert.isNull(resourceIdByName, "资源名称已经存在");
+    }
+
+    @Override
+    public Resource buildEntity() {
         Resource resource = new Resource();
         resource.setParentId(parentId);
         resource.setName(name);

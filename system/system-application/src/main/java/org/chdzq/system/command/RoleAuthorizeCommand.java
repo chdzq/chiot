@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Value
 @Builder
-public class RoleAuthorizeCommand implements ICommand {
+public class RoleAuthorizeCommand implements ICommand<Role, Long> {
 
     /**
      * 角色名称
@@ -57,7 +57,8 @@ public class RoleAuthorizeCommand implements ICommand {
         }
     }
 
-    public Role toEntity() {
+    @Override
+    public Role buildEntity() {
         List<Resource> resources;
         if (CollectionUtils.isEmpty(resourceIds)) {
             resources = new ArrayList<>();
