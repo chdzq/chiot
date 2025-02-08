@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.endpoint.DefaultOAuth2AccessTokenResponseMapConverter;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AccessTokenAuthenticationToken;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.util.CollectionUtils;
@@ -67,9 +68,17 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             builder.additionalParameters(additionalParameters);
         }
         OAuth2AccessTokenResponse accessTokenResponse = builder.build();
-        Map<String, Object> tokenResponseParameters = ACCESS_TOKEN_CONVERTER.convert(accessTokenResponse);
+        Map<String, Object> tokenResponse = ACCESS_TOKEN_CONVERTER.convert(accessTokenResponse);
+
+        AuthenticationToken token = AuthenticationToken.builder()
+                .accessToken((String) tokenResponse.get(OAuth2ParameterNames.ACCESS_TOKEN))
+                .tokenType((String) tokenResponse.get(OAuth2ParameterNames.TOKEN_TYPE))
+                .refreshToken((String) tokenResponse.get(OAuth2ParameterNames.REFRESH_TOKEN))
+                .expiresIn((long)tokenResponse.get(OAuth2ParameterNames.EXPIRES_IN))
+                .build();
+
         ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
 
-        this.httpConverter.write(Result.ok(tokenResponseParameters), null, httpResponse);
+        this.httpConverter.write(Result.ok(token), null, httpResponse);
     }
 }

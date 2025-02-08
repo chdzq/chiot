@@ -9,12 +9,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.chdzq.authentication.oauth2.extension.password.PasswordAuthenticationConverter;
 import org.chdzq.authentication.oauth2.extension.password.PasswordAuthenticationProvider;
-import org.chdzq.authentication.oauth2.handler.CustomAuthenticationFailureHandler;
-import org.chdzq.authentication.oauth2.handler.CustomAuthenticationSuccessHandler;
+import org.chdzq.authentication.oauth2.handler.*;
 import org.chdzq.authentication.oauth2.oidc.CustomOidcAuthenticationConverter;
 import org.chdzq.authentication.oauth2.oidc.CustomOidcAuthenticationProvider;
 import org.chdzq.authentication.oauth2.oidc.CustomOidcUserInfoService;
 import org.chdzq.authentication.utils.RsaUtil;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -25,6 +25,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -34,8 +35,10 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.token.*;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
 import java.util.List;
@@ -105,7 +108,6 @@ public class AuthorizationServerConfig {
                                 }
                         )
                 );
-
         http.exceptionHandling((exceptions) -> exceptions
                         .defaultAuthenticationEntryPointFor(
                                 new LoginUrlAuthenticationEntryPoint("/login"),
