@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Setter
 @ConfigurationProperties(prefix = "security")
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @EnableWebFluxSecurity
 @Slf4j
 public class SecurityConfig {
