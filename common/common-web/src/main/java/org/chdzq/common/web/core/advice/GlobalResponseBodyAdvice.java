@@ -37,7 +37,7 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if (selectedContentType != MediaType.APPLICATION_JSON) {
+        if (!Objects.equals(selectedContentType, MediaType.APPLICATION_JSON)) {
             return body;
         }
         // 记录 Controller 结果
