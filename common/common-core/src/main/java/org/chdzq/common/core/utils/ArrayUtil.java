@@ -14,6 +14,10 @@ public class ArrayUtil {
         return array == null || array.length == 0;
     }
 
+    public static boolean isEmpty(byte[] array) {
+        return array == null || array.length == 0;
+    }
+
     public static boolean isNotEmpty(Object[] array) {
         return !isEmpty(array);
     }

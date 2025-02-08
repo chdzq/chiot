@@ -1,1 +1,2 @@
 org.chdzq.common.core.utils.SpringUtil
+org.chdzq.common.core.config.JacksonAutoConfiguration
