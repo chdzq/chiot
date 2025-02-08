@@ -3,7 +3,7 @@ package org.chdzq.system.service.impl;
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.entity.Page;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
-import org.chdzq.common.web.core.context.UserContext;
+import org.chdzq.common.security.utils.UserContext;
 import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
@@ -22,7 +22,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 用户查询服务

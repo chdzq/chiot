@@ -41,7 +41,7 @@ public class SystemRoleRepositoryImpl extends ServiceImplX<SystemRoleMapper, Sys
 
     private SystemRoleResourceService roleResourceService;
 
-    private RedisTemplate<Object, Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     @Override
