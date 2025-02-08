@@ -3,9 +3,8 @@ package org.chdzq.common.security.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.chdzq.common.core.constants.RedisConstant;
-import org.chdzq.common.security.utils.UserContextSecurityProvider;
+import org.chdzq.common.security.utils.UserContext;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
@@ -23,7 +22,7 @@ import java.util.*;
 @Slf4j
 public class PermissionService {
 
-    private final RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 判断当前登录用户是否拥有操作权限
@@ -37,12 +36,12 @@ public class PermissionService {
             return Boolean.FALSE;
         }
         // 超级管理员放行
-        if (UserContextSecurityProvider.isRoot()) {
+        if (UserContext.isRoot()) {
             return Boolean.TRUE;
         }
 
         // 获取当前登录用户的角色编码集合
-        Set<String> roleCodes = UserContextSecurityProvider.getRoles();
+        Set<String> roleCodes = UserContext.getRoles();
         if (CollectionUtils.isEmpty(roleCodes)) {
             return false;
         }

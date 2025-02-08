@@ -12,17 +12,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Spring Security 工具类
- *
+ * 用户上下文
  * @author chdzq
  * @version 1.0
- * @date 2024/11/27 15:12
+ * @date 2024/11/21 23:35
  */
+public class UserContext {
 
-public class UserContextSecurityProvider {
+    private UserContext() {}
 
-    private UserContextSecurityProvider(){}
-
+    /**
+     * 获取用户ID
+     * @return
+     */
     public static Long getUserId() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         return getLong(tokenAttributes.get(JwtClaimConstant.USER_ID));
@@ -71,7 +73,7 @@ public class UserContextSecurityProvider {
         return roles != null && roles.contains(SystemConstant.ROOT_ROLE_CODE);
     }
 
-    private static String getJti() {
+    public static String getJti() {
         Map<String, Object> tokenAttributes = getTokenAttributes();
         if (tokenAttributes != null) {
             return String.valueOf(tokenAttributes.get(JwtClaimConstant.JTI));

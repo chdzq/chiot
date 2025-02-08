@@ -107,7 +107,7 @@ public class ResourceServerConfig {
     }
 
     @Bean("ps")
-    public PermissionService permissionService(RedisTemplate<Object, Object> redisTemplate) {
+    public PermissionService permissionService(RedisTemplate<String, Object> redisTemplate) {
         return new PermissionService(redisTemplate);
     }
 }
