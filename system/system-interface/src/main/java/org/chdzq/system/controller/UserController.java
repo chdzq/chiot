@@ -72,33 +72,7 @@ public class UserController {
         return userService.getAuthInfo(new QueryAuthInfo(username));
     }
 
-    /**
-     * 分页获取用户列表
-     * @param pageNo 页面 默认为1
-     * @param pageSize 分页数量 默认为10
-     * @param keyword 搜索关键词
-     * @param status 状态
-     * @param startTime 搜索开始时间
-     * @param endTime 搜索结束时间
-     * @return
-     */
-    @GetMapping(value = "/page")
-    public Page<? extends UserVO> page(@RequestParam(name = "pageNo", required = false) Integer pageNo,
-                                       @RequestParam(name = "pageSize", required = false) Integer pageSize,
-                                       @RequestParam(name = "keyword", required = false) String keyword,
-                                       @RequestParam(name = "status", required = false) Integer status,
-                                       @RequestParam(name = "startTime", required = false) LocalDateTime startTime,
-                                       @RequestParam(name = "endTime", required = false) LocalDateTime endTime) {
-        UserPageQuery query = UserPageQuery.builder()
-                .pageNo(pageNo)
-                .pageSize(pageSize)
-                .keyword(keyword)
-                .status(status)
-                .endTime(endTime)
-                .startTime(startTime)
-                .build();
-        return userQueryService.page(query);
-    }
+
 
     /**
      * 查询当前用户的登录信息

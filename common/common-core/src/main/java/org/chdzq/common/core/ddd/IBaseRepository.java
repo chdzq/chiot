@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @version 1.0
  * @date 2024/11/28 02:01
  */
-public interface IBaseRepository<T extends IBaseEntity<ID>, ID extends Serializable> {
+public interface IBaseRepository<T extends IAggregateRoot<ID>, ID extends Serializable> {
     /**
      * 创建
      * @param entity 实体

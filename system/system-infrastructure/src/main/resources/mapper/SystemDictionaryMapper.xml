@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.chdzq.system.repository.dao.SystemDictionaryMapper">
+
+    <sql id="ColumnSQL">
+        dict.id,
+        dict.name,
+        dict.code,
+        dict.sort,
+        dict.status,
+        dict.remark,
+        dict.deleted,
+        dict.created_time,
+        dict.updated_time,
+        dict.created_by,
+        dict.updated_by
+    </sql>
+
+
+    <select id="queryPageList" resultType="org.chdzq.system.repository.po.SystemDictionaryDO">
+        SELECT
+            <include refid="ColumnSQL" />
+        FROM sys_dictionary dict
+        <where>
+            <if test="param.status != null">
+                AND dict.status = #{param.status.code}
+            </if>
+            <if test="param.keyword != null and param.keyword.trim() neq '' ">
+                AND (
+                    dict.name LIKE CONCAT('%',#{param.keyword},'%')
+                    OR dict.code LIKE CONCAT('%',#{param.keyword},'%')
+                )
+            </if>
+        </where>
+        ORDER BY dict.sort ASC, dict.created_time DESC;
+    </select>
+
+</mapper>

@@ -1,17 +1,12 @@
 package org.chdzq.system.convert;
 
-import org.chdzq.system.entity.Resource;
-import org.chdzq.system.entity.Role;
-import org.chdzq.system.entity.User;
+import org.chdzq.system.entity.*;
 import org.chdzq.system.query.model.*;
-import org.chdzq.system.repository.po.SystemResourceDO;
-import org.chdzq.system.repository.po.SystemRoleDO;
-import org.chdzq.system.repository.po.SystemUserDO;
+import org.chdzq.system.repository.po.*;
 import org.chdzq.common.core.enums.DataScopeEnum;
 import org.chdzq.common.core.enums.GenderEnum;
 import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.common.core.vo.EmailNumber;
-import org.chdzq.system.entity.Password;
 import org.chdzq.common.core.vo.PhoneNumber;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -77,4 +72,16 @@ public interface SystemInfraConvertor {
     SystemRoleDO role2RoleDO(Role role);
 
     RoleVO roleDo2RoleVO(SystemRoleDO roleDO);
+
+    @Mapping(target = "status", source = "dictionary.status.code")
+    SystemDictionaryDO dictionary2SystemDictionaryDO(Dictionary dictionary);
+    DictionaryVO dictionaryDO2DictionaryVO(SystemDictionaryDO dictionaryDO);
+    List<DictionaryVO> dictionaryDOList2DictionaryVOList(List<SystemDictionaryDO> dictionaryDOList);
+
+
+    @Mapping(target = "status", source = "item.status.code")
+    SystemDictionaryItemDO dictionaryItem2SystemDictionaryItemDO(DictionaryItem item);
+    DictionaryItemVO dictionaryItemDO2DictionaryItemVO(SystemDictionaryItemDO itemDO);
+    List<DictionaryItemVO> dictionaryItemDOList2DictionaryItemVOList(List<SystemDictionaryItemDO> itemDOList);
+
 }
