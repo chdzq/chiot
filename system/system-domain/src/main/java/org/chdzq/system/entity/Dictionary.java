@@ -3,7 +3,6 @@ package org.chdzq.system.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.chdzq.common.core.ddd.BaseEntity;
-import org.chdzq.common.core.ddd.IAggregateRoot;
 import org.chdzq.common.core.ddd.IBaseEntity;
 import org.chdzq.common.core.enums.StatusEnum;
 
@@ -14,7 +13,7 @@ import java.util.List;
  *
  * @author chdzq
  * @version 1.0
- * @date 2025/2/8 16:30
+ * @create 2025/2/8 16:30
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

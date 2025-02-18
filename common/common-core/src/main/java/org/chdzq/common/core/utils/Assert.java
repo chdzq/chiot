@@ -20,6 +20,12 @@ import java.util.function.Supplier;
 public class Assert {
     private Assert() {}
 
+    public static void state(boolean expression, String messageTemplate, Object ... params) {
+        if (!expression) {
+            throw new IllegalStateException(String.format(messageTemplate, params));
+        }
+    }
+
     public static void state(boolean expression, String message) {
         if (!expression) {
             throw new IllegalStateException(message);
@@ -29,6 +35,12 @@ public class Assert {
     public static void state(boolean expression, Supplier<String> messageSupplier) {
         if (!expression) {
             throw new IllegalStateException(nullSafeGet(messageSupplier));
+        }
+    }
+
+    public static void isTrue(boolean expression, String messageTemplate, Object ... params) {
+        if (!expression) {
+            throw new IllegalArgumentException(String.format(messageTemplate, params));
         }
     }
 
@@ -44,6 +56,12 @@ public class Assert {
         }
     }
 
+    public static void isNull(@Nullable Object object, String messageTemplate, Object ... params) {
+        if (object != null) {
+            throw new IllegalArgumentException(String.format(messageTemplate, params));
+        }
+    }
+
     public static void isNull(@Nullable Object object, String message) {
         if (object != null) {
             throw new IllegalArgumentException(message);
@@ -53,6 +71,12 @@ public class Assert {
     public static void isNull(@Nullable Object object, Supplier<String> messageSupplier) {
         if (object != null) {
             throw new IllegalArgumentException(nullSafeGet(messageSupplier));
+        }
+    }
+
+    public static void notNull(@Nullable Object object, String messageTemplate, Object ... params) {
+        if (object == null) {
+            throw new IllegalArgumentException(String.format(messageTemplate, params));
         }
     }
 

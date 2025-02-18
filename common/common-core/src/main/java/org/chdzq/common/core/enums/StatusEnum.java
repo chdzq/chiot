@@ -2,6 +2,7 @@ package org.chdzq.common.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.chdzq.common.core.dictionary.DictionaryConstantInterface;
 import org.chdzq.common.core.validation.EnumerableValue;
 
 /**
@@ -13,7 +14,7 @@ import org.chdzq.common.core.validation.EnumerableValue;
  */
 @AllArgsConstructor
 @Getter
-public enum StatusEnum implements IBaseEnum<Integer>, EnumerableValue<Integer> {
+public enum StatusEnum implements IBaseEnum<Integer>, EnumerableValue<Integer>, DictionaryConstantInterface<Integer> {
     DISABLE(0, "停用"),
     ENABLE(1, "启用"),
     ;
@@ -52,5 +53,15 @@ public enum StatusEnum implements IBaseEnum<Integer>, EnumerableValue<Integer> {
     @Override
     public Integer getEnumerableValue() {
         return code;
+    }
+
+    @Override
+    public Integer getDictionaryKey() {
+        return code;
+    }
+
+    @Override
+    public String getDictionaryValue() {
+        return name;
     }
 }

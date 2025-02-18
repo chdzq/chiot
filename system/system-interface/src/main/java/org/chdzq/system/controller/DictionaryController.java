@@ -1,20 +1,19 @@
 package org.chdzq.system.controller;
 
 import lombok.AllArgsConstructor;
+import org.chdzq.common.core.dictionary.DictionaryConstant;
+import org.chdzq.common.core.dictionary.DictionaryConstantService;
 import org.chdzq.common.core.entity.Page;
 import org.chdzq.system.command.*;
-import org.chdzq.system.entity.Dictionary;
 import org.chdzq.system.query.DictionaryItemPageQuery;
 import org.chdzq.system.query.DictionaryPageQuery;
-import org.chdzq.system.query.UserPageQuery;
 import org.chdzq.system.query.model.DictionaryItemVO;
 import org.chdzq.system.query.model.DictionaryVO;
-import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.service.DictionaryQueryService;
 import org.chdzq.system.service.DictionaryService;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 字典控制器
@@ -29,6 +28,8 @@ import java.time.LocalDateTime;
 public class DictionaryController {
 
     private DictionaryService dictionaryService;
+
+    private DictionaryConstantService dictionaryConstantService;
 
     /**
      * 新增
@@ -108,7 +109,7 @@ public class DictionaryController {
      * @param pageSize 分页数量 默认为10
      * @param keyword 搜索关键词
      * @param status 状态
-     * @return
+     * @return 字典集列表
      */
     @GetMapping(value = "/page")
     public Page<? extends DictionaryVO> page(@RequestParam(name = "pageNo", required = false) Integer pageNo,
@@ -124,13 +125,23 @@ public class DictionaryController {
                 .build();
         return dictionaryQueryService.page(query);
     }
+
     /**
-     * 分页获取字典集列表
+     * 获取字典常量列表
+     * @return 常量字典列表
+     */
+    @GetMapping(value = "/constants")
+    public List<DictionaryConstant> constantList() {
+        return dictionaryConstantService.getDictionaryConstantList();
+    }
+
+    /**
+     * 分页获取字典项列表
      * @param pageNo 页面 默认为1
      * @param pageSize 分页数量 默认为10
      * @param keyword 搜索关键词
      * @param status 状态
-     * @return
+     * @return 字典项列表
      */
     @GetMapping(value = "/{dictionaryId}/page")
     public Page<? extends DictionaryItemVO> itemPage(

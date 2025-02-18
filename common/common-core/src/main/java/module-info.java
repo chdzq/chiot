@@ -11,4 +11,5 @@ module org.chdzq.common.core {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
     requires org.slf4j;
+    requires spring.boot;
 }

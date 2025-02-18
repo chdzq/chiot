@@ -1,7 +1,6 @@
 package org.chdzq.system.query.model;
 
 import lombok.Data;
-import lombok.Value;
 
 /**
  * 字典项
