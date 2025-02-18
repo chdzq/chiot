@@ -28,4 +28,11 @@ public interface IBaseRepository<T extends IAggregateRoot<ID>, ID extends Serial
      */
     void delete(T entity);
 
+    /**
+     * 根据主键获取 实体
+     * @param id 主键
+     * @return 实体
+     */
+    default T get(ID id) {return null;}
+
 }

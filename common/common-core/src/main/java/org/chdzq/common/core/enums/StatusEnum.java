@@ -1,5 +1,7 @@
 package org.chdzq.common.core.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.chdzq.common.core.dictionary.DictionaryConstantInterface;
@@ -14,10 +16,11 @@ import org.chdzq.common.core.validation.EnumerableValue;
  */
 @AllArgsConstructor
 @Getter
-public enum StatusEnum implements IBaseEnum<Integer>, EnumerableValue<Integer>, DictionaryConstantInterface<Integer> {
+public enum StatusEnum implements IBaseEnum<Integer>, EnumerableValue<Integer>, DictionaryConstantInterface<Integer>, IEnum<Integer> {
     DISABLE(0, "停用"),
     ENABLE(1, "启用"),
     ;
+    @EnumValue
     private final Integer code;
     private final String name;
 

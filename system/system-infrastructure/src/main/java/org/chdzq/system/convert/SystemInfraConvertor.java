@@ -84,4 +84,11 @@ public interface SystemInfraConvertor {
     DictionaryItemVO dictionaryItemDO2DictionaryItemVO(SystemDictionaryItemDO itemDO);
     List<DictionaryItemVO> dictionaryItemDOList2DictionaryItemVOList(List<SystemDictionaryItemDO> itemDOList);
 
+
+    @Mapping(target = "status", source = "department.status.code")
+    SystemDepartmentDO department2SystemDepartDO(Department department);
+    DepartmentTreeVO departmentDO2SystemDepartTreeVO(SystemDepartmentDO department);
+    List<DepartmentTreeVO> departmentDOList2SystemDepartTreeVOList(List<SystemDepartmentDO> departmentList);
+
+
 }

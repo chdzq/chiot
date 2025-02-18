@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.chdzq.system.repository.dao.SystemDepartmentMapper">
+
+    <sql id="BaseColumSQL">
+        dept.id,
+        dept.name,
+        dept.code,
+        dept.status,
+        dept.parent_id,
+        dept.sort
+    </sql>
+
+    <sql id="ColumSQL">
+        dept.id,
+        dept.name,
+        dept.code,
+        dept.status,
+        dept.parent_id,
+        dept.sort,
+        dept.deleted,
+        dept.created_time,
+        dept.updated_time,
+        dept.created_by,
+        dept.updated_by
+    </sql>
+
+    <select id="selectEntityById" resultType="org.chdzq.system.entity.Department">
+        SELECT
+           <include refid="BaseColumSQL" />
+        FROM sys_department dept
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectEntityByCode" resultType="org.chdzq.system.entity.Department">
+        SELECT
+        <include refid="BaseColumSQL" />
+        FROM sys_department dept
+        WHERE code = #{code}
+    </select>
+    <select id="selectEntityByName" resultType="org.chdzq.system.entity.Department">
+        SELECT
+        <include refid="BaseColumSQL" />
+        FROM sys_department dept
+        WHERE name = #{name}
+    </select>
+
+    <select id="recursiveSelectDepartmentsBy" resultType="org.chdzq.system.repository.po.SystemDepartmentDO">
+        WITH RECURSIVE recursive_query AS (
+        SELECT
+        <include refid="ColumSQL"></include>
+        FROM sys_department dept
+        <where>
+            <if test="query.status.code != null">
+                AND dept.status = #{query.status.code}
+            </if>
+            <if test='query.keyword != null and query.keyword.trim() neq ""'>
+                AND
+            ( dept.name LIKE CONCAT('%',#{query.name},'%')
+                OR
+                dept.code LIKE CONCAT('%',#{query.name},'%')
+            )
+            </if>
+        </where>
+        UNION
+        SELECT
+        <include refid="ColumSQL"></include>
+        FROM sys_department AS dept
+        INNER JOIN recursive_query AS rq ON rq.parent_id = dept.id
+        )
+        SELECT
+        <include refid="ColumSQL"></include>
+        FROM recursive_query as dept
+        ORDER BY dept.sort DESC
+    </select>
+</mapper>

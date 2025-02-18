@@ -12,4 +12,5 @@ module org.chdzq.common.core {
     requires com.fasterxml.jackson.datatype.jsr310;
     requires org.slf4j;
     requires spring.boot;
+    requires com.baomidou.mybatis.plus.annotation;
 }
