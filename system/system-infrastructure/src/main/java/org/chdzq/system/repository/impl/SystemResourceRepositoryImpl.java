@@ -77,6 +77,13 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
     }
 
     @Override
+    public Resource getBy(Long id) {
+        SystemResourceDO resourceDO = getById(id);
+        Resource resource = SystemInfraConvertor.INSTANCE.resourceDo2Resource(resourceDO);
+        return resource;
+    }
+
+    @Override
     public Long getParentIdByKey(Long id) {
         SystemResourceDO resourceDO = getById(id);
         return resourceDO.getParentId();

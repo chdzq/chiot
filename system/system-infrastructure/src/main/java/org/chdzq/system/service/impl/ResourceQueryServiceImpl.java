@@ -48,11 +48,12 @@ public class ResourceQueryServiceImpl extends ServiceImplX<SystemResourceMapper,
     }
 
     @Override
-    public List<ResourceVO> listByRoleIds(Collection<Long> roleIds) {
+    public List<ResourceTreeVO> listByRoleIds(Collection<Long> roleIds) {
         if (CollectionUtils.isEmpty(roleIds)) {
             return new ArrayList<>(0);
         }
         List<SystemResourceDO> resources = baseMapper.selectByRoleIds(roleIds);
-        return resources.stream().map(convertor::resourceDo2ResourceVO).distinct().toList();
+        List<ResourceTreeVO> list = resources.stream().map(convertor::resourceDo2ResourceTreeVO).distinct().toList();
+        return TreeUtil.buildTree(list);
     }
 }

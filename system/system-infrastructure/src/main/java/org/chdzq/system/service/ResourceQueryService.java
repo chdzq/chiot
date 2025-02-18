@@ -35,5 +35,5 @@ public interface ResourceQueryService {
      * @param roleIds
      * @return
      */
-    List<ResourceVO> listByRoleIds(Collection<Long> roleIds);
+    List<ResourceTreeVO> listByRoleIds(Collection<Long> roleIds);
 }

@@ -56,7 +56,7 @@ public class UserInfo {
     /**
      * 权限列表
      */
-    List<ResourceVO> resources;
+    List<ResourceTreeVO> resources;
 
 
 }

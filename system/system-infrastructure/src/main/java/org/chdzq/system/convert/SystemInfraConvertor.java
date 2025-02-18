@@ -46,7 +46,7 @@ public interface SystemInfraConvertor {
 
     UserVO userDo2UserVO(SystemUserDO userDO);
 
-    UserInfo userDo2UserInfo(SystemUserDO userDO, List<RoleVO> roles, List<ResourceVO> resources);
+    UserInfo userDo2UserInfo(SystemUserDO userDO, List<RoleVO> roles, List<ResourceTreeVO> resources);
 
 
 

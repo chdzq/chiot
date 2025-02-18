@@ -37,7 +37,11 @@ public class ResourceServiceImpl implements ResourceService {
             entity.setPermission(cmd.getCode());
         } else {
             Long parentId = entity.getParentId();
-            String permission = resourceRepository.getPermissionByKey(parentId);
+            Resource parentResource = resourceRepository.getBy(parentId);
+            String permission = parentResource.getPermission();
+            String path = parentResource.getPath();
+            entity.setPath(path + "/" + entity.getPath());
+            entity.setPermission(parentResource.getCode() + "_" + entity.getCode());
             entity.setPermission(permission + ":" + cmd.getCode());
         }
 

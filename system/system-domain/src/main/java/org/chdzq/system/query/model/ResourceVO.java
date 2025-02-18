@@ -1,8 +1,6 @@
 package org.chdzq.system.query.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 import java.util.Objects;
@@ -52,6 +50,31 @@ public class ResourceVO {
      * 是否授权(1:已授权;0:未授权)
      */
     Integer authorized;
+
+    /**
+     * 菜单图标
+     */
+    private String icon;
+
+    /**
+     * 跳转路径
+     */
+    private String redirect;
+
+    /**
+     * 【目录】只有一个子路由是否始终显示(1:是 0:否)
+     */
+    private Integer alwaysShow;
+
+    /**
+     * 是否隐藏(1-是 0-否)
+     */
+    private Integer hidden;
+
+    /**
+     * 【菜单】是否开启页面缓存(1:是 0:否)
+     */
+    private Integer keepAlive;
 
     public boolean equals(Object obj) {
         if (super.equals(obj)) {

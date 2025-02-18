@@ -73,4 +73,24 @@ public class SystemResourceDO extends BaseDO {
      * 菜单图标
      */
     private String icon;
+
+    /**
+     * 跳转路径
+     */
+    private String redirect;
+
+    /**
+     * 【目录】只有一个子路由是否始终显示(1:是 0:否)
+     */
+    private Integer alwaysShow;
+
+    /**
+     * 是否隐藏(1-是 0-否)
+     */
+    private Integer hidden;
+
+    /**
+     * 【菜单】是否开启页面缓存(1:是 0:否)
+     */
+    private Integer keepAlive;
 }

@@ -8,10 +8,7 @@ import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.query.UserPageQuery;
-import org.chdzq.system.query.model.ResourceVO;
-import org.chdzq.system.query.model.RoleVO;
-import org.chdzq.system.query.model.UserInfo;
-import org.chdzq.system.query.model.UserVO;
+import org.chdzq.system.query.model.*;
 import org.chdzq.system.repository.dao.SystemUserMapper;
 import org.chdzq.system.repository.po.SystemUserDO;
 import org.chdzq.system.service.ResourceQueryService;
@@ -63,7 +60,7 @@ public class UserQueryServiceImpl extends ServiceImplX<SystemUserMapper, SystemU
 
         List<RoleVO> roles = roleQueryService.listByCodes(roleCodes);
         List<Long> roleIds = roles.stream().map(RoleVO::getId).toList();
-        List<ResourceVO> resources = resourceQueryService.listByRoleIds(roleIds);
+        List<ResourceTreeVO> resources = resourceQueryService.listByRoleIds(roleIds);
 
         return convertor.userDo2UserInfo(userDO, roles, resources);
     }

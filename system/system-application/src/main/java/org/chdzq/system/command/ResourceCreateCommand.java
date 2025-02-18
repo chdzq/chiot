@@ -11,6 +11,8 @@ import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.ResourceRepository;
+import org.springframework.util.StringUtils;
+
 import java.util.Objects;
 
 /**

@@ -24,6 +24,7 @@
     <sql id="ResourceColumnSQL">
         t2.id,
         t2.type,
+        t2.parent_id,
         t2.name,
         t2.code,
         t2.path,
@@ -51,17 +52,26 @@
     </select>
 
     <select id="selectByRoleIds" resultType="org.chdzq.system.repository.po.SystemResourceDO">
+        WITH RECURSIVE recursive_query AS (
         SELECT
             <include refid="ResourceColumnSQL"></include>
         FROM sys_role_resource t1
-        JOIN sys_resource t2
-            ON t1.resource_id = t2.id
+        JOIN sys_resource t2 ON t1.resource_id = t2.id
         WHERE
             t1.role_id IN
             <foreach collection="roleIds" item="item" index="index" open="(" close=")" separator=",">
                 #{item}
             </foreach>
-        ORDER BY t2.sort DESC
+        UNION
+        SELECT
+            <include refid="ResourceColumnSQL"></include>
+        FROM sys_resource AS t2
+        INNER JOIN recursive_query AS rq ON rq.parent_id = t2.id
+    )
+        SELECT
+            <include refid="ResourceColumnSQL"></include>
+        FROM recursive_query as t2
+            ORDER BY t2.sort DESC
     </select>
 
 </mapper>

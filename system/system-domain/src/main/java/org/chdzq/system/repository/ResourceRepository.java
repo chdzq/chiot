@@ -3,6 +3,7 @@ package org.chdzq.system.repository;
 import org.chdzq.common.core.ddd.IBaseRepository;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.Resource;
+import org.chdzq.system.query.model.ResourceVO;
 
 import java.util.List;
 
@@ -36,6 +37,14 @@ public interface ResourceRepository extends IBaseRepository<Resource, Long> {
      * @return
      */
     String getPermissionByKey(Long id);
+
+
+    /**
+     * 根据主键查询权限编码
+     * @param id
+     * @return
+     */
+    Resource getBy(Long id);
 
     /**
      * 根据节点查询父节点
