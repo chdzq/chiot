@@ -2,6 +2,7 @@ package org.chdzq.system.controller;
 
 import lombok.AllArgsConstructor;
 import org.chdzq.common.core.entity.Page;
+import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.system.command.UserCreateCommand;
 import org.chdzq.system.command.UserDeleteCommand;
 import org.chdzq.system.command.UserUpdateCommand;
@@ -82,4 +83,26 @@ public class UserController {
     public UserInfo userInfo() {
         return userQueryService.getCurrentUserInfo();
     }
+
+
+    @GetMapping("/page")
+    public Page<? extends UserVO> page(
+            @RequestParam(name = "pageNo", required = false) Integer pageNo,
+            @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "status", required = false)  Integer status,
+            @RequestParam(value = "startTime", required = false)  LocalDateTime startTime,
+            @RequestParam(value = "endTime", required = false)  LocalDateTime endTime
+    ) {
+        UserPageQuery pageQuery = UserPageQuery.builder()
+                .keyword(keyword)
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .status(status)
+                .endTime(endTime)
+                .startTime(startTime)
+                .build();
+        return userQueryService.page(pageQuery);
+    }
+
 }
