@@ -1,5 +1,6 @@
 package org.chdzq.common.core.enums;
 
+import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.chdzq.common.core.validation.EnumerableValue;
@@ -13,7 +14,7 @@ import org.chdzq.common.core.validation.EnumerableValue;
  */
 @AllArgsConstructor
 @Getter
-public enum DataScopeEnum implements IBaseEnum<Integer>, EnumerableValue<Integer> {
+public enum DataScopeEnum implements IBaseEnum<Integer>, EnumerableValue<Integer>, IEnum<Integer> {
 
     /**
      * value 越小，数据权限范围越大

@@ -1,5 +1,7 @@
 package org.chdzq.common.core.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.chdzq.common.core.dictionary.DictionaryConstantInterface;
@@ -14,12 +16,13 @@ import org.chdzq.common.core.validation.EnumerableValue;
  */
 @AllArgsConstructor
 @Getter
-public enum GenderEnum implements IBaseEnum<Integer>, EnumerableValue<Integer>, DictionaryConstantInterface<Integer> {
+public enum GenderEnum implements IBaseEnum<Integer>, EnumerableValue<Integer>, DictionaryConstantInterface<Integer>, IEnum<Integer> {
 
     MALE(1, "男"),
     FEMALE(2, "女"),
     ;
 
+    @EnumValue
     private final Integer code;
     private final String name;
 
