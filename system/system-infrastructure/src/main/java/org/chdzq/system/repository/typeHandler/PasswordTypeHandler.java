@@ -1,4 +1,4 @@
-package org.chdzq.system.repository.typehandler;
+package org.chdzq.system.repository.typeHandler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;

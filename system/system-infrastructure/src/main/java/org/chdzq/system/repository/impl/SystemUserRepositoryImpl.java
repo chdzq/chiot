@@ -1,6 +1,7 @@
 package org.chdzq.system.repository.impl;
 
 import lombok.AllArgsConstructor;
+import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.User;
@@ -26,6 +27,15 @@ import java.util.Objects;
 @Repository
 @AllArgsConstructor
 public class SystemUserRepositoryImpl extends ServiceImplX<SystemUserMapper, SystemUserDO> implements UserRepository {
+
+    @Override
+    public User get(Long id) {
+        if (Objects.isNull(id)) {
+            return null;
+        }
+        return baseMapper.selectEntityBy(WrapperX.<SystemUserDO>lambdaQuery().eq(SystemUserDO::getId, id));
+    }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -96,6 +106,17 @@ public class SystemUserRepositoryImpl extends ServiceImplX<SystemUserMapper, Sys
             return Boolean.TRUE;
         }
         return !isUsernameAvailable(username);
+    }
+
+    @Override
+    public User getEntityByUserName(String username) {
+        if (!StringUtils.hasText(username)) {
+            return null;
+        }
+        return baseMapper.selectEntityBy(
+                WrapperX.<SystemUserDO>lambdaQuery()
+                        .eq(SystemUserDO::getUsername, username)
+        );
     }
 
     private SystemUserRoleRepository userRoleRepository;

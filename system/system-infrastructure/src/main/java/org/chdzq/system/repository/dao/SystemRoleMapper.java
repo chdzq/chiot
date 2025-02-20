@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.chdzq.common.mybatis.core.mapper.BaseMapperX;
+import org.chdzq.system.query.RoleListQuery;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.repository.po.SystemRoleDO;
+
+import java.util.List;
 
 /**
  * 角色
@@ -39,4 +42,11 @@ public interface SystemRoleMapper extends BaseMapperX<SystemRoleDO> {
      * @return
      */
     IPage<SystemRoleDO> queryPageList(@Param("page") IPage<SystemRoleDO> page, @Param("param") RolePageQuery param);
+
+    /**
+     * 根据查询参数查询数据
+     * @param param
+     * @return
+     */
+    List<SystemRoleDO> selectList(@Param("param") RoleListQuery param);
 }

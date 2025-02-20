@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.chdzq.common.core.utils.Assert;
 import org.chdzq.common.core.utils.ValidationUtil;
+import org.chdzq.system.entity.Department;
 import org.chdzq.system.entity.Role;
 import org.chdzq.system.entity.User;
 import org.chdzq.common.core.ddd.ICommand;
@@ -14,6 +15,7 @@ import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.common.core.vo.EmailNumber;
 import org.chdzq.common.core.vo.PhoneNumber;
+import org.chdzq.system.repository.DepartmentRepository;
 import org.chdzq.system.repository.UserRepository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -41,15 +43,18 @@ public class UserUpdateCommand implements ICommand<User, Long> {
      * 账户名
      * 必填
      */
-    @NotBlank(message = "账户名不能为空")
     private String username;
 
     /**
      * 昵称
      * 必填
      */
-    @NotBlank(message = "昵称不能为空")
     private String nickname;
+
+    /**
+     * 部门ID
+     */
+    private Long departmentId;
 
     /**
      * email
@@ -72,7 +77,6 @@ public class UserUpdateCommand implements ICommand<User, Long> {
      * 性别(1->男；2->女)
      * 必填
      */
-    @NotNull(message = "性别不能为空")
     @InEnum(value = GenderEnum.class, message = "性别类型错误")
     private Integer gender;
 
@@ -92,52 +96,63 @@ public class UserUpdateCommand implements ICommand<User, Long> {
      * 校验
      * @param userRepository 仓库
      */
-    public void validate(UserRepository userRepository) {
+    public void validate(UserRepository userRepository, DepartmentRepository departmentRepository) {
         ValidationUtil.validate(this);
 
-        Boolean exist = userRepository.isExistByKey(id);
-        Assert.isTrue(exist, "用户不存在");
+        User user = userRepository.get(id);
+        Assert.notNull(user, "用户不存在");
 
         //查询是否存在当前用户
-        if (StringUtils.hasText(username)) {
-            Boolean available = userRepository.isUsernameAvailable(id, username);
-            Assert.isTrue(available, "用户名不可用");
+        if (StringUtils.hasText(username) && !Objects.equals(username, user.getUsername())) {
+            User user2 = userRepository.getEntityByUserName(username);
+            Assert.isTrue(Objects.isNull(user2) || !Objects.equals(id, user2.getId()), "用户名不可用");
+        }
+
+        //判断部门是否存在
+        if (Objects.nonNull(departmentId)) {
+            Assert.notNull(departmentRepository.get(departmentId), "部门不存在");
         }
     }
 
     @Override
     public User buildEntity() {
-        User obj = new User();
-        obj.setId(id);
-        obj.setUsername(username);
-        obj.setNickname(nickname);
+
+        User entity = new User();
+        entity.setId(id);
+        entity.setUsername(username);
+        entity.setNickname(nickname);
         if (StringUtils.hasText(mobile)) {
-            obj.setMobile(new PhoneNumber(mobile));
+            entity.setMobile(PhoneNumber.make(mobile));
         }
 
         if (StringUtils.hasText(email)) {
-            obj.setEmail(new EmailNumber(email));
+            entity.setEmail(EmailNumber.make(email));
         }
 
         if (Objects.isNull(status)) {
-            obj.setStatus(StatusEnum.ENABLE);
+            entity.setStatus(StatusEnum.ENABLE);
         } else {
-            obj.setStatus(StatusEnum.getByCode(status));
+            entity.setStatus(StatusEnum.getByCode(status));
         }
 
-        obj.setGender(GenderEnum.getByCode(gender));
+        entity.setGender(GenderEnum.getByCode(gender));
 
         if (Objects.isNull(dataScope)) {
-            obj.setDataScope(DataScopeEnum.SELF);
+            entity.setDataScope(DataScopeEnum.SELF);
         } else {
-            obj.setDataScope(DataScopeEnum.getByCode(dataScope));
+            entity.setDataScope(DataScopeEnum.getByCode(dataScope));
         }
 
         if (!CollectionUtils.isEmpty(roles)) {
             List<Role> list = roles.stream().map(Role::new).toList();
-            obj.setRoles(list);
+            entity.setRoles(list);
         }
 
-        return obj;
+        if (Objects.nonNull(departmentId)) {
+            Department department = new Department();
+            department.setId(departmentId);
+            entity.setDepartment(department);
+        }
+        return entity;
     }
 }

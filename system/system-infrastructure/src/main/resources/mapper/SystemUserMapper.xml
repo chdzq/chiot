@@ -30,7 +30,7 @@
             t1.nickname,
             t1.password,
             t1.status,
-            t1.dept_id,
+            t1.department_id,
             t1.avatar,
             t1.mobile,
             t1.email,
@@ -42,11 +42,11 @@
             t3.sort as role_sort,
             t3.data_scope as role_data_scope
         FROM sys_user t1
-            LEFT JOIN sys_user_role t2
-                ON t2.user_id = t1.id
-            LEFT JOIN sys_role t3
-                ON t3.id = t2.role_id
-                AND t3.status = 1
+        LEFT JOIN sys_user_role t2
+            ON t2.user_id = t1.id
+        LEFT JOIN sys_role t3
+            ON t3.id = t2.role_id
+            AND t3.status = 1
         WHERE
             t1.username = #{username}
 
@@ -62,7 +62,7 @@
         u.gender,
         u.avatar,
         u.status,
-        u.dept_id,
+        u.department_id,
         u.created_time
         FROM
         sys_user u
@@ -71,6 +71,10 @@
 
             <if test='param.status!=null'>
                 AND u.status = #{param.status}
+            </if>
+
+            <if test="param.departmentId != null">
+                AND u.department_id = #{param.departmentId}
             </if>
 
             <if test='param.startTime!=null'>
@@ -89,5 +93,32 @@
                 )
             </if>
         </where>
+    </select>
+
+    <resultMap id="EntityResultMap" type="org.chdzq.system.entity.User" autoMapping="true">
+        <id property="id" column="id" />
+        <result property="email" column="email" typeHandler="org.chdzq.common.web.core.mybatis.typeHandler.EmailTypeHandler" />
+        <result property="mobile" column="mobile" typeHandler="org.chdzq.common.web.core.mybatis.typeHandler.PhoneTypeHandler" />
+        <result property="password" column="password" typeHandler="org.chdzq.system.repository.typeHandler.PasswordTypeHandler" />
+        <association property="department" javaType="org.chdzq.system.entity.Department">
+            <id column="department_id" property="id" />
+        </association>
+    </resultMap>
+
+    <select id="selectEntityBy" resultMap="EntityResultMap">
+        SELECT
+            u.id,
+            u.username,
+            u.nickname,
+            u.password,
+            u.mobile,
+            u.email,
+            u.gender,
+            u.avatar,
+            u.status,
+            u.department_id
+        FROM
+            sys_user u
+        ${ew.customSqlSegment}
     </select>
 </mapper>

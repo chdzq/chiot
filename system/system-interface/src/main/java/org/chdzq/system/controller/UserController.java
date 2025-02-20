@@ -84,11 +84,20 @@ public class UserController {
         return userQueryService.getCurrentUserInfo();
     }
 
-
+    /**
+     * 查询用户信息
+     * @param userId 新增的用户id
+     */
+    @GetMapping(value = "/{userId}")
+    public UserVO detail(
+            @PathVariable("userId") Long userId) {
+        return userQueryService.detail(userId);
+    }
     @GetMapping("/page")
     public Page<? extends UserVO> page(
             @RequestParam(name = "pageNo", required = false) Integer pageNo,
             @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @RequestParam(value = "departmentId", required = false) Long departmentId,
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "status", required = false)  Integer status,
             @RequestParam(value = "startTime", required = false)  LocalDateTime startTime,
@@ -99,10 +108,12 @@ public class UserController {
                 .pageNo(pageNo)
                 .pageSize(pageSize)
                 .status(status)
+                .departmentId(departmentId)
                 .endTime(endTime)
                 .startTime(startTime)
                 .build();
         return userQueryService.page(pageQuery);
     }
+
 
 }

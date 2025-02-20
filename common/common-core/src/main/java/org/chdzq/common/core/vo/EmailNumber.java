@@ -23,17 +23,13 @@ public class EmailNumber {
     String email;
 
     public EmailNumber(String email) {
-        this(email, true);
-    }
-
-    public EmailNumber(String email, Boolean check) {
-        if (check && !pattern.matcher(email).matches()) {
-            throw PARAMETER_ERROR.makeException("邮箱符合规范");
-        }
         this.email = email;
     }
 
-    public static EmailNumber of(String email) {
+    public static EmailNumber make(String email) {
+        if (!pattern.matcher(email).matches()) {
+            throw PARAMETER_ERROR.makeException("邮箱符合规范");
+        }
         return new EmailNumber(email);
     }
 

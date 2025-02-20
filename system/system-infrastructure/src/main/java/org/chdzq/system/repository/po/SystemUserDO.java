@@ -74,5 +74,5 @@ public class SystemUserDO extends BaseDO {
     /**
      * 部门
      */
-    private Long deptId;
+    private Long departmentId;
 }

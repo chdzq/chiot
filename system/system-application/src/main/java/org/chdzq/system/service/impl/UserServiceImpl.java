@@ -9,6 +9,7 @@ import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.Password;
 import org.chdzq.system.entity.User;
 import org.chdzq.system.query.QueryAuthInfo;
+import org.chdzq.system.repository.DepartmentRepository;
 import org.chdzq.system.repository.UserRepository;
 import org.chdzq.system.service.UserService;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,8 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
+    private DepartmentRepository departmentRepository;
+
     @Override
     public AuthInfo getAuthInfo(QueryAuthInfo param) {
         AuthInfo user = userRepository.getAuthInfoByUsername(param.getUsername());
@@ -41,12 +44,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(@Validated UserCreateCommand cmd) {
-        cmd.validate(userRepository);
+        cmd.validate(userRepository, departmentRepository);
         User user = cmd.buildEntity();
 
         // 设置默认加密密码
         String password = DEFAULT_PASSWORD;
-        user.setPassword(new Password(password, passwordService));
+        user.setPassword(Password.make(password, passwordService));
 
         userRepository.create(user);
     }
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(@Validated UserUpdateCommand cmd) {
-        cmd.validate(userRepository);
+        cmd.validate(userRepository, departmentRepository);
         User user = cmd.buildEntity();
         userRepository.update(user);
     }

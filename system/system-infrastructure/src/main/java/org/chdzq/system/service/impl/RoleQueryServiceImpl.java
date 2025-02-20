@@ -4,6 +4,7 @@ import org.chdzq.common.core.entity.Page;
 import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
 import org.chdzq.system.convert.SystemInfraConvertor;
+import org.chdzq.system.query.RoleListQuery;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.repository.dao.SystemRoleMapper;
@@ -28,7 +29,7 @@ public class RoleQueryServiceImpl extends ServiceImplX<SystemRoleMapper, SystemR
     private final SystemInfraConvertor convertor = SystemInfraConvertor.INSTANCE;
     @Override
     public Page<? extends RoleVO> page(RolePageQuery param) {
-        Page<SystemRoleDO> roleDOPage = baseMapper.selectCustomPage(param, (p, q)->baseMapper.queryPageList(p, q));
+        Page<SystemRoleDO> roleDOPage = customPage(param, (p, q)->baseMapper.queryPageList(p, q));
 
         Page<? extends RoleVO> result = roleDOPage.map(SystemInfraConvertor.INSTANCE::roleDo2RoleVO);
         return result;
@@ -44,5 +45,15 @@ public class RoleQueryServiceImpl extends ServiceImplX<SystemRoleMapper, SystemR
                         .in(SystemRoleDO::getCode, roleCodes)
         );
         return list.stream().map(convertor::roleDo2RoleVO).toList();
+    }
+
+    @Override
+    public List<? extends RoleVO> list(RoleListQuery param) {
+        List<SystemRoleDO> roleDOList = baseMapper.selectList(param);
+
+        List<? extends RoleVO> result = roleDOList.stream()
+                .map(SystemInfraConvertor.INSTANCE::roleDo2RoleVO)
+                .toList();
+        return result;
     }
 }

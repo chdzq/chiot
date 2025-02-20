@@ -7,6 +7,7 @@ import org.chdzq.system.command.RoleDeleteCommand;
 import org.chdzq.system.command.RoleAuthorizeCommand;
 import org.chdzq.system.command.RoleUpdateCommand;
 import org.chdzq.system.query.ResourceQuery;
+import org.chdzq.system.query.RoleListQuery;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.ResourceVO;
 import org.chdzq.system.query.model.RoleVO;
@@ -83,6 +84,20 @@ public class RoleController {
                         .name(name)
                         .pageNo(pageNo)
                         .pageSize(pageSize)
+                        .build()
+        );
+    }
+
+    /**
+     * 查询列表
+     * @param keyword 查询关键字
+     */
+    @GetMapping(value = "/list")
+    public List<? extends RoleVO> list(
+            @RequestParam(name = "keyword", required = false) String keyword) {
+        return queryService.list(
+                RoleListQuery.builder()
+                        .keyword(keyword)
                         .build()
         );
     }

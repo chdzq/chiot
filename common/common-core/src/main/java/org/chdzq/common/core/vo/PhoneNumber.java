@@ -22,17 +22,13 @@ public class PhoneNumber {
     String number;
 
     public PhoneNumber(String number) {
-        this(number, true);
-    }
-
-    public PhoneNumber(String number, Boolean check) {
-        if (check && !MobileValidator.isMobilePattern.matcher(number).matches()) {
-            throw ResultError.PARAMETER_ERROR.makeException("电话号码不符合规范");
-        }
         this.number = number;
     }
 
-    public static PhoneNumber of(String number) {
+    public static PhoneNumber make(String number) {
+        if (!MobileValidator.isMobilePattern.matcher(number).matches()) {
+            throw ResultError.PARAMETER_ERROR.makeException("电话号码不符合规范");
+        }
         return new PhoneNumber(number);
     }
 

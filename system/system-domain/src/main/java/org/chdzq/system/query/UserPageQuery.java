@@ -29,6 +29,11 @@ public class UserPageQuery extends PageQuery {
     private final StatusEnum status;
 
     /**
+     * 部门Id
+     */
+    private final Long departmentId;
+
+    /**
      * 开始时间
      */
     private final LocalDateTime startTime;
@@ -44,9 +49,11 @@ public class UserPageQuery extends PageQuery {
                          String keyword,
                          @InEnum(StatusEnum.class)
                          Integer status,
+                         Long departmentId,
                          LocalDateTime startTime,
                          LocalDateTime endTime) {
         super(pageNo, pageSize);
+        this.departmentId = departmentId;
         this.keyword = keyword;
         this.status = StatusEnum.getByCode(status);
         this.startTime = startTime;

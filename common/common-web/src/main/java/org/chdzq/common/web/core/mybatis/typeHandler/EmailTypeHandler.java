@@ -1,4 +1,4 @@
-package org.chdzq.system.repository.typehandler;
+package org.chdzq.common.web.core.mybatis.typeHandler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -32,7 +32,7 @@ public class EmailTypeHandler extends BaseTypeHandler<EmailNumber> {
         if (!StringUtils.hasText(rs.getString(columnName))) {
             return null;
         }
-        return new EmailNumber(rs.getString(columnName), false);
+        return new EmailNumber(rs.getString(columnName));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class EmailTypeHandler extends BaseTypeHandler<EmailNumber> {
         if (!StringUtils.hasText(rs.getString(columnIndex))) {
             return null;
         }
-        return new EmailNumber(rs.getString(columnIndex), false);
+        return new EmailNumber(rs.getString(columnIndex));
     }
 
     @Override
@@ -48,6 +48,6 @@ public class EmailTypeHandler extends BaseTypeHandler<EmailNumber> {
         if (!StringUtils.hasText(cs.getString(columnIndex))) {
             return null;
         }
-        return new EmailNumber(cs.getString(columnIndex), false);
+        return new EmailNumber(cs.getString(columnIndex));
     }
 }

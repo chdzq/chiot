@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.chdzq.common.core.utils.Assert;
 import org.chdzq.common.core.utils.ValidationUtil;
+import org.chdzq.system.entity.Department;
 import org.chdzq.system.entity.Role;
 import org.chdzq.system.entity.User;
 import org.chdzq.common.core.ddd.ICommand;
@@ -14,6 +15,7 @@ import org.chdzq.common.core.enums.StatusEnum;
 import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.common.core.vo.EmailNumber;
 import org.chdzq.common.core.vo.PhoneNumber;
+import org.chdzq.system.repository.DepartmentRepository;
 import org.chdzq.system.repository.UserRepository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -43,6 +45,12 @@ public class UserCreateCommand implements ICommand<User, Long> {
      */
     @NotBlank(message = "昵称不能为空")
     private String nickname;
+
+    /**
+     * 部门ID
+     */
+    @NotNull(message = "用户需要设置一个部门")
+    private Long departmentId;
 
     /**
      * email
@@ -85,46 +93,54 @@ public class UserCreateCommand implements ICommand<User, Long> {
      * 校验
      * @param userRepository 仓库
      */
-    public void validate(UserRepository userRepository) {
+    public void validate(UserRepository userRepository, DepartmentRepository departmentRepository) {
         ValidationUtil.validate(this);
 
         //查询是否存在当前用户
-        Boolean available = userRepository.isUsernameAvailable(username);
-        Assert.isTrue(available, "当前用户名已存在");
+        Assert.isNull(userRepository.getEntityByUserName(username), "当前用户名已存在");
+
+        //判断部门是否存在
+        Department department = departmentRepository.get(departmentId);
+        Assert.notNull(department, "部门不存在");
+        Assert.isTrue(Objects.equals(StatusEnum.ENABLE, department.getStatus()), "部门%s状态不启用", department.getName());
     }
 
     @Override
     public User buildEntity() {
-        User obj = new User();
-        obj.setUsername(username);
-        obj.setNickname(nickname);
+        User entity = new User();
+        entity.setUsername(username);
+        entity.setNickname(nickname);
         if (StringUtils.hasText(mobile)) {
-            obj.setMobile(new PhoneNumber(mobile));
+            entity.setMobile(PhoneNumber.make(mobile));
         }
 
         if (StringUtils.hasText(email)) {
-            obj.setEmail(new EmailNumber(email));
+            entity.setEmail(EmailNumber.make(email));
         }
 
         if (Objects.isNull(status)) {
-            obj.setStatus(StatusEnum.ENABLE);
+            entity.setStatus(StatusEnum.ENABLE);
         } else {
-            obj.setStatus(StatusEnum.getByCode(status));
+            entity.setStatus(StatusEnum.getByCode(status));
         }
 
-        obj.setGender(GenderEnum.getByCode(gender));
+        entity.setGender(GenderEnum.getByCode(gender));
 
         if (Objects.isNull(dataScope)) {
-            obj.setDataScope(DataScopeEnum.SELF);
+            entity.setDataScope(DataScopeEnum.SELF);
         } else {
-            obj.setDataScope(DataScopeEnum.getByCode(dataScope));
+            entity.setDataScope(DataScopeEnum.getByCode(dataScope));
         }
 
         if (!CollectionUtils.isEmpty(roles)) {
             List<Role> list = roles.stream().map(Role::new).toList();
-            obj.setRoles(list);
+            entity.setRoles(list);
         }
-
-        return obj;
+        if (Objects.nonNull(departmentId)) {
+            Department department = new Department();
+            department.setId(departmentId);
+            entity.setDepartment(department);
+        }
+        return entity;
     }
 }

@@ -81,6 +81,11 @@ public class User implements IBaseEntity<Long> {
     private List<Role> roles;
 
     /**
+     * 部门
+     */
+    private Department department;
+
+    /**
      * 数据权限
      */
     private DataScopeEnum dataScope;

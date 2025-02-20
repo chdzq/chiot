@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -63,5 +64,14 @@ public class UserQueryServiceImpl extends ServiceImplX<SystemUserMapper, SystemU
         List<ResourceTreeVO> resources = resourceQueryService.listByRoleIds(roleIds);
 
         return convertor.userDo2UserInfo(userDO, roles, resources);
+    }
+
+    @Override
+    public UserVO detail(Long userId) {
+        if (Objects.isNull(userId)) {
+            return null;
+        }
+        SystemUserDO userDO = getById(userId);
+        return SystemInfraConvertor.INSTANCE.userDo2UserVO(userDO);
     }
 }

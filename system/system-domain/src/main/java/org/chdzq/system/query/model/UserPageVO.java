@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Value;
 
 /**
- * 用户展示类
+ * 分页用户展示类
  *
  * @author chdzq
  * @version 1.0
@@ -12,7 +12,7 @@ import lombok.Value;
  */
 @Value
 @Builder
-public class UserVO {
+public class UserPageVO {
     /**
      * 用户id
      */

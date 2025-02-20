@@ -1,4 +1,4 @@
-package org.chdzq.system.repository.typehandler;
+package org.chdzq.common.web.core.mybatis.typeHandler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -32,7 +32,7 @@ public class PhoneTypeHandler extends BaseTypeHandler<PhoneNumber> {
         if (!StringUtils.hasText(rs.getString(columnName))) {
             return null;
         }
-        return new PhoneNumber(rs.getString(columnName), false);
+        return new PhoneNumber(rs.getString(columnName));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class PhoneTypeHandler extends BaseTypeHandler<PhoneNumber> {
         if (!StringUtils.hasText(rs.getString(columnIndex))) {
             return null;
         }
-        return new PhoneNumber(rs.getString(columnIndex), false);
+        return new PhoneNumber(rs.getString(columnIndex));
     }
 
     @Override
@@ -48,6 +48,6 @@ public class PhoneTypeHandler extends BaseTypeHandler<PhoneNumber> {
         if (!StringUtils.hasText(cs.getString(columnIndex))) {
             return null;
         }
-        return new PhoneNumber(cs.getString(columnIndex), false);
+        return new PhoneNumber(cs.getString(columnIndex));
     }
 }

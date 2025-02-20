@@ -28,36 +28,25 @@ public class Password {
 
     String password;
 
-    String encodedPassword;
-
-    public Password(String password, PasswordCoder passwordCoder) {
-        this(password, ()->passwordCoder.encode(password), true);
+    public Password(String password) {
+        this.password = password;
     }
 
-    public Password(String encodedPassword) {
-        this(null, ()-> encodedPassword, false);
-    }
 
-    public Password(String password, Supplier<String> encodedPasswordSupplier, Boolean check) {
-
+    public static Password make(String password, PasswordCoder passwordCoder) {
         /**
          * 校验密码是否符合规则
          */
-        if (check && null != password && !pattern.matcher(password).matches()) {
+        if (null != password && !pattern.matcher(password).matches()) {
             throw PARAMETER_ERROR.makeException("密码不符合规范");
         }
-        this.password = password;
-        this.encodedPassword = encodedPasswordSupplier.get();
-    }
-
-    public static Password of(String encodedPassword) {
-        return new Password(encodedPassword);
+        return new Password(passwordCoder.encode(password));
     }
 
     public static String valueOf(Password password) {
         if (password == null) {
             return null;
         }
-        return password.getEncodedPassword();
+        return password.getPassword();
     }
 }

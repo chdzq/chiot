@@ -41,4 +41,10 @@ public interface UserRepository extends IBaseRepository<User, Long> {
      */
     Boolean isUsernameAvailable(Long id, String username);
 
+    /**
+     * 根据用户名查询用户
+     * @param username 用户名
+     * @return
+     */
+    User getEntityByUserName(String username);
 }

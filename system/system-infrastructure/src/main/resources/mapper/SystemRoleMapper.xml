@@ -45,4 +45,26 @@
         </where>
     </select>
 
+    <select id="selectList" resultType="org.chdzq.system.repository.po.SystemRoleDO">
+        SELECT
+        t1.id,
+        t1.name,
+        t1.code,
+        t1.sort,
+        t1.status,
+        t1.created_time
+        FROM
+        sys_role t1
+        <where>
+            t1.status = 1
+            <if test='param.keyword!=null and param.keyword.trim() neq ""'>
+                AND (
+                    t1.name LIKE CONCAT('%',#{param.keyword},'%')
+                    OR
+                    t1.code LIKE CONCAT('%',#{param.keyword},'%')
+                )
+            </if>
+        </where>
+    </select>
+
 </mapper>

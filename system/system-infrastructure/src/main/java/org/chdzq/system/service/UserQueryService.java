@@ -37,4 +37,11 @@ public interface UserQueryService {
      * @return
      */
     UserInfo getCurrentUserInfo();
+
+    /**
+     * 根据用户id 查询用户的详细信息
+     * @param userId
+     * @return
+     */
+    UserVO detail(Long userId);
 }

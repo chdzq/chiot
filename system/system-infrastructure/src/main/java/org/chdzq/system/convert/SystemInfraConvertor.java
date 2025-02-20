@@ -35,13 +35,16 @@ public interface SystemInfraConvertor {
 
     SystemInfraConvertor INSTANCE = Mappers.getMapper(SystemInfraConvertor.class);
 
-    @Mappings(
-            @Mapping(target = "id", source = "userDO.id")
-    )
+    @Mapping(target = "id", source = "userDO.id")
+    @Mapping(target = "department.id", source = "userDO.departmentId")
+    @Mapping(target = "password.password", source = "password")
+    @Mapping(target = "email.email", source = "email")
+    @Mapping(target = "mobile.number", source = "mobile")
     User userDo2User(SystemUserDO userDO);
 
     @Mapping(target = "status", source = "user.status.code")
     @Mapping(target = "gender", source = "user.gender.code")
+    @Mapping(target = "departmentId", source = "department.id")
     SystemUserDO user2UserDo(User user);
 
     UserVO userDo2UserVO(SystemUserDO userDO);
