@@ -48,5 +48,5 @@ public interface SystemRoleMapper extends BaseMapperX<SystemRoleDO> {
      * @param param
      * @return
      */
-    List<SystemRoleDO> selectList(@Param("param") RoleListQuery param);
+    List<SystemRoleDO> selectListByQuery(@Param("param") RoleListQuery param);
 }

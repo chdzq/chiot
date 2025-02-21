@@ -45,7 +45,7 @@
         </where>
     </select>
 
-    <select id="selectList" resultType="org.chdzq.system.repository.po.SystemRoleDO">
+    <select id="selectListByQuery" resultType="org.chdzq.system.repository.po.SystemRoleDO">
         SELECT
         t1.id,
         t1.name,

@@ -49,7 +49,7 @@ public class RoleQueryServiceImpl extends ServiceImplX<SystemRoleMapper, SystemR
 
     @Override
     public List<? extends RoleVO> list(RoleListQuery param) {
-        List<SystemRoleDO> roleDOList = baseMapper.selectList(param);
+        List<SystemRoleDO> roleDOList = baseMapper.selectListByQuery(param);
 
         List<? extends RoleVO> result = roleDOList.stream()
                 .map(SystemInfraConvertor.INSTANCE::roleDo2RoleVO)
