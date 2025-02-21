@@ -56,7 +56,7 @@ public class DictionaryConstantServiceImpl implements DictionaryConstantService,
                             .map((constant) -> {
                                 DictionaryConstantInterface<?> dict = (DictionaryConstantInterface<? extends Serializable>) constant;
                                 DictionaryConstantItem item = new DictionaryConstantItem();
-                                item.setKey(dict.getDictionaryKey().toString());
+                                item.setKey(dict.getDictionaryKey());
                                 item.setValue(dict.getDictionaryValue());
                                 return item;
                             }).toList();

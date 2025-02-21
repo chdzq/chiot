@@ -2,6 +2,8 @@ package org.chdzq.common.core.dictionary;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 常量字典项
  *
@@ -13,7 +15,7 @@ public class DictionaryConstantItem {
     /**
      * 字典项名称
      */
-    private String key;
+    private Serializable key;
 
     /**
      * 字典项值
