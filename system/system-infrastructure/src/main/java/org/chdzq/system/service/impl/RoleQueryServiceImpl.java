@@ -1,5 +1,6 @@
 package org.chdzq.system.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.chdzq.common.core.entity.Page;
 import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
@@ -8,14 +9,18 @@ import org.chdzq.system.query.RoleListQuery;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.RoleVO;
 import org.chdzq.system.repository.dao.SystemRoleMapper;
+import org.chdzq.system.repository.dao.SystemUserRoleMapper;
 import org.chdzq.system.repository.po.SystemRoleDO;
+import org.chdzq.system.repository.po.SystemUserRoleDO;
 import org.chdzq.system.service.RoleQueryService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 角色查询服务
@@ -25,8 +30,12 @@ import java.util.List;
  * @date 2025/1/2 17:35
  */
 @Service
+@AllArgsConstructor
 public class RoleQueryServiceImpl extends ServiceImplX<SystemRoleMapper, SystemRoleDO> implements RoleQueryService {
-    private final SystemInfraConvertor convertor = SystemInfraConvertor.INSTANCE;
+
+    private final SystemUserRoleMapper systemUserRoleMapper;
+
+    private final static SystemInfraConvertor convertor = SystemInfraConvertor.INSTANCE;
     @Override
     public Page<? extends RoleVO> page(RolePageQuery param) {
         Page<SystemRoleDO> roleDOPage = customPage(param, (p, q)->baseMapper.queryPageList(p, q));
@@ -55,5 +64,18 @@ public class RoleQueryServiceImpl extends ServiceImplX<SystemRoleMapper, SystemR
                 .map(SystemInfraConvertor.INSTANCE::roleDo2RoleVO)
                 .toList();
         return result;
+    }
+
+    @Override
+    public List<SystemRoleDO> listByIds(Collection<? extends Serializable> ids) {
+        return super.listByIds(ids);
+    }
+
+    @Override
+    public List<SystemRoleDO> listByUserId(Long userId) {
+        if (Objects.isNull(userId)) {
+            return new ArrayList<>();
+        }
+        return baseMapper.selectListByUserId(userId);
     }
 }

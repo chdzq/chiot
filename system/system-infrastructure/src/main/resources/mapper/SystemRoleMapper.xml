@@ -67,4 +67,24 @@
         </where>
     </select>
 
+    <select id="selectListByUserId" resultType="org.chdzq.system.repository.po.SystemRoleDO">
+        SELECT
+            r.id,
+            r.name,
+            r.code,
+            r.sort,
+            r.status,
+            r.created_time
+        FROM
+        sys_role r
+        JOIN sys_user_role ur
+        ON r.id = ur.role_id
+        <where>
+            r.deleted = 0
+            <if test="userId != null">
+                AND ur.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
 </mapper>

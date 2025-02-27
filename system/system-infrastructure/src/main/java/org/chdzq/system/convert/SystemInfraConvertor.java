@@ -47,11 +47,18 @@ public interface SystemInfraConvertor {
     @Mapping(target = "departmentId", source = "department.id")
     SystemUserDO user2UserDo(User user);
 
-    UserVO userDo2UserVO(SystemUserDO userDO);
+    @Mapping(target = "id", source = "user.id")
+    @Mapping(target = "status", source = "user.status")
+    @Mapping(target = "createdTime", source = "user.createdTime")
+    @Mapping(target = "departmentId", source = "department.id")
+    UserVO userDo2UserVO(SystemUserDO user, SystemDepartmentDO department, List<Long> roles);
 
     UserInfo userDo2UserInfo(SystemUserDO userDO, List<RoleVO> roles, List<ResourceTreeVO> resources);
-
-
+    @Mapping(target = "id", source = "user.id")
+    @Mapping(target = "status", source = "user.status")
+    @Mapping(target = "createdTime", source = "user.createdTime")
+    @Mapping(target = "departmentName", source = "department.name")
+    UserPageVO userDo2UserPageVO(SystemUserDO user, SystemDepartmentDO department);
 
     @Mapping(target = "enabled", source = "resource.enabled.code")
     @Mapping(target = "type", source = "resource.type.code")
@@ -92,6 +99,7 @@ public interface SystemInfraConvertor {
     SystemDepartmentDO department2SystemDepartDO(Department department);
     DepartmentTreeVO departmentDO2SystemDepartTreeVO(SystemDepartmentDO department);
     List<DepartmentTreeVO> departmentDOList2SystemDepartTreeVOList(List<SystemDepartmentDO> departmentList);
+    DepartmentVO departmentDO2SystemDepartVO(SystemDepartmentDO department);
 
 
 }

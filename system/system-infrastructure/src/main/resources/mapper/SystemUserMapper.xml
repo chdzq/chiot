@@ -67,8 +67,8 @@
         FROM
         sys_user u
         <where>
-            u.username != '${@org.chdzq.common.core.constants.SystemConstant@DEFAULT_ADMIN_USER_NAME}'
-
+            u.deleted = 0
+            AND u.username != '${@org.chdzq.common.core.constants.SystemConstant@DEFAULT_ADMIN_USER_NAME}'
             <if test='param.status!=null'>
                 AND u.status = #{param.status}
             </if>
@@ -93,6 +93,7 @@
                 )
             </if>
         </where>
+        ORDER BY u.created_time DESC
     </select>
 
     <resultMap id="EntityResultMap" type="org.chdzq.system.entity.User" autoMapping="true">

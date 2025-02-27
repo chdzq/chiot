@@ -1,6 +1,7 @@
 package org.chdzq.system.command;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.chdzq.common.core.ddd.ICommand;
 import org.chdzq.common.core.utils.Assert;
@@ -21,7 +22,7 @@ public class UserDeleteCommand implements ICommand<User, Long> {
     /**
      * 用户Id
      */
-    @NotBlank(message = "主键不能为空")
+    @NotNull(message = "主键不能为空")
     private Long id;
 
     public UserDeleteCommand(Long id) {

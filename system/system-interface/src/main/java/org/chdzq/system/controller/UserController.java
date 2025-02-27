@@ -10,6 +10,7 @@ import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.query.UserPageQuery;
 import org.chdzq.system.query.model.UserInfo;
+import org.chdzq.system.query.model.UserPageVO;
 import org.chdzq.system.query.model.UserVO;
 import org.chdzq.system.service.UserQueryService;
 import org.chdzq.system.service.UserService;
@@ -93,8 +94,9 @@ public class UserController {
             @PathVariable("userId") Long userId) {
         return userQueryService.detail(userId);
     }
+
     @GetMapping("/page")
-    public Page<? extends UserVO> page(
+    public Page<? extends UserPageVO> page(
             @RequestParam(name = "pageNo", required = false) Integer pageNo,
             @RequestParam(name = "pageSize", required = false) Integer pageSize,
             @RequestParam(value = "departmentId", required = false) Long departmentId,

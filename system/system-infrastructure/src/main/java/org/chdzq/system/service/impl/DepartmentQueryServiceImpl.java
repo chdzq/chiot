@@ -10,6 +10,8 @@ import org.chdzq.system.repository.po.SystemDepartmentDO;
 import org.chdzq.system.service.DepartmentQueryService;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,5 +28,15 @@ public class DepartmentQueryServiceImpl extends ServiceImplX<SystemDepartmentMap
         List<SystemDepartmentDO> departmentDOS = baseMapper.recursiveSelectDepartmentsBy(query);
         List<DepartmentTreeVO> treeVOList = SystemInfraConvertor.INSTANCE.departmentDOList2SystemDepartTreeVOList(departmentDOS);
         return TreeUtil.buildTree(treeVOList);
+    }
+
+    @Override
+    public List<SystemDepartmentDO> listByIds(Collection<? extends Serializable> idList) {
+        return super.listByIds(idList);
+    }
+
+    @Override
+    public SystemDepartmentDO getById(Serializable id) {
+        return super.getById(id);
     }
 }

@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    final private static String DEFAULT_PASSWORD = "password";
+    final private static String DEFAULT_PASSWORD = "PassWord123";
 
     @Override
     @Transactional(rollbackFor = Exception.class)

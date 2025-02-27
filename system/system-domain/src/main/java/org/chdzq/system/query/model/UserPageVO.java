@@ -3,6 +3,8 @@ package org.chdzq.system.query.model;
 import lombok.Builder;
 import lombok.Value;
 
+import java.time.LocalDateTime;
+
 /**
  * 分页用户展示类
  *
@@ -49,12 +51,13 @@ public class UserPageVO {
     Integer gender;
 
     /**
-     * 部门ID
-     */
-    Long departmentId;
-
-    /**
      * 部门名称
      */
     String departmentName;
+
+    /**
+     * 创建时间
+     */
+    LocalDateTime createdTime;
+
 }

@@ -49,4 +49,11 @@ public interface SystemRoleMapper extends BaseMapperX<SystemRoleDO> {
      * @return
      */
     List<SystemRoleDO> selectListByQuery(@Param("param") RoleListQuery param);
+
+    /**
+     * 根据用户主键查询角色列表
+     * @param userId
+     * @return
+     */
+    List<SystemRoleDO> selectListByUserId(@Param("userId") Long userId);
 }

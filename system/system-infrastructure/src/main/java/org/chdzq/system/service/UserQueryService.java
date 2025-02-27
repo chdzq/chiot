@@ -5,6 +5,7 @@ import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.query.UserPageQuery;
 import org.chdzq.system.query.model.UserInfo;
+import org.chdzq.system.query.model.UserPageVO;
 import org.chdzq.system.query.model.UserVO;
 
 /**
@@ -29,7 +30,7 @@ public interface UserQueryService {
      * @param param
      * @return
      */
-    Page<? extends UserVO> page(UserPageQuery param);
+    Page<? extends UserPageVO> page(UserPageQuery param);
 
 
     /**

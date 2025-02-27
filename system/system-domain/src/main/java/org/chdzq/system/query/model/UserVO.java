@@ -2,6 +2,10 @@ package org.chdzq.system.query.model;
 
 import lombok.Builder;
 import lombok.Value;
+import org.chdzq.system.entity.Role;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 用户展示类
@@ -54,7 +58,12 @@ public class UserVO {
     Long departmentId;
 
     /**
-     * 部门名称
+     * 创建时间
      */
-    String departmentName;
+    LocalDateTime createdTime;
+
+    /**
+     * 角色列表
+     */
+    List<Long> roles;
 }

@@ -4,7 +4,9 @@ import org.chdzq.common.core.entity.Page;
 import org.chdzq.system.query.RoleListQuery;
 import org.chdzq.system.query.RolePageQuery;
 import org.chdzq.system.query.model.RoleVO;
+import org.chdzq.system.repository.po.SystemRoleDO;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,4 +39,20 @@ public interface RoleQueryService {
      * @return
      */
     List<RoleVO> listByCodes(Collection<String> roleCodes);
+
+
+    /**
+     * 根据角色列表查询所有的角色数据
+     * @param ids
+     * @return
+     */
+    List<SystemRoleDO> listByIds(Collection<? extends Serializable> ids);
+
+
+    /**
+     * 根据用户查询角色列表
+     * @param userId
+     * @return
+     */
+    List<SystemRoleDO> listByUserId(Long userId);
 }

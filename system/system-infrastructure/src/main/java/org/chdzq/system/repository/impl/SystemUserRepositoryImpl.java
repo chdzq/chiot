@@ -1,6 +1,7 @@
 package org.chdzq.system.repository.impl;
 
 import lombok.AllArgsConstructor;
+import org.chdzq.common.core.constants.Constant;
 import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.entity.AuthInfo;
@@ -116,6 +117,7 @@ public class SystemUserRepositoryImpl extends ServiceImplX<SystemUserMapper, Sys
         return baseMapper.selectEntityBy(
                 WrapperX.<SystemUserDO>lambdaQuery()
                         .eq(SystemUserDO::getUsername, username)
+                        .eq(SystemUserDO::getDeleted, Constant.UNDELETED)
         );
     }
 
