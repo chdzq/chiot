@@ -2,8 +2,11 @@ package org.chdzq.common.core.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ArraySerializerBase;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.chdzq.common.core.utils.JsonUtil;
 import org.chdzq.common.core.converter.LocalDateDeserializer;
@@ -16,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -44,7 +48,9 @@ public class JacksonAutoConfiguration {
                         .addSerializer(LocalDateTime.class, LocalDateTimeSerializer.INSTANCE)
                         .addDeserializer(LocalDateTime.class, LocalDateTimeDeserializer.INSTANCE)
                         .addSerializer(LocalDate.class, LocalDateSerializer.INSTANCE)
-                        .addDeserializer(LocalDate.class, LocalDateDeserializer.INSTANCE);
+                        .addDeserializer(LocalDate.class, LocalDateDeserializer.INSTANCE)
+                        .addSerializer(Long.class, ToStringSerializer.instance)
+                ;
                 objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
                 // 反序列化时，忽略目标对象没有的属性
                 objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

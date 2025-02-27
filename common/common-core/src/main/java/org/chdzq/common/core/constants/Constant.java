@@ -15,4 +15,7 @@ public interface Constant {
     //删除
     Integer DELETED = 1;
 
+    //Root用户
+    String ROOT_ROLE_CODE = "ROOT";
+
 }
