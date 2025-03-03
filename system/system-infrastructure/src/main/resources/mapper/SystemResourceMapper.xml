@@ -30,6 +30,7 @@
         t2.path,
         t2.component,
         t2.permission,
+        t2.link,
         t2.icon,
         t2.sort,
         t2.enabled,

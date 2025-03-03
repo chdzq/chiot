@@ -70,6 +70,11 @@ public class Resource implements IBaseEntity<Long> {
      */
     private String icon;
 
+    /**
+     * 重定向地址 外链地址
+     */
+    private String link;
+
     @Override
     public Long getIdentifier() {
         return id;
@@ -83,7 +88,18 @@ public class Resource implements IBaseEntity<Long> {
     }
 
     @Builder
-    public Resource(Long id, Long parentId, String name, String code, Integer type, String path, String component, String permission, Integer enabled, Integer sort, String icon) {
+    public Resource(Long id,
+                    Long parentId,
+                    String name,
+                    String code,
+                    Integer type,
+                    String path,
+                    String component,
+                    String permission,
+                    Integer enabled,
+                    Integer sort,
+                    String icon,
+                    String link) {
         this.id = id;
         this.parentId = parentId;
         this.name = name;
@@ -95,5 +111,6 @@ public class Resource implements IBaseEntity<Long> {
         this.enabled = StatusEnum.getByCode(enabled);
         this.sort = sort;
         this.icon = icon;
+        this.link = link;
     }
 }

@@ -23,7 +23,6 @@ public class ResourceTreeVO implements TreeInterface<Long, ResourceTreeVO> {
     /**
      * 父菜单ID
      */
-    @JsonIgnore
     private Long parentId;
 
     /**
@@ -40,6 +39,11 @@ public class ResourceTreeVO implements TreeInterface<Long, ResourceTreeVO> {
      * 菜单类型(1-菜单；2-目录；3-外链；4-按钮权限)
      */
     private Integer type;
+
+    /**
+     * 排序序号
+     */
+    private Integer sort;
 
     /**
      * 路由路径(浏览器地址栏路径)
@@ -63,7 +67,12 @@ public class ResourceTreeVO implements TreeInterface<Long, ResourceTreeVO> {
     /**
      * 跳转路径
      */
-    private String redirect;
+    private String link;
+
+    /**
+     * 权限标识
+     */
+    private String permission;
 
     /**
      * 【目录】只有一个子路由是否始终显示(1:是 0:否)

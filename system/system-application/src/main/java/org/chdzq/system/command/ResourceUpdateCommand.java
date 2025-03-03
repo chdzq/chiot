@@ -1,5 +1,6 @@
 package org.chdzq.system.command;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.chdzq.common.core.utils.ValidationUtil;
 import org.chdzq.common.core.validation.InEnum;
 import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.ResourceRepository;
+import org.springframework.util.StringUtils;
 
 import java.util.Objects;
 
@@ -30,15 +32,19 @@ public class ResourceUpdateCommand implements ICommand<Resource, Long> {
     private Long id;
 
     /**
+     * 父资源ID
+     */
+    @NotNull(message = "主键不能为空")
+    private Long parentId;
+
+    /**
      * 名称
      */
-    @NotBlank(message = "名称不能为空")
     private String name;
 
     /**
      * 编码
      */
-    @NotBlank(message = "编码不能为空")
     private String code;
 
     /**
@@ -79,6 +85,12 @@ public class ResourceUpdateCommand implements ICommand<Resource, Long> {
     private String icon;
 
     /**
+     * 重定向地址 外链地址
+     */
+    private String link;
+
+
+    /**
      * 校验
      * @param resourceRepository 仓库
      */
@@ -87,9 +99,12 @@ public class ResourceUpdateCommand implements ICommand<Resource, Long> {
 
         Assert.isTrue(resourceRepository.isExistByKey(id), "资源不存在");
 
-        Long parentId = resourceRepository.getParentIdByKey(id);
+        if (Objects.nonNull(parentId) && !Objects.equals(parentId, 0L)) {
+            //说明不是是顶级节点
+            Resource parent = resourceRepository.getBy(parentId);
+            Assert.notNull(parent, "父节点不存在");
+        }
 
-        Assert.isTrue(resourceRepository.isExistByKey(parentId), "父节点不存在");
 
         Long resourceIdByCode = resourceRepository.getResourceIdByCode(parentId, code);
         Assert.isTrue(
@@ -104,16 +119,25 @@ public class ResourceUpdateCommand implements ICommand<Resource, Long> {
 
     @Override
     public Resource buildEntity() {
-        Resource resource = new Resource();
-        resource.setId(id);
-        resource.setName(name);
-        resource.setCode(code);
-        resource.setType(ResourceEnum.getByCode(type));
-        resource.setPath(path);
-        resource.setComponent(component);
-        resource.setSort(sort);
-        resource.setIcon(icon);
-        resource.setEnabled(StatusEnum.getByCode(enabled));
-        return resource;
+        Resource.ResourceBuilder builder = Resource.builder();
+        if (StringUtils.hasText(path)) {
+            //目录需要是/开头
+            if (!StringUtils.startsWithIgnoreCase(path, "/")) {
+                builder.path("/" + path);
+            } else {
+                builder.path(path);
+            }
+        }
+        builder.type(type)
+                .link(link)
+                .parentId(parentId)
+                .component(component)
+                .permission(permission)
+                .icon(icon)
+                .sort(sort)
+                .code(code)
+                .name(name)
+                .enabled(enabled);
+        return builder.build();
     }
 }

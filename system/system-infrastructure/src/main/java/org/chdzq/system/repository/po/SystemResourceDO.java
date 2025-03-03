@@ -77,7 +77,7 @@ public class SystemResourceDO extends BaseDO {
     /**
      * 跳转路径
      */
-    private String redirect;
+    private String link;
 
     /**
      * 【目录】只有一个子路由是否始终显示(1:是 0:否)

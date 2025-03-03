@@ -1,5 +1,6 @@
 package org.chdzq.system.command;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -38,7 +39,6 @@ public class ResourceCreateCommand implements ICommand<Resource, Long> {
     @NotBlank(message = "名称不能为空")
     private String name;
 
-
     /**
      * 菜单名称
      */
@@ -57,6 +57,11 @@ public class ResourceCreateCommand implements ICommand<Resource, Long> {
     private String path;
 
     /**
+     * 重定向地址 外链地址
+     */
+    private String link;
+
+    /**
      * 组件路径(vue页面完整路径，省略.vue后缀)
      */
     private String component;
@@ -65,17 +70,23 @@ public class ResourceCreateCommand implements ICommand<Resource, Long> {
      * 显示状态(1:显示;0:隐藏)
      */
     @InEnum(StatusEnum.class)
-    private Integer enabled;
+    private Integer enabled = StatusEnum.ENABLE.getCode();
 
     /**
      * 排序
      */
-    private Integer sort;
+    private Integer sort = 0;
 
     /**
      * 菜单图标
      */
     private String icon;
+
+    /**
+     * 权限
+     */
+    private String permission;
+
 
     /**
      * 校验
@@ -84,9 +95,22 @@ public class ResourceCreateCommand implements ICommand<Resource, Long> {
     public void validate(ResourceRepository resourceRepository) {
         ValidationUtil.validate(this);
 
+        if (!Objects.equals(type, ResourceEnum.BUTTON.getCode())) {
+            Assert.isTrue(StringUtils.hasText(path), "path不能为空");
+        }
+
+        if (Objects.equals(type, ResourceEnum.PAGE.getCode())) {
+            Assert.isTrue(StringUtils.hasText(component), "component不能为空");
+        }
+
+        if (Objects.equals(type, ResourceEnum.LINK.getCode())) {
+            Assert.isTrue(StringUtils.hasText(link), "外链地址不能为空");
+        }
+
         if (Objects.nonNull(parentId) && !Objects.equals(parentId, 0L)) {
             //说明不是是顶级节点
-            Assert.isTrue(resourceRepository.isExistByKey(parentId), "父节点不存在");
+            Resource parent = resourceRepository.getBy(parentId);
+            Assert.notNull(parent, "父节点不存在");
         } else {
             parentId = 0L;
         }
@@ -100,16 +124,25 @@ public class ResourceCreateCommand implements ICommand<Resource, Long> {
 
     @Override
     public Resource buildEntity() {
-        Resource resource = new Resource();
-        resource.setParentId(parentId);
-        resource.setName(name);
-        resource.setType(ResourceEnum.getByCode(type));
-        resource.setPath(path);
-        resource.setComponent(component);
-        resource.setSort(sort);
-        resource.setCode(code);
-        resource.setIcon(icon);
-        resource.setEnabled(StatusEnum.getByCode(enabled));
-        return resource;
+        Resource.ResourceBuilder builder = Resource.builder();
+        if (!Objects.equals(type, ResourceEnum.BUTTON.getCode())) {
+            //目录需要是/开头
+            if (!StringUtils.startsWithIgnoreCase(path, "/")) {
+                builder.path("/" + path);
+            } else {
+                builder.path(path);
+            }
+        }
+        builder.type(type)
+                .link(link)
+                .parentId(parentId)
+                .component(component)
+                .permission(permission)
+                .icon(icon)
+                .sort(sort)
+                .code(code)
+                .name(name)
+                .enabled(enabled);
+        return builder.build();
     }
 }

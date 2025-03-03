@@ -1,6 +1,7 @@
 package org.chdzq.system.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.chdzq.common.core.enums.ResourceEnum;
 import org.chdzq.system.command.ResourceCreateCommand;
 import org.chdzq.system.command.ResourceDeleteCommand;
 import org.chdzq.system.command.ResourceUpdateCommand;
@@ -30,21 +31,6 @@ public class ResourceServiceImpl implements ResourceService {
     public void create(ResourceCreateCommand cmd) {
         cmd.validate(resourceRepository);
         Resource entity = cmd.buildEntity();
-        if (
-                Objects.isNull(entity.getParentId()) ||
-                Objects.equals(entity.getParentId(), 0L)) {
-            //说明是顶级节点
-            entity.setPermission(cmd.getCode());
-        } else {
-            Long parentId = entity.getParentId();
-            Resource parentResource = resourceRepository.getBy(parentId);
-            String permission = parentResource.getPermission();
-            String path = parentResource.getPath();
-            entity.setPath(path + "/" + entity.getPath());
-            entity.setPermission(parentResource.getCode() + "_" + entity.getCode());
-            entity.setPermission(permission + ":" + cmd.getCode());
-        }
-
         resourceRepository.create(entity);
     }
 
@@ -54,9 +40,6 @@ public class ResourceServiceImpl implements ResourceService {
         cmd.validate(resourceRepository);
 
         Resource entity = cmd.buildEntity();
-        Long parentId = resourceRepository.getParentIdByKey(entity.getId());
-        String permission = resourceRepository.getPermissionByKey(parentId);
-        entity.setPermission(permission + ":" + cmd.getCode());
 
         resourceRepository.update(entity);
     }
