@@ -1,8 +1,11 @@
 package org.chdzq.system.repository.dao;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.chdzq.common.mybatis.core.mapper.BaseMapperX;
+import org.chdzq.system.entity.Resource;
 import org.chdzq.system.repository.po.SystemResourceDO;
 
 import java.util.Collection;
@@ -36,6 +39,13 @@ public interface SystemResourceMapper extends BaseMapperX<SystemResourceDO> {
      */
     Long selectResourceIdByName(@Param("parentId")Long parentId,
                                 @Param("name")String name);
+
+    /**
+     * 根据条件查询Entity
+     * @param queryWrapper
+     * @return
+     */
+    Resource selectEntityBy(@Param(Constants.WRAPPER) Wrapper<SystemResourceDO> queryWrapper);
 
 
     /**

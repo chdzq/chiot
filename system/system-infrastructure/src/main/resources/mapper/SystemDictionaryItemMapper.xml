@@ -27,8 +27,10 @@
         JOIN sys_dictionary_item item
         ON dict.id = item.dictionary_id
         <where>
-            dict.id = #{param.dictionaryId}
-
+            dict.deleted = 0
+            <if test="param.dictionaryId != null">
+                AND dict.id = #{param.dictionaryId}
+            </if>
             <if test="param.status != null">
                 AND dict.status = #{param.status.code}
             </if>

@@ -97,38 +97,30 @@ public class ResourceUpdateCommand implements ICommand<Resource, Long> {
     public void validate(ResourceRepository resourceRepository) {
         ValidationUtil.validate(this);
 
-        Assert.isTrue(resourceRepository.isExistByKey(id), "资源不存在");
+        Assert.notNull(resourceRepository.get(id), "资源不存在");
 
         if (Objects.nonNull(parentId) && !Objects.equals(parentId, 0L)) {
             //说明不是是顶级节点
-            Resource parent = resourceRepository.getBy(parentId);
+            Resource parent = resourceRepository.get(parentId);
             Assert.notNull(parent, "父节点不存在");
         }
 
-
-        Long resourceIdByCode = resourceRepository.getResourceIdByCode(parentId, code);
+        Resource resourceByCode = resourceRepository.getResourceInParentByCode(parentId, code);
         Assert.isTrue(
-                Objects.isNull(resourceIdByCode) || !Objects.equals(id, resourceIdByCode),
+                Objects.isNull(resourceByCode) || Objects.equals(id, resourceByCode.getId()),
                 "资源编码已经存在");
 
-        Long resourceIdByName = resourceRepository.getResourceIdByName(parentId, name);
+        Resource resourceByName = resourceRepository.getResourceInParentByName(parentId, name);
         Assert.isTrue(
-                Objects.isNull(resourceIdByName) || Objects.equals(id, resourceIdByName),
+                Objects.isNull(resourceByName) || Objects.equals(id, resourceByName.getId()),
                 "资源名称已经存在");
     }
 
     @Override
     public Resource buildEntity() {
-        Resource.ResourceBuilder builder = Resource.builder();
-        if (StringUtils.hasText(path)) {
-            //目录需要是/开头
-            if (!StringUtils.startsWithIgnoreCase(path, "/")) {
-                builder.path("/" + path);
-            } else {
-                builder.path(path);
-            }
-        }
-        builder.type(type)
+        Resource.ResourceBuilder builder = Resource.builder()
+                .id(id)
+                .type(type)
                 .link(link)
                 .parentId(parentId)
                 .component(component)
@@ -138,6 +130,14 @@ public class ResourceUpdateCommand implements ICommand<Resource, Long> {
                 .code(code)
                 .name(name)
                 .enabled(enabled);
+        if (StringUtils.hasText(path)) {
+            //目录需要是/开头
+            if (!StringUtils.startsWithIgnoreCase(path, "/")) {
+                builder.path("/" + path);
+            } else {
+                builder.path(path);
+            }
+        }
         return builder.build();
     }
 }

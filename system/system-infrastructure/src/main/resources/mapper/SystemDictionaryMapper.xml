@@ -24,6 +24,7 @@
             <include refid="ColumnSQL" />
         FROM sys_dictionary dict
         <where>
+            dict.deleted = 0
             <if test="param.status != null">
                 AND dict.status = #{param.status.code}
             </if>

@@ -1,5 +1,7 @@
 package org.chdzq.system.repository.impl;
 
+import org.chdzq.common.core.constants.Constant;
+import org.chdzq.common.mybatis.core.query.QueryWrapperX;
 import org.chdzq.common.mybatis.core.query.WrapperX;
 import org.chdzq.common.mybatis.core.service.ServiceImplX;
 import org.chdzq.system.convert.SystemInfraConvertor;
@@ -15,6 +17,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.locks.Condition;
 
 /**
  * 资源的仓库
@@ -25,21 +28,14 @@ import java.util.Objects;
  */
 @Service
 public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMapper, SystemResourceDO> implements SystemResourceService {
-    @Override
-    public Boolean isExistByKey(Long id) {
-        Serializable existedByKey = baseMapper.isExistedByKey(WrapperX.<SystemResourceDO>lambdaQuery()
-                .eq(SystemResourceDO::getId, id));
-        return Objects.nonNull(existedByKey);
-    }
 
     @Override
-    public Boolean isExistByKeys(List<Long> ids) {
-        if (CollectionUtils.isEmpty(ids)) {
-            return Boolean.FALSE;
-        }
-        List<Serializable> keys = baseMapper.isExistedByKeys(WrapperX.<SystemResourceDO>lambdaQuery()
-                .in(SystemResourceDO::getId, ids));
-        return keys.size() == ids.size();
+    public Resource get(Long id) {
+        return baseMapper.selectEntityBy(
+                WrapperX.<SystemResourceDO>lambdaQuery()
+                        .eq(SystemResourceDO::getId, id)
+                        .eq(SystemResourceDO::getDeleted, Constant.UNDELETED)
+        );
     }
 
     @Override
@@ -71,32 +67,23 @@ public class SystemResourceRepositoryImpl extends ServiceImplX<SystemResourceMap
     }
 
     @Override
-    public String getPermissionByKey(Long id) {
-        SystemResourceDO resourceDO = getById(id);
-        return resourceDO.getPermission();
+    public Resource getResourceInParentByCode(Long parentId, String code) {
+        return baseMapper.selectEntityBy(
+                WrapperX.<SystemResourceDO>lambdaQuery()
+                        .eq(SystemResourceDO::getDeleted, Constant.UNDELETED)
+                        .eq(SystemResourceDO::getParentId, parentId)
+                        .eq(SystemResourceDO::getCode, code)
+        );
     }
 
     @Override
-    public Resource getBy(Long id) {
-        SystemResourceDO resourceDO = getById(id);
-        Resource resource = SystemInfraConvertor.INSTANCE.resourceDo2Resource(resourceDO);
-        return resource;
-    }
-
-    @Override
-    public Long getParentIdByKey(Long id) {
-        SystemResourceDO resourceDO = getById(id);
-        return resourceDO.getParentId();
-    }
-
-    @Override
-    public Long getResourceIdByCode(Long parentId, String code) {
-        return baseMapper.selectResourceIdByCode(parentId, code);
-    }
-
-    @Override
-    public Long getResourceIdByName(Long parentId, String name) {
-        return baseMapper.selectResourceIdByName(parentId, name);
+    public Resource getResourceInParentByName(Long parentId, String name) {
+        return baseMapper.selectEntityBy(
+                WrapperX.<SystemResourceDO>lambdaQuery()
+                        .eq(SystemResourceDO::getDeleted, Constant.UNDELETED)
+                        .eq(SystemResourceDO::getParentId, parentId)
+                        .eq(SystemResourceDO::getName, name)
+        );
     }
 
     @Override

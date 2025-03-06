@@ -31,6 +31,7 @@
         FROM
         sys_role t1
         <where>
+            t1.deleted = 0
             <if test='param.status!=null'>
                 AND t1.status = #{param.status}
             </if>
@@ -56,7 +57,7 @@
         FROM
         sys_role t1
         <where>
-            t1.status = 1
+            t1.deleted = 0
             <if test='param.keyword!=null and param.keyword.trim() neq ""'>
                 AND (
                     t1.name LIKE CONCAT('%',#{param.keyword},'%')

@@ -5,6 +5,7 @@ import org.chdzq.common.mybatis.core.service.ServiceImplX;
 import org.chdzq.system.convert.SystemInfraConvertor;
 import org.chdzq.system.query.DepartmentQuery;
 import org.chdzq.system.query.model.DepartmentTreeVO;
+import org.chdzq.system.query.model.DepartmentVO;
 import org.chdzq.system.repository.dao.SystemDepartmentMapper;
 import org.chdzq.system.repository.po.SystemDepartmentDO;
 import org.chdzq.system.service.DepartmentQueryService;
@@ -28,6 +29,12 @@ public class DepartmentQueryServiceImpl extends ServiceImplX<SystemDepartmentMap
         List<SystemDepartmentDO> departmentDOS = baseMapper.recursiveSelectDepartmentsBy(query);
         List<DepartmentTreeVO> treeVOList = SystemInfraConvertor.INSTANCE.departmentDOList2SystemDepartTreeVOList(departmentDOS);
         return TreeUtil.buildTree(treeVOList);
+    }
+
+    @Override
+    public DepartmentVO view(Long id) {
+        SystemDepartmentDO departmentDO = getById(id);
+        return SystemInfraConvertor.INSTANCE.departmentDO2SystemDepartVO(departmentDO);
     }
 
     @Override

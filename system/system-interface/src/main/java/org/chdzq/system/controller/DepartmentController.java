@@ -6,6 +6,7 @@ import org.chdzq.system.command.DepartmentDeleteCommand;
 import org.chdzq.system.command.DepartmentUpdateCommand;
 import org.chdzq.system.query.DepartmentQuery;
 import org.chdzq.system.query.model.DepartmentTreeVO;
+import org.chdzq.system.query.model.DepartmentVO;
 import org.chdzq.system.service.DepartmentQueryService;
 import org.chdzq.system.service.DepartmentService;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +57,15 @@ public class DepartmentController {
     @DeleteMapping(value = "/{departmentId}")
     public void delete(@PathVariable("departmentId") Long departmentId) {
         commandService.delete(new DepartmentDeleteCommand(departmentId));
+    }
+
+    /**
+     * 查询
+     * @param departmentId 部门Id
+     */
+    @GetMapping(value = "/{departmentId}")
+    public DepartmentVO detail(@PathVariable("departmentId") Long departmentId) {
+        return queryService.view(departmentId);
     }
 
     @GetMapping(value = "/tree")

@@ -16,6 +16,11 @@ public class DepartmentVO {
     private Long id;
 
     /**
+     * 父节点id
+     */
+    private Long parentId;
+
+    /**
      * 部门名称
      */
     private String name;

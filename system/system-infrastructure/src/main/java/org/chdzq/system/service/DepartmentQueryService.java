@@ -2,6 +2,7 @@ package org.chdzq.system.service;
 
 import org.chdzq.system.query.DepartmentQuery;
 import org.chdzq.system.query.model.DepartmentTreeVO;
+import org.chdzq.system.query.model.DepartmentVO;
 import org.chdzq.system.repository.po.SystemDepartmentDO;
 
 import java.io.Serializable;
@@ -22,6 +23,13 @@ public interface DepartmentQueryService {
      * @return
      */
     List<DepartmentTreeVO> tree(DepartmentQuery query);
+
+    /**
+     * 根据主键查询详情
+     * @param id
+     * @return
+     */
+    DepartmentVO view(Long id);
 
     /**
      * 根据ID列表查询部门列表

@@ -1,5 +1,6 @@
 package org.chdzq.common.core.enums;
 
+import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.chdzq.common.core.dictionary.DictionaryConstantInterface;
@@ -14,7 +15,10 @@ import org.chdzq.common.core.validation.EnumerableValue;
  */
 @AllArgsConstructor
 @Getter
-public enum ResourceEnum  implements IBaseEnum<Integer>, EnumerableValue<Integer>, DictionaryConstantInterface<Integer> {
+public enum ResourceEnum  implements IBaseEnum<Integer>,
+        EnumerableValue<Integer>,
+        DictionaryConstantInterface<Integer>,
+        IEnum<Integer> {
     PAGE(1, "菜单"),
     DIRECTORY(2, "目录"),
     LINK(3, "外链"),

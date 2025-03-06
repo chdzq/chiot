@@ -35,8 +35,7 @@ public class ResourceDeleteCommand implements ICommand<Resource, Long> {
      */
     public void validate(ResourceRepository resourceRepository) {
         ValidationUtil.validate(this);
-        Boolean exist = resourceRepository.isExistByKey(id);
-        Assert.isTrue(exist, "资源不存在");
+        Assert.notNull(resourceRepository.get(id), "资源不存在");
     }
 
     @Override

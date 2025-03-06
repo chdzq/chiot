@@ -53,6 +53,7 @@
         <include refid="ColumSQL"></include>
         FROM sys_department dept
         <where>
+            dept.deleted = 0
             <if test="query.status.code != null">
                 AND dept.status = #{query.status.code}
             </if>
@@ -69,10 +70,11 @@
         <include refid="ColumSQL"></include>
         FROM sys_department AS dept
         INNER JOIN recursive_query AS rq ON rq.parent_id = dept.id
+        WHERE dept.deleted = 0
         )
         SELECT
         <include refid="ColumSQL"></include>
         FROM recursive_query as dept
-        ORDER BY dept.sort DESC
+        ORDER BY dept.sort ASC, dept.created_time DESC
     </select>
 </mapper>

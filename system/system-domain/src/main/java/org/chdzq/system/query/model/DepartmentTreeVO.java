@@ -32,7 +32,6 @@ public class DepartmentTreeVO implements TreeInterface<Long, DepartmentTreeVO> {
     /**
      * 父节点id
      */
-    @JsonIgnore
     private Long parentId;
 
     /**

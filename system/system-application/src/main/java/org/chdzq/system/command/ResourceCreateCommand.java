@@ -1,6 +1,5 @@
 package org.chdzq.system.command;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -109,17 +108,17 @@ public class ResourceCreateCommand implements ICommand<Resource, Long> {
 
         if (Objects.nonNull(parentId) && !Objects.equals(parentId, 0L)) {
             //说明不是是顶级节点
-            Resource parent = resourceRepository.getBy(parentId);
+            Resource parent = resourceRepository.get(parentId);
             Assert.notNull(parent, "父节点不存在");
         } else {
             parentId = 0L;
         }
 
-        Long resourceIdByCode = resourceRepository.getResourceIdByCode(parentId, code);
-        Assert.isNull(resourceIdByCode, "资源编码已经存在");
+        Resource resourceByCode = resourceRepository.getResourceInParentByCode(parentId, code);
+        Assert.isNull(resourceByCode, "资源编码已经存在");
 
-        Long resourceIdByName = resourceRepository.getResourceIdByName(parentId, name);
-        Assert.isNull(resourceIdByName, "资源名称已经存在");
+        Resource resourceByName = resourceRepository.getResourceInParentByName(parentId, name);
+        Assert.isNull(resourceByName, "资源名称已经存在");
     }
 
     @Override
