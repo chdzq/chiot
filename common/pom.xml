@@ -17,6 +17,7 @@
         <module>common-mybatis</module>
         <module>common-security</module>
         <module>common-redis</module>
+        <module>common-file</module>
     </modules>
 
     <properties>
@@ -54,6 +55,12 @@
             <dependency>
                 <groupId>org.chdzq.common</groupId>
                 <artifactId>common-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.chdzq.common</groupId>
+                <artifactId>common-file</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
