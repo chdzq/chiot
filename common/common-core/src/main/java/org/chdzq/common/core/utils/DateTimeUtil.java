@@ -136,6 +136,17 @@ public class DateTimeUtil {
     }
 
     /**
+     * 格式化日期时间为指定格式
+     *
+     * @param date      {@link LocalDate}
+     * @param formatter 日期格式化器
+     * @return 格式化后的字符串
+     */
+    public static String format(LocalDateTime date, String formatter) {
+        return _format(date, StringUtil.isBlank(formatter) ? NORM_DATE_FORMATTER : DateTimeFormatter.ofPattern(formatter));
+    }
+
+    /**
      * 格式化日期时间为yyyy-MM-dd格式
      *
      * @param date {@link LocalDate}
