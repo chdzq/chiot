@@ -5,6 +5,7 @@ import org.chdzq.system.adapter.PasswordCoder;
 import org.chdzq.system.command.UserCreateCommand;
 import org.chdzq.system.command.UserDeleteCommand;
 import org.chdzq.system.command.UserUpdateCommand;
+import org.chdzq.system.command.UserUpdateProfileCommand;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.entity.Password;
 import org.chdzq.system.entity.User;
@@ -57,6 +58,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(@Validated UserUpdateCommand cmd) {
+        cmd.validate(userRepository, departmentRepository);
+        User user = cmd.buildEntity();
+        userRepository.update(user);
+    }
+
+    @Override
+    public void update(UserUpdateProfileCommand cmd) {
         cmd.validate(userRepository, departmentRepository);
         User user = cmd.buildEntity();
         userRepository.update(user);

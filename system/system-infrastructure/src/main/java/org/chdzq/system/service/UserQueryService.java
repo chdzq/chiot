@@ -6,6 +6,7 @@ import org.chdzq.system.query.QueryAuthInfo;
 import org.chdzq.system.query.UserPageQuery;
 import org.chdzq.system.query.model.UserInfo;
 import org.chdzq.system.query.model.UserPageVO;
+import org.chdzq.system.query.model.UserProfileVO;
 import org.chdzq.system.query.model.UserVO;
 
 /**
@@ -45,4 +46,12 @@ public interface UserQueryService {
      * @return
      */
     UserVO detail(Long userId);
+
+
+    /**
+     * 获取用户的简介信息
+     * @param userId 用户主键
+     * @return 用户简介信息
+     */
+    UserProfileVO getUserProfile(Long userId);
 }

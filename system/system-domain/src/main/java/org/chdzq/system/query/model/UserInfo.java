@@ -49,6 +49,11 @@ public class UserInfo {
     Integer gender;
 
     /**
+     * 头像
+     */
+    String avatar;
+
+    /**
      * 角色列表
      */
     List<RoleVO> roles;

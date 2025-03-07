@@ -97,4 +97,17 @@ public class UserQueryServiceImpl extends ServiceImplX<SystemUserMapper, SystemU
         List<Long> roleIds = roleDOList.stream().map(SystemRoleDO::getId).toList();
         return SystemInfraConvertor.INSTANCE.userDo2UserVO(userDO, department, roleIds);
     }
+
+    @Override
+    public UserProfileVO getUserProfile(Long userId) {
+        if (Objects.isNull(userId)) {
+            return null;
+        }
+        SystemUserDO userDO = getById(userId);
+        Assert.notNull(userDO, "查询的用户不存在");
+        SystemDepartmentDO department = departmentQueryService.getById(userDO.getDepartmentId());
+        List<SystemRoleDO> roleDOList = roleQueryService.listByUserId(userDO.getId());
+        List<String> roleNames = roleDOList.stream().map(SystemRoleDO::getName).distinct().toList();
+        return SystemInfraConvertor.INSTANCE.userDo2UserProfileVO(userDO, department, roleNames);
+    }
 }

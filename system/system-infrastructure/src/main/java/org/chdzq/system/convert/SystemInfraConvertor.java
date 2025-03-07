@@ -60,6 +60,11 @@ public interface SystemInfraConvertor {
     @Mapping(target = "departmentName", source = "department.name")
     UserPageVO userDo2UserPageVO(SystemUserDO user, SystemDepartmentDO department);
 
+    @Mapping(target = "id", source = "user.id")
+    @Mapping(target = "createdTime", source = "user.createdTime")
+    @Mapping(target = "departmentName", source = "department.name")
+    UserProfileVO userDo2UserProfileVO(SystemUserDO user, SystemDepartmentDO department, List<String> roleNames);
+
     @Mapping(target = "enabled", source = "resource.enabled.code")
     @Mapping(target = "type", source = "resource.type.code")
     SystemResourceDO resource2ResourceDO(Resource resource);

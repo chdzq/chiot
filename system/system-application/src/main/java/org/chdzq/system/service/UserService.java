@@ -3,6 +3,7 @@ package org.chdzq.system.service;
 import org.chdzq.system.command.UserCreateCommand;
 import org.chdzq.system.command.UserDeleteCommand;
 import org.chdzq.system.command.UserUpdateCommand;
+import org.chdzq.system.command.UserUpdateProfileCommand;
 import org.chdzq.system.entity.AuthInfo;
 import org.chdzq.system.query.QueryAuthInfo;
 
@@ -34,6 +35,12 @@ public interface UserService {
      * @param cmd
      */
     void update(UserUpdateCommand cmd);
+
+    /**
+     * 更新用户简介
+     * @param cmd
+     */
+    void update(UserUpdateProfileCommand cmd);
 
     /**
      * 删除用户
