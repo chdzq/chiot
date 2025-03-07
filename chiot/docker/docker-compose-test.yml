@@ -67,7 +67,7 @@ services:
       - ./minio/env/minio.env
     restart: unless-stopped # 重启策略：除非手动停止容器，否则自动重启
     ports:
-      - 9001:9000
+      - 9000:9000
       - 9090:9090
     volumes:
       - ../minio/data:/data
